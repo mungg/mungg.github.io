@@ -8,6 +8,63 @@
   
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<link rel="icon" href="images/grogu_pixel.png">
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.5;
+      color: #333;
+    }
+    heading {
+      font-size: 1.8em;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 15px;
+      display: block;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    papertitle {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #8e44ad;
+    }
+    name {
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    a {
+      color: #8e44ad;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .paper-item {
+      margin-bottom: 25px;
+    }
+    .paper-title {
+      margin-bottom: 5px;
+    }
+    .paper-authors {
+      margin-bottom: 5px;
+      color: #555;
+    }
+    .paper-venue {
+      margin-bottom: 5px;
+      font-style: italic;
+      color: #666;
+    }
+    .paper-links {
+      margin-bottom: 10px;
+    }
+    .paper-description {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,16 +77,16 @@
               <p style="text-align:center">
                 <name>Yekyung Kim</name>
               </p>
-              <p>
-		      Hi! I am a second year PhD student at <a href="https://wiki.umiacs.umd.edu/clip/index.php/Main_Page">University of Maryland, CLIP Lab</a> advised by <a href="https://people.cs.umass.edu/~miyyer/"> Mohit Iyyer </a> with a research focus on natural language processing. I initially started my PhD at <a href="https://nlp.cs.umass.edu/">UMass NLP</a> and later transferred to UMD along with my advisor. 
+              <p style="font-size: 1.1em; line-height: 1.4; margin-bottom: 15px; max-width: 800px;">
+                Hi! I am a second year PhD student at <a href="https://wiki.umiacs.umd.edu/clip/index.php/Main_Page">University of Maryland, CLIP Lab</a> advised by <a href="https://www.cs.umd.edu/~miyyer/"> Mohit Iyyer </a> with a research focus on natural language processing. I initially started my PhD at <a href="https://nlp.cs.umass.edu/">UMass NLP</a> and later transferred to UMD along with my advisor. 
               </p>
-              <p>
-		      Before starting PhD, I worked at Hyundai Motors Group and LG Electronics as a research engineer. I was fortunate to be selected as a <a href=http://www.koreatimes.co.kr/www/tech/2021/02/133_267589.html">specialist in AI</a> and researched at <a href="https://lti.cs.cmu.edu/">CMU LTI</a> as a visiting scientist mentored by <a href="https://www.cs.cmu.edu/~jgc/">Jaime Carbonell</a>.
+              <p style="font-size: 1.1em; line-height: 1.4; margin-bottom: 15px; max-width: 800px;">
+                Before starting PhD, I worked at Hyundai Motors Group and LG Electronics as a research engineer. I was fortunate to be selected as a <a href=http://www.koreatimes.co.kr/www/tech/2021/02/133_267589.html">specialist in AI</a> and researched at <a href="https://lti.cs.cmu.edu/">CMU LTI</a> as a visiting scientist mentored by <a href="https://www.cs.cmu.edu/~jgc/">Jaime Carbonell</a>.
               </p>
 <!--               <p>In 2015, I received my master's degree with an outstanding paper award from Seoul National University, where I was in <a href="http://marg.snu.ac.kr"> Music and Audio Research Group (MARG)</a> advised by <a href="http://marg.snu.ac.kr/marg_people/">Kyogu Lee</a> and <a href="http://hcc.snu.ac.kr/wordpress/people/bongwon-suh">Bongwon Suh</a>.
               </p> -->
-              <p style="text-align:center">
-                <a href="mailto:sigma89kim@gmail.com">Email</a> &nbsp/&nbsp
+              <p style="text-align:center; margin-top: 10px;">
+                <a href="mailto:yekyung@umd.edu">Email</a> &nbsp/&nbsp
 <!--                <a href="data/CV_Yekyung.pdf">CV</a> &nbsp/&nbsp-->
                 <a href="https://scholar.google.co.kr/citations?user=6Rn81SsAAAAJ&hl=en">Google Scholar</a> &nbsp/&nbsp
                 <a href="https://github.com/mungg">Github</a>
@@ -42,9 +99,20 @@
         </tbody></table>
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
             <tr>
-            <td style="padding:20px;width:100%;vertical-align:middle">
+            <td style="padding:20px;width:100%;vertical-align:middle;margin-bottom:-10px">
               <heading>Research</heading>
-              <p>
+              <p style="font-size: 1.1em; line-height: 1.4; margin-bottom: 15px; max-width: 800px;">
+                My research focuses on <strong style="color: #2c3e50; font-size: 1.0em;">evaluating and improving language models</strong>, particularly in <strong style="color: #2c3e50; font-size: 1.0em;">long-context scenarios</strong>. I investigate how data influences model behavior and develop methods to enhance their performance and reliability. More specifically, my current research focuses on:
+              </p>
+              <div style="margin-left: 15px; margin-top: 0px; margin-bottom: 25px; max-width: 800px;">
+                <p style="margin: 4px 0; line-height: 1.4;">
+                  <strong style="color: #2c3e50; font-size: 1.1em;">• How faithfully LLM generate content from long inputs, and how to verify it</strong>
+                </p>
+                <p style="margin: 4px 0; line-height: 1.4;">
+                  <strong style="color: #2c3e50; font-size: 1.1em;">• Understanding and optimizing the impact of data on long-context reasoning</strong>
+                </p>
+              </div>
+
 <!--                 My research goal is to build an <strong>efficient</strong> and <strong>trustworthy</strong>  system that connects humans and machines leveraging language as a bridge. I am interested in systems that make reliable communication between humans and machines and learn knowledge with as little human supervision as possible. In particular, my research directions include:
               </p>
               <p>
@@ -55,7 +123,7 @@
 
               </p>
               <p>
-              3) <strong>Trustfulness</strong>: Logical reasoning is a human’s hallmark capability that enables reliable communication. How can we control the model to give reliable answers expressing uncertainty? Is it possible for models to solve logic puzzles (ex., Einstein's Riddle) by comprehending problems and utilizing logical deduction? How can we teach models to reason logically with human guidance?
+              3) <strong>Trustfulness</strong>: Logical reasoning is a human's hallmark capability that enables reliable communication. How can we control the model to give reliable answers expressing uncertainty? Is it possible for models to solve logic puzzles (ex., Einstein's Riddle) by comprehending problems and utilizing logical deduction? How can we teach models to reason logically with human guidance?
               </p> -->
 <!--                -->
 <!--                My research goal is to build an <strong>efficient</strong> and <strong>trustworthy</strong> system that connects humans and machines leveraging language as a bridge.-->
@@ -69,15 +137,34 @@
 <!--                 </p>-->
 <!--              <p>-->
 <!--                3) <strong>Logical reasoning</strong>: How can we expand machine knowledge with human guidance for logical reasoning?-->
-<!--                I'm interested in computer vision, machine learning, optimization, and image processing. Much of my research is about inferring the physical world (shape, motion, color, light, etc) from images. Representative papers are <span class="highlight">highlighted</span>.-->
               </p>
             </td>
           </tr>
         </tbody></table>
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-	<tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/VeriScore_img.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+          <tr>
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/OneRuler_image.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
+              <a href="https://arxiv.org/pdf/2503.01996">
+                <papertitle>One ruler to measure them all: Benchmarking multilingual long-context language models</papertitle>
+              </a>
+              <br>
+              <strong>Yekyung Kim</strong>,
+              Jenna Russell, 
+              Marzena Karpinska,
+              Mohit Iyyer
+              <br>
+              <em>arXiv 2025</em>
+              <br>
+              <a href=https://github.com/mungg/OneRuler>Code</a>
+            </td>
+          </tr>
+  
+  
+  
+          <tr>
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/VeriScore_img.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://arxiv.org/pdf/2406.19276">
                 <papertitle>VERISCORE: Evaluating the Factuality of Verifiable Claims in Long-form Text Generation</papertitle>
               </a>
@@ -89,15 +176,15 @@
               <em> Accepted by EMNLP Findings 2024 </em>
               <br>
               <a href=https://github.com/Yixiao-Song/VeriScore>Code</a>
-              <p></p>
-              <p>
-		       We propose VERISCORE, a metric for diverse long-form generation tasks that contain both verifiable and unverifiable content. VERISCORE can be effectively implemented with either closed or fine-tuned open-weight language models, and human evaluation confirms that VERISCORE’s extracted claims are more sensible than those from competing methods across eight different long-form tasks.            
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
+		       We propose VERISCORE, a metric for diverse long-form generation tasks that contain both verifiable and unverifiable content. VERISCORE can be effectively implemented with either closed or fine-tuned open-weight language models, and human evaluation confirms that VERISCORE's extracted claims are more sensible than those from competing methods across eight different long-form tasks.            
+              </p> -->
 	    </td>
           </tr>
 		
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/FABLES_icon2.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/FABLES_icon2.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://arxiv.org/abs/2404.01261">
                 <papertitle>FABLES: Evaluating Faithfulness and Content Selection in Book-length Summarization</papertitle>
               </a>
@@ -116,15 +203,15 @@
 <!--              <a href="TODO">arXiv</a>-->
 <!--              /-->
               <a href=https://github.com/mungg/FABLES>Dataset + Code</a>
-              <p></p>
-              <p>
-		      While long-context large language models (LLMs) can technically summarize book-length documents (>100K tokens), the length and complexity of the documents have so far prohibited evaluations of input-dependent aspects like faithfulness. In this paper, we conduct the first large-scale human evaluation of faithfulness and content selection on LLM-generated summaries of fictional books. </p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
+		      While long-context large language models (LLMs) can technically summarize book-length documents (>100K tokens), the length and complexity of the documents have so far prohibited evaluations of input-dependent aspects like faithfulness. In this paper, we conduct the first large-scale human evaluation of faithfulness and content selection on LLM-generated summaries of fictional books. 
+              </p> -->
             </td>
           </tr>
 
 	<tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/UR_thumbnail.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/UR_thumbnail.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://arxiv.org/pdf/2402.06794">
                 <papertitle>Is it safe to cross? Interpretable Risk Assessment with GPT-4V for Safety-Aware Street Crossing</papertitle>
               </a>
@@ -135,16 +222,15 @@
               <br>
 		<em> 21st International Conference on Ubiquitous Robots </em>
               <br>
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                 This paper introduces an innovative approach that leverages vision-language models (VLMs) to interpret complex street crossing scenes, offering a potential advancement over conventional traffic signal recognition techniques.
-              </p>
+              </p> -->
             </td>
           </tr>
 		
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/LINDA_profile2.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/LINDA_profile2.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://arxiv.org/pdf/2112.13969.pdf">
                 <papertitle>LINDA: Unsupervised Learning to Interpolate in Natural Language Processing</papertitle>
               </a>
@@ -155,17 +241,16 @@
               <br>
 		<em>arXiv</em>
               <br>
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                 We propose an unsupervised learning approach to text interpolation for the purpose of data augmentation that does not require any heuristics nor manually crafted resources but learns to
 interpolate between any pair of natural language sentences over a natural language manifold.              
-	      </p>
+	      </p> -->
             </td>
           </tr>
 
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/InfoVerse_profile.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/InfoVerse_profile.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://aclanthology.org/2023.acl-long.547/">
                 <papertitle>A Universal Framework for Dataset Characterization with Multidimensional Meta-information </papertitle>
               </a>
@@ -181,16 +266,15 @@ interpolate between any pair of natural language sentences over a natural langua
 <!--              <a href="TODO">arXiv</a>-->
 <!--              /-->
               <a href=https://github.com/minnesotanlp/infoVerse">code</a>
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                 We propose a data-centric framework to construct a new feature space that can capture various characteristics of datasets and novel sampling method to select a set of data points that maximizes the group informativeness.
-              </p>
+              </p> -->
             </td>
           </tr>
 
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/metacraft_profile.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/metacraft_profile.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
              <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30467">
                 <papertitle>Meta-Crafting: Improved Detection of Out-of-distributed Texts via Crafting Metadata Space</papertitle>
               </a>
@@ -207,16 +291,15 @@ interpolate between any pair of natural language sentences over a natural langua
 <!--              /-->
 <!--              <a href="TODO">code</a>-->
 <!--              code will be released soon-->
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                 We propose Meta-Crafting: a unified method that can capture both background and semantic shifts.  Specifically, we construct a new discriminative feature space to detect OOD samples
-              </p>
+              </p> -->
             </td>
           </tr>
 
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/Active_profile.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/Active_profile.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://aclanthology.org/2020.lifelongnlp-1.1.pdf">
                 <papertitle>Deep Active Learning for Sequence Labeling Based on Diversity and Uncertainty in Gradient</papertitle>
               </a>
@@ -228,16 +311,15 @@ interpolate between any pair of natural language sentences over a natural langua
 <!--              <a href="https://arxiv.org/pdf/2011.13570.pdf">arXiv</a>-->
 <!--              /-->
 <!--              <a href="TODO">code</a>-->
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                 I demonstrate that the amount of labeled training data can be reduced using active learning when it incorporates both uncertainty and diversity in the sequence labeling task.
-              </p>
+              </p> -->
             </td>
           </tr>
 
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/Korean_profile.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/Korean_profile.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://journals.flvc.org/FLAIRS/article/view/128509">
                 <papertitle>Learning Sub-Character level representation forKorean Named Entity Recognition</papertitle>
               </a>
@@ -248,16 +330,15 @@ interpolate between any pair of natural language sentences over a natural langua
               <em>The International FLAIRS Conference Proceedings </em>, 2020
               <br>
 <!--              <a href="https://journals.flvc.org/FLAIRS/article/view/128509">paper</a>-->
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                 We propose a improved unigram-level Korean NER model with sub-character level representation, jamo, which can represent a unique linguistic structure of Korean and its syntactic properties and morphological variations.
-              </p>
+              </p> -->
             </td>
           </tr>
 
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/Music_Twitter_profile.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/Music_Twitter_profile.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="https://dl.acm.org/doi/abs/10.1145/2632188.2632206">
                 <papertitle>#Nowplaying the Future Billboard: Mining Music Listening Behaviors of Twitter Users for Hit Song Prediction</papertitle>
               </a>
@@ -269,16 +350,15 @@ interpolate between any pair of natural language sentences over a natural langua
               <em>Workshop on Social Media Retrieval and Analysis (SoMeRA) at SIGIR </em>, 2014
               <br>
 <!--              <a href="https://dl.acm.org/doi/abs/10.1145/2632188.2632206">paper</a>-->
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                 We collect users' music listening behavior from Twitter using music-related hashtags (eg,# nowplaying). We then build a predictive model to forecast the Billboard rankings and hit music.
-              </p>
+              </p> -->
             </td>
           </tr>
 
           <tr>
-            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/Adobe_Twitter_profile.png" width="160"></td>
-            <td style="padding:20px;width:75%;vertical-align:middle">
+            <td style="padding:10px;padding-right:2px;width:25%;vertical-align:middle;text-align:center"><img src="images/Adobe_Twitter_profile.png" width="200" height="120"></td>
+            <td style="padding:10px;padding-left:0px;width:45%;max-width:45%;vertical-align:middle">
               <a href="http://david-hawking.net/SIRIP2014_Proceedings/SIRIP'14-A%20Visual%20Analytics%20Approach%20to%20Summarizing%20Tweets.pdf">
                 <papertitle>A Visual Analytics Approach to Summarizing Tweets</papertitle>
               </a>
@@ -291,10 +371,9 @@ interpolate between any pair of natural language sentences over a natural langua
               <em>Industry day at SIGIR </em>, 2014
               <br>
 <!--              <a href="http://david-hawking.net/SIRIP2014_Proceedings/SIRIP'14-A%20Visual%20Analytics%20Approach%20to%20Summarizing%20Tweets.pdf">paper</a>-->
-              <p></p>
-              <p>
+              <!-- <p style="font-size: 1.1em; line-height: 1.3; margin-bottom: 5px; max-width: 800px;">
                We build on key principles of visual analytics and describe an end-to-end, visual exploration system for tweets that both presents overall summaries and supports analysis of any variations that exists in the activity
-              </p>
+              </p> -->
             </td>
           </tr>
 
