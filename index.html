@@ -51,6 +51,18 @@
       font-weight: 600;
       color: #2c3e50;
     }
+
+    /* li를 일반 문장과 비슷한 크기로 맞추기 */
+    ul {
+      margin-top: 0.3em;    /* 위 문장이랑 간격 줄이기 */
+      margin-bottom: 0.8em;
+      padding-left: 20px;   /* 들여쓰기 */
+    }
+
+    li {
+      font-size: 1.1em;     /* 위에서 쓰는 p의 1.1em과 맞춤 */
+      line-height: 1.4;
+    }
   </style>
 </head>
 
@@ -75,7 +87,7 @@
     advised by <a href="https://www.cs.umd.edu/~miyyer/">Mohit Iyyer</a>,
     with a research focus on natural language processing.
     
-    My work lies at the intersection of evaluation alignment, with the goal of making large language models better able to understand, reason over, and reliably answer questions in long-context scenarios.
+    My work lies at the intersection of evaluation and alignment, with the goal of making large language models better able to understand, reason over, and reliably answer questions in long-context scenarios.
 
     I initially started my PhD at
     <a href="https://nlp.cs.umass.edu/">UMass NLP</a>
@@ -119,7 +131,7 @@
     Broadly, I study two related levels of this problem:
   </p>
 
-  <ul style="margin-left:20px;">
+  <ul>
     <li>
       Context level: 
       How can we help models better retrieve and synthesize relevant information from long contexts?
@@ -132,7 +144,7 @@
 
   <p style="font-size:1.05em;">My current research includes:</p>
 
-  <ul style="margin-left:20px;">
+  <ul>
     <li>
       Evaluating faithfulness and factuality in long-context and long-form generation
       [
@@ -143,311 +155,315 @@
     </li>
 
     <li>
-       Improving LLMs using synthetic datasets for efficient training and stronger reasoning
-  
+      Improving LLMs using synthetic datasets for efficient training and stronger reasoning
       [
       <a href="https://arxiv.org/pdf/2505.11080">BLEUBERI (NeurIPS’25)</a>, ongoing work
       ]
     </li>
 
     <li>
-        Retrieving and organizing information with function-calling agents
+      Retrieving and organizing information with function-calling agents
     </li>
   </ul>
+
+</td>
+</tr>
+</table>
+
 <!-- Publications -->
-          <table style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
-            <tbody>
-              <!-- BLEUBERI -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/BLEUBERI_thumnail.png" width="200" height="120" alt="BLEUBERI thumbnail">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2505.11080">
-                    <papertitle>BLEUBERI: BLEU is a surprisingly effective reward for instruction following</papertitle>
-                  </a>
-                  <br>
-                  Yapei Chang,
-                  <strong>Yekyung Kim</strong>,
-                  Michael Krumdick,
-                  Amir Zadeh,
-                  Chuan Li,
-                  Chris Tanner,
-                  Mohit Iyyer
-                  <br>
-                  <em>NeurIPS 2025</em>
-                  <br>
-                  <a href="https://github.com/lilakk/BLEUBERI">Code</a>
-                </td>
-              </tr>
+<table style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
+  <tbody>
+    <!-- BLEUBERI -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/BLEUBERI_thumnail.png" width="200" height="120" alt="BLEUBERI thumbnail">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://arxiv.org/pdf/2505.11080">
+          <papertitle>BLEUBERI: BLEU is a surprisingly effective reward for instruction following</papertitle>
+        </a>
+        <br>
+        Yapei Chang,
+        <strong>Yekyung Kim</strong>,
+        Michael Krumdick,
+        Amir Zadeh,
+        Chuan Li,
+        Chris Tanner,
+        Mohit Iyyer
+        <br>
+        <em>NeurIPS 2025</em>
+        <br>
+        <a href="https://github.com/lilakk/BLEUBERI">Code</a>
+      </td>
+    </tr>
 
-              <!-- OneRULER -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/OneRuler_image.png" width="200" height="120" alt="OneRULER image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2503.01996">
-                    <papertitle>One ruler to measure them all: Benchmarking multilingual long-context language models</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Jenna Russell,
-                  Marzena Karpinska,
-                  Mohit Iyyer
-                  <br>
-                  <em>COLM 2025</em>
-                  <br>
-                  <a href="https://github.com/mungg/OneRuler">Code</a>
-                </td>
-              </tr>
+    <!-- OneRULER -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/OneRuler_image.png" width="200" height="120" alt="OneRULER image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://arxiv.org/pdf/2503.01996">
+          <papertitle>One ruler to measure them all: Benchmarking multilingual long-context language models</papertitle>
+        </a>
+        <br>
+        <strong>Yekyung Kim</strong>,
+        Jenna Russell,
+        Marzena Karpinska,
+        Mohit Iyyer
+        <br>
+        <em>COLM 2025</em>
+        <br>
+        <a href="https://github.com/mungg/OneRuler">Code</a>
+      </td>
+    </tr>
 
-              <!-- VERISCORE -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/VeriScore_img.png" width="200" height="120" alt="VERISCORE image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2406.19276">
-                    <papertitle>VERISCORE: Evaluating the Factuality of Verifiable Claims in Long-form Text Generation</papertitle>
-                  </a>
-                  <br>
-                  Yixiao Song,
-                  <strong>Yekyung Kim</strong>,
-                  Mohit Iyyer
-                  <br>
-                  <em>EMNLP Findings 2024</em>
-                  <br>
-                  <a href="https://github.com/Yixiao-Song/VeriScore">Code</a>
-                </td>
-              </tr>
+    <!-- VERISCORE -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/VeriScore_img.png" width="200" height="120" alt="VERISCORE image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://arxiv.org/pdf/2406.19276">
+          <papertitle>VERISCORE: Evaluating the Factuality of Verifiable Claims in Long-form Text Generation</papertitle>
+        </a>
+        <br>
+        Yixiao Song,
+        <strong>Yekyung Kim</strong>,
+        Mohit Iyyer
+        <br>
+        <em>EMNLP Findings 2024</em>
+        <br>
+        <a href="https://github.com/Yixiao-Song/VeriScore">Code</a>
+      </td>
+    </tr>
 
-              <!-- FABLES -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/FABLES_icon2.png" width="200" height="120" alt="FABLES icon">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/abs/2404.01261">
-                    <papertitle>FABLES: Evaluating Faithfulness and Content Selection in Book-length Summarization</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Yapei Chang,
-                  Marzena Karpinska,
-                  Aparna Garimella,
-                  Varun Manjunatha,
-                  Kyle Lo,
-                  Tanya Goyal,
-                  Mohit Iyyer
-                  <br>
-                  <em>COLM 2024</em>
-                  <br>
-                  <a href="https://github.com/mungg/FABLES">Dataset + Code</a>
-                </td>
-              </tr>
+    <!-- FABLES -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/FABLES_icon2.png" width="200" height="120" alt="FABLES icon">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://arxiv.org/abs/2404.01261">
+          <papertitle>FABLES: Evaluating Faithfulness and Content Selection in Book-length Summarization</papertitle>
+        </a>
+        <br>
+        <strong>Yekyung Kim</strong>,
+        Yapei Chang,
+        Marzena Karpinska,
+        Aparna Garimella,
+        Varun Manjunatha,
+        Kyle Lo,
+        Tanya Goyal,
+        Mohit Iyyer
+        <br>
+        <em>COLM 2024</em>
+        <br>
+        <a href="https://github.com/mungg/FABLES">Dataset + Code</a>
+      </td>
+    </tr>
 
-              <!-- Street Crossing -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/UR_thumbnail.png" width="200" height="120" alt="Street crossing thumbnail">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2402.06794">
-                    <papertitle>Is it safe to cross? Interpretable Risk Assessment with GPT-4V for Safety-Aware Street Crossing</papertitle>
-                  </a>
-                  <br>
-                  Hochul Hwang,
-                  Sunjae Kwon,
-                  <strong>Yekyung Kim</strong>,
-                  Donghyun Kim
-                  <br>
-                  <em>21st International Conference on Ubiquitous Robots</em>
-                </td>
-              </tr>
+    <!-- Street Crossing -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/UR_thumbnail.png" width="200" height="120" alt="Street crossing thumbnail">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://arxiv.org/pdf/2402.06794">
+          <papertitle>Is it safe to cross? Interpretable Risk Assessment with GPT-4V for Safety-Aware Street Crossing</papertitle>
+        </a>
+        <br>
+        Hochul Hwang,
+        Sunjae Kwon,
+        <strong>Yekyung Kim</strong>,
+        Donghyun Kim
+        <br>
+        <em>21st International Conference on Ubiquitous Robots</em>
+      </td>
+    </tr>
 
-              <!-- LINDA -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/LINDA_profile2.png" width="200" height="120" alt="LINDA image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2112.13969.pdf">
-                    <papertitle>LINDA: Unsupervised Learning to Interpolate in Natural Language Processing</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Seohyeong Jeong,
-                  Kyunghyun Cho
-                  <br>
-                  <em>arXiv</em>
-                </td>
-              </tr>
+    <!-- LINDA -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/LINDA_profile2.png" width="200" height="120" alt="LINDA image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://arxiv.org/pdf/2112.13969.pdf">
+          <papertitle>LINDA: Unsupervised Learning to Interpolate in Natural Language Processing</papertitle>
+        </a>
+        <br>
+        <strong>Yekyung Kim</strong>,
+        Seohyeong Jeong,
+        Kyunghyun Cho
+        <br>
+        <em>arXiv</em>
+      </td>
+    </tr>
 
-              <!-- InfoVerse -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/InfoVerse_profile.png" width="200" height="120" alt="InfoVerse image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://aclanthology.org/2023.acl-long.547/">
-                    <papertitle>A Universal Framework for Dataset Characterization with Multidimensional Meta-information</papertitle>
-                  </a>
-                  <br>
-                  <a href="https://sites.google.com/view/jaehyungkim">Jaehyung Kim</a>,
-                  <strong>Yekyung Kim</strong>,
-                  Karin Johanna Denton de Langis,
-                  Jinwoo Shin,
-                  Dongyeop Kang
-                  <br>
-                  <em>ACL 2023</em>
-                  <br>
-                  <a href="https://github.com/minnesotanlp/infoVerse">Code</a>
-                </td>
-              </tr>
+    <!-- InfoVerse -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/InfoVerse_profile.png" width="200" height="120" alt="InfoVerse image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://aclanthology.org/2023.acl-long.547/">
+          <papertitle>A Universal Framework for Dataset Characterization with Multidimensional Meta-information</papertitle>
+        </a>
+        <br>
+        <a href="https://sites.google.com/view/jaehyungkim">Jaehyung Kim</a>,
+        <strong>Yekyung Kim</strong>,
+        Karin Johanna Denton de Langis,
+        Jinwoo Shin,
+        Dongyeop Kang
+        <br>
+        <em>ACL 2023</em>
+        <br>
+        <a href="https://github.com/minnesotanlp/infoVerse">Code</a>
+      </td>
+    </tr>
 
-              <!-- Meta-Crafting -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/metacraft_profile.png" width="200" height="120" alt="Meta-Crafting image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30467">
-                    <papertitle>Meta-Crafting: Improved Detection of Out-of-distributed Texts via Crafting Metadata Space</papertitle>
-                  </a>
-                  <br>
-                  Ryan Koo,
-                  <strong>Yekyung Kim</strong>,
-                  Dongyeop Kang,
-                  Jaehyung Kim
-                  <br>
-                  <em>AAAI 2024 Student Abstract and Poster Program</em>
-                </td>
-              </tr>
+    <!-- Meta-Crafting -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/metacraft_profile.png" width="200" height="120" alt="Meta-Crafting image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30467">
+          <papertitle>Meta-Crafting: Improved Detection of Out-of-distributed Texts via Crafting Metadata Space</papertitle>
+        </a>
+        <br>
+        Ryan Koo,
+        <strong>Yekyung Kim</strong>,
+        Dongyeop Kang,
+        Jaehyung Kim
+        <br>
+        <em>AAAI 2024 Student Abstract and Poster Program</em>
+      </td>
+    </tr>
 
-              <!-- Deep Active Learning -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Active_profile.png" width="200" height="120" alt="Active learning image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://aclanthology.org/2020.lifelongnlp-1.1.pdf">
-                    <papertitle>Deep Active Learning for Sequence Labeling Based on Diversity and Uncertainty in Gradient</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>
-                  <br>
-                  <em>Workshop on Life-long Learning for Spoken Language Systems at AACL</em>, 2021
-                </td>
-              </tr>
+    <!-- Deep Active Learning -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/Active_profile.png" width="200" height="120" alt="Active learning image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://aclanthology.org/2020.lifelongnlp-1.1.pdf">
+          <papertitle>Deep Active Learning for Sequence Labeling Based on Diversity and Uncertainty in Gradient</papertitle>
+        </a>
+        <br>
+        <strong>Yekyung Kim</strong>
+        <br>
+        <em>Workshop on Life-long Learning for Spoken Language Systems at AACL</em>, 2021
+      </td>
+    </tr>
 
-              <!-- Korean NER -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Korean_profile.png" width="200" height="120" alt="Korean NER image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://journals.flvc.org/FLAIRS/article/view/128509">
-                    <papertitle>Learning Sub-Character level representation for Korean Named Entity Recognition</papertitle>
-                  </a>
-                  <br>
-                  Yejin Kim,
-                  <strong>Yekyung Kim</strong> (equal contributions)
-                  <br>
-                  <em>The International FLAIRS Conference Proceedings</em>, 2020
-                </td>
-              </tr>
+    <!-- Korean NER -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/Korean_profile.png" width="200" height="120" alt="Korean NER image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://journals.flvc.org/FLAIRS/article/view/128509">
+          <papertitle>Learning Sub-Character level representation for Korean Named Entity Recognition</papertitle>
+        </a>
+        <br>
+        Yejin Kim,
+        <strong>Yekyung Kim</strong> (equal contributions)
+        <br>
+        <em>The International FLAIRS Conference Proceedings</em>, 2020
+      </td>
+    </tr>
 
-              <!-- Nowplaying Billboard -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Music_Twitter_profile.png" width="200" height="120" alt="Music Twitter image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://dl.acm.org/doi/abs/10.1145/2632188.2632206">
-                    <papertitle>#Nowplaying the Future Billboard: Mining Music Listening Behaviors of Twitter Users for Hit Song Prediction</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Bongwon Suh,
-                  Kyogu Lee
-                  <br>
-                  <em>Workshop on Social Media Retrieval and Analysis (SoMeRA) at SIGIR</em>, 2014
-                </td>
-              </tr>
+    <!-- Nowplaying Billboard -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/Music_Twitter_profile.png" width="200" height="120" alt="Music Twitter image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="https://dl.acm.org/doi/abs/10.1145/2632188.2632206">
+          <papertitle>#Nowplaying the Future Billboard: Mining Music Listening Behaviors of Twitter Users for Hit Song Prediction</papertitle>
+        </a>
+        <br>
+        <strong>Yekyung Kim</strong>,
+        Bongwon Suh,
+        Kyogu Lee
+        <br>
+        <em>Workshop on Social Media Retrieval and Analysis (SoMeRA) at SIGIR</em>, 2014
+      </td>
+    </tr>
 
-              <!-- Visual Analytics Tweets -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Adobe_Twitter_profile.png" width="200" height="120" alt="Adobe Twitter image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="http://david-hawking.net/SIRIP2014_Proceedings/SIRIP'14-A%20Visual%20Analytics%20Approach%20to%20Summarizing%20Tweets.pdf">
-                    <papertitle>A Visual Analytics Approach to Summarizing Tweets</papertitle>
-                  </a>
-                  <br>
-                  Ramik Sadana,
-                  <strong>Yekyung Kim</strong>,
-                  Bongwon Suh,
-                  Eunyee Koh
-                  <br>
-                  <em>Industry day at SIGIR</em>, 2014
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <!-- Visual Analytics Tweets -->
+    <tr>
+      <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
+        <img src="images/Adobe_Twitter_profile.png" width="200" height="120" alt="Adobe Twitter image">
+      </td>
+      <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
+        <a href="http://david-hawking.net/SIRIP2014_Proceedings/SIRIP'14-A%20Visual%20Analytics%20Approach%20to%20Summarizing%20Tweets.pdf">
+          <papertitle>A Visual Analytics Approach to Summarizing Tweets</papertitle>
+        </a>
+        <br>
+        Ramik Sadana,
+        <strong>Yekyung Kim</strong>,
+        Bongwon Suh,
+        Eunyee Koh
+        <br>
+        <em>Industry day at SIGIR</em>, 2014
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-          <!-- Industry Projects -->
-          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <tbody>
-              <tr>
-                <td>
-                  <heading>Industry Project</heading>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+<!-- Industry Projects -->
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+  <tbody>
+    <tr>
+      <td>
+        <heading>Industry Project</heading>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-          <table width="100%" align="center" border="0" cellpadding="20">
-            <tbody>
-              <tr>
-                <td style="padding:20px;width:30%;vertical-align:middle;">
-                  <img src="images/Incheon_robot.jpeg" width="400" alt="Incheon Airport robot">
-                </td>
-                <td width="75%" valign="center">
-                  <a href="https://jordanfraser.medium.com/the-robot-airport-workers-of-seoul-a08349f4f44e">
-                    Airstar - Incheon Airport Robot, LG Electronics
-                  </a>
-                </td>
-              </tr>
+<table width="100%" align="center" border="0" cellpadding="20">
+  <tbody>
+    <tr>
+      <td style="padding:20px;width:30%;vertical-align:middle;">
+        <img src="images/Incheon_robot.jpeg" width="400" alt="Incheon Airport robot">
+      </td>
+      <td width="75%" valign="center">
+        <a href="https://jordanfraser.medium.com/the-robot-airport-workers-of-seoul-a08349f4f44e">
+          Airstar - Incheon Airport Robot, LG Electronics
+        </a>
+      </td>
+    </tr>
 
-              <tr>
-                <td style="padding:20px;width:10%;vertical-align:middle;">
-                  <img src="images/hyundai_chatbot.jpeg" width="400" alt="Hyundai chatbot">
-                </td>
-                <td width="50%" valign="center">
-                  <a href="https://www.google.com/search?q=Hyundai+voice+chatbot+assistant&sxsrf=ALiCzsbUOf4VY0LEW_dMXU0Q5PCr2sp5TQ:1670517677094&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj4wO-lu-r7AhWOHKYKHWP7DSIQ_AUoAXoECAEQAw&biw=1658&bih=813&dpr=1#imgrc=pJ1fp5jVtlHUvM">
-                    AI assistant for car, Hyundai
-                  </a>
-                </td>
-              </tr>
+    <tr>
+      <td style="padding:20px;width:10%;vertical-align:middle;">
+        <img src="images/hyundai_chatbot.jpeg" width="400" alt="Hyundai chatbot">
+      </td>
+      <td width="50%" valign="center">
+        <a href="https://www.google.com/search?q=Hyundai+voice+chatbot+assistant&sxsrf=ALiCzsbUOf4VY0LEW_dMXU0Q5PCr2sp5TQ:1670517677094&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj4wO-lu-r7AhWOHKYKHWP7DSIQ_AUoAXoECAEQAw&biw=1658&bih=813&dpr=1#imgrc=pJ1fp5jVtlHUvM">
+          AI assistant for car, Hyundai
+        </a>
+      </td>
+    </tr>
 
-              <tr>
-                <td style="padding:20px;width:30%;vertical-align:middle;">
-                  <img src="images/LG_thinQ.jpeg" width="400" alt="LG ThinQ chatbot">
-                </td>
-                <td width="75%" valign="center">
-                  <a href="https://www.prnewswire.com/news-releases/lg-introduces-faster-advanced-customer-service-experience-with-proactive-support-300959483.html">
-                    Chatbot for home-appliances, LG Electronics
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <tr>
+      <td style="padding:20px;width:30%;vertical-align:middle;">
+        <img src="images/LG_thinQ.jpeg" width="400" alt="LG ThinQ chatbot">
+      </td>
+      <td width="75%" valign="center">
+        <a href="https://www.prnewswire.com/news-releases/lg-introduces-faster-advanced-customer-service-experience-with-proactive-support-300959483.html">
+          Chatbot for home-appliances, LG Electronics
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-        </td>
-      </tr>
-    </tbody>
-  </table>
+</td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>
