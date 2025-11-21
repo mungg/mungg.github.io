@@ -16,6 +16,7 @@
       line-height: 1.5;
       color: #333;
     }
+
     heading {
       font-size: 1.8em;
       font-weight: 600;
@@ -25,405 +26,151 @@
       border-bottom: 1px solid #eee;
       padding-bottom: 5px;
     }
+
     papertitle {
       font-size: 1.2em;
       font-weight: 600;
       color: #8e44ad;
     }
+
     name {
       font-size: 2.2em;
       font-weight: 700;
       color: #2c3e50;
     }
+
     a {
       color: #8e44ad;
       text-decoration: none;
     }
-    a:hover {
-      text-decoration: underline;
-    }
-    .section {
-      margin-bottom: 30px;
-    }
-    .paper-item {
-      margin-bottom: 25px;
-    }
-    .paper-title {
-      margin-bottom: 5px;
-    }
-    .paper-authors {
-      margin-bottom: 5px;
-      color: #555;
-    }
-    .paper-venue {
-      margin-bottom: 5px;
-      font-style: italic;
-      color: #666;
-    }
-    .paper-links {
-      margin-bottom: 10px;
-    }
-    .paper-description {
-      margin-top: 10px;
+
+    a:hover { text-decoration: underline; }
+
+    .highlight {
+      font-size: 1.08em;
+      font-weight: 600;
+      color: #2c3e50;
     }
   </style>
 </head>
 
 <body>
-  <table style="width:100%;max-width:800px;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
-    <tbody>
-      <tr>
-        <td style="padding:0;">
-          <!-- Intro + Profile -->
-          <table style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
-            <tbody>
-              <tr>
-                <td style="padding:2.5%;width:63%;vertical-align:middle;">
-                  <p style="text-align:center;">
-                    <name>Yekyung Kim</name>
-                  </p>
-                  <p style="font-size:1.1em;line-height:1.4;margin-bottom:15px;max-width:800px;">
-                    Hi! I am a third year PhD student at
-                    <a href="https://wiki.umiacs.umd.edu/clip/index.php/Main_Page">University of Maryland, CLIP Lab</a>
-                    advised by
-                    <a href="https://www.cs.umd.edu/~miyyer/">Mohit Iyyer</a>
-                    with a research focus on natural language processing.
-                    I initially started my PhD at
-                    <a href="https://nlp.cs.umass.edu/">UMass NLP</a>
-                    and later transferred to UMD along with my advisor.
-                  </p>
-                  <p style="font-size:1.1em;line-height:1.4;margin-bottom:15px;max-width:800px;">
-                    Before starting PhD, I worked at Hyundai Motors Group and LG Electronics as a research engineer.
-                    I was fortunate to be selected as a
-                    <a href="https://www.koreatimes.co.kr/business/tech-science/20190422/lg-to-nurture-ai-specialists-with-carnegie-mellon-university-of-toronto">
-                      specialist in AI
-                    </a>
-                    and researched at
-                    <a href="https://lti.cs.cmu.edu/">CMU LTI</a>
-                    as a visiting scientist mentored by
-                    <a href="https://www.cs.cmu.edu/~jgc/">Jaime Carbonell</a>.
-                  </p>
-                  <p style="text-align:center;margin-top:10px;">
-                    <a href="mailto:yekyung@umd.edu">Email</a> &nbsp;/&nbsp;
-                    <!-- <a href="data/CV_Yekyung.pdf">CV</a> &nbsp;/&nbsp; -->
-                    <a href="https://scholar.google.co.kr/citations?user=6Rn81SsAAAAJ&hl=en">Google Scholar</a> &nbsp;/&nbsp;
-                    <a href="https://github.com/mungg">Github</a>
-                  </p>
-                </td>
-                <td style="padding:2.5%;width:40%;max-width:40%;">
-                  <a href="images/yekyung_2025.jpg">
-                    <img
-                      style="width:80%;max-width:80%;"
-                      alt="profile photo"
-                      src="images/yekyung_2025.jpg"
-                      class="hoverZoomLink"
-                    >
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+<table style="width:100%;max-width:800px;border:0;margin:0 auto;">
+<tbody>
+<tr>
+<td>
 
-          <!-- Research Section -->
-          <table style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
-            <tbody>
-              <tr>
-                <td style="padding:20px;width:100%;vertical-align:middle;margin-bottom:-10px;">
-                  <heading>Research</heading>
+<!-- ===================== ABOUT ===================== -->
+<table style="width:100%;">
+<tr>
+<td style="padding:2.5%;width:63%;vertical-align:middle">
 
-                  <p style="font-size:1.1em;line-height:1.5;margin-bottom:10px;max-width:800px;">
-                    My work lies at the intersection of
-                    <strong style="color:#2c3e50;">evaluation</strong> and
-                    <strong style="color:#2c3e50;">alignment</strong>, with the goal of making large language models better able to
-                    <strong style="color:#2c3e50;">understand, reason over, and reliably answer questions in long-context scenarios</strong>.
-                  </p>
+  <p style="text-align:center">
+    <name>Yekyung Kim</name>
+  </p>
 
-                  <p style="font-size:1.05em;line-height:1.5;margin-bottom:10px;max-width:800px;">
-                    Broadly, I study two related levels of this problem:
-                  </p>
+  <p style="font-size:1.1em; line-height:1.4;">
+    Hi! I am a third-year PhD student at the
+    <a href="https://wiki.umiacs.umd.edu/clip/index.php/Main_Page">University of Maryland, CLIP Lab</a>,
+    advised by <a href="https://www.cs.umd.edu/~miyyer/">Mohit Iyyer</a>,
+    with a research focus on natural language processing.
+    
+    My work lies at the intersection of evaluation alignment, with the goal of making large language models better able to understand, reason over, and reliably answer questions in long-context scenarios.
 
-                  <ul style="margin-left:20px;margin-top:0;margin-bottom:15px;max-width:800px;font-size:1em;line-height:1.45;color:#2c3e50;">
-                    <li style="margin-bottom:6px;">
-                      <strong>Input level (context understanding &amp; retrieval)</strong> —
-                      How can we help models better retrieve and synthesize relevant information from long contexts?
-                    </li>
-                    <li>
-                      <strong>Output level (generation quality &amp; faithfulness)</strong> —
-                      How can we rigorously evaluate the quality and faithfulness of long-form generation and reasoning?
-                    </li>
-                  </ul>
+    I initially started my PhD at
+    <a href="https://nlp.cs.umass.edu/">UMass NLP</a>
+    and later transferred to UMD along with my advisor.
+  </p>
 
-                  <p style="font-size:1.05em;line-height:1.5;margin-bottom:8px;max-width:800px;">
-                    My current research interests include:
-                  </p>
+  <p style="font-size:1.1em;">
+    Before starting my PhD, I worked at Hyundai Motors Group and LG Electronics as a research engineer.
+    I was selected as a
+    <a href="https://www.koreatimes.co.kr/business/tech-science/20190422/lg-to-nurture-ai-specialists-with-carnegie-mellon-university-of-toronto">
+      specialist in AI
+    </a>
+    and conducted research at
+    <a href="https://lti.cs.cmu.edu/">CMU LTI</a>
+    as a visiting scientist mentored by
+    <a href="https://www.cs.cmu.edu/~jgc/">Jaime Carbonell</a>.
+  </p>
 
-                  <ul style="margin-left:20px;margin-top:0;margin-bottom:20px;max-width:800px;font-size:1em;line-height:1.45;color:#2c3e50;">
-                    <li style="margin-bottom:8px;">
-                      <strong>Evaluating faithfulness and factuality in long-context and long-form generation</strong>
-                      [
-                      <a href="https://arxiv.org/pdf/2404.01261" target="_blank" rel="noopener noreferrer" style="color:#6a0dad;text-decoration:none;">
-                        FABLES (COLM’24)
-                      </a>,
-                      <a href="https://arxiv.org/pdf/2406.19276" target="_blank" rel="noopener noreferrer" style="color:#6a0dad;text-decoration:none;">
-                        VERISCORE (EMNLP’24)
-                      </a>,
-                      <a href="https://arxiv.org/pdf/2503.01996" target="_blank" rel="noopener noreferrer" style="color:#6a0dad;text-decoration:none;">
-                        OneRULER (COLM’25)
-                      </a>
-                      ]
-                    </li>
+  <p style="text-align:center;">
+    <a href="mailto:yekyung@umd.edu">Email</a> &nbsp;/&nbsp;
+    <a href="https://scholar.google.co.kr/citations?user=6Rn81SsAAAAJ&hl=en">Google Scholar</a> &nbsp;/&nbsp;
+    <a href="https://github.com/mungg">Github</a>
+  </p>
 
-                    <li style="margin-bottom:8px;">
-                      <strong>Improving LLMs using synthetic datasets for efficient training and stronger reasoning in long-context scenarios</strong>
-                      [
-                      <a href="https://arxiv.org/pdf/2505.11080" target="_blank" rel="noopener noreferrer" style="color:#6a0dad;text-decoration:none;">
-                        BLEUBERI (NeurIPS’25)
-                      </a>,
-                      ongoing work
-                      ]
-                    </li>
+</td>
 
-                    <li>
-                      <strong>Retrieving and organizing information with function-calling agents in long-context settings</strong>
-                    </li>
-                  </ul>
+<td style="padding:2.5%;width:40%;max-width:40%">
+  <img src="images/yekyung_2025.jpg" style="width:80%;" alt="profile photo">
+</td>
+</tr>
+</table>
 
-                  <p style="font-size:1.05em;line-height:1.5;margin-bottom:15px;max-width:800px;">
-                    Overall, I am interested in building models that are
-                    <strong style="color:#2c3e50;">more logical, more faithful, and more dependable</strong>
-                    in complex long-context settings.
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+<!-- ===================== RESEARCH ===================== -->
+<table style="width:100%;margin-top:20px;">
+<tr>
+<td style="padding:20px;">
 
-          <!-- Publications -->
-          <table style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:0 auto;">
-            <tbody>
-              <!-- BLEUBERI -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/BLEUBERI_thumnail.png" width="200" height="120" alt="BLEUBERI thumbnail">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2505.11080">
-                    <papertitle>BLEUBERI: BLEU is a surprisingly effective reward for instruction following</papertitle>
-                  </a>
-                  <br>
-                  Yapei Chang,
-                  <strong>Yekyung Kim</strong>,
-                  Michael Krumdick,
-                  Amir Zadeh,
-                  Chuan Li,
-                  Chris Tanner,
-                  Mohit Iyyer
-                  <br>
-                  <em>NeurIPS 2025</em>
-                  <br>
-                  <a href="https://github.com/lilakk/BLEUBERI">Code</a>
-                </td>
-              </tr>
+  <heading>Research</heading>
 
-              <!-- OneRULER -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/OneRuler_image.png" width="200" height="120" alt="OneRULER image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2503.01996">
-                    <papertitle>One ruler to measure them all: Benchmarking multilingual long-context language models</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Jenna Russell,
-                  Marzena Karpinska,
-                  Mohit Iyyer
-                  <br>
-                  <em>COLM 2025</em>
-                  <br>
-                  <a href="https://github.com/mungg/OneRuler">Code</a>
-                </td>
-              </tr>
+  <p style="font-size:1.1em;">
+    Broadly, I study two related levels of this problem:
+  </p>
 
-              <!-- VERISCORE -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/VeriScore_img.png" width="200" height="120" alt="VERISCORE image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2406.19276">
-                    <papertitle>VERISCORE: Evaluating the Factuality of Verifiable Claims in Long-form Text Generation</papertitle>
-                  </a>
-                  <br>
-                  Yixiao Song,
-                  <strong>Yekyung Kim</strong>,
-                  Mohit Iyyer
-                  <br>
-                  <em>EMNLP Findings 2024</em>
-                  <br>
-                  <a href="https://github.com/Yixiao-Song/VeriScore">Code</a>
-                </td>
-              </tr>
+  <ul style="margin-left:20px;font-size:1.0em;">
+    <li>
+      <span class="highlight">Context level</span>: 
+      How can we help models better retrieve and synthesize relevant information from long contexts?
+    </li>
+    <li>
+      <span class="highlight">Generation level</span>: 
+      How can we rigorously evaluate the quality and faithfulness of long-form generation and reasoning?
+    </li>
+  </ul>
 
-              <!-- FABLES -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/FABLES_icon2.png" width="200" height="120" alt="FABLES icon">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/abs/2404.01261">
-                    <papertitle>FABLES: Evaluating Faithfulness and Content Selection in Book-length Summarization</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Yapei Chang,
-                  Marzena Karpinska,
-                  Aparna Garimella,
-                  Varun Manjunatha,
-                  Kyle Lo,
-                  Tanya Goyal,
-                  Mohit Iyyer
-                  <br>
-                  <em>COLM 2024</em>
-                  <br>
-                  <a href="https://github.com/mungg/FABLES">Dataset + Code</a>
-                </td>
-              </tr>
+  <p style="font-size:1.05em;">My current research includes:</p>
 
-              <!-- Street Crossing -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/UR_thumbnail.png" width="200" height="120" alt="Street crossing thumbnail">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2402.06794">
-                    <papertitle>Is it safe to cross? Interpretable Risk Assessment with GPT-4V for Safety-Aware Street Crossing</papertitle>
-                  </a>
-                  <br>
-                  Hochul Hwang,
-                  Sunjae Kwon,
-                  <strong>Yekyung Kim</strong>,
-                  Donghyun Kim
-                  <br>
-                  <em>21st International Conference on Ubiquitous Robots</em>
-                </td>
-              </tr>
+  <ul style="margin-left:20px;">
+    <li>
+      <span class="highlight">Evaluating faithfulness and factuality in long-context and long-form generation</span>
+      [
+      <a href="https://arxiv.org/pdf/2404.01261">FABLES (COLM’24)</a>,
+      <a href="https://arxiv.org/pdf/2406.19276">VERISCORE (EMNLP’24)</a>,
+      <a href="https://arxiv.org/pdf/2503.01996">OneRULER (COLM’25)</a>
+      ]
+    </li>
 
-              <!-- LINDA -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/LINDA_profile2.png" width="200" height="120" alt="LINDA image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://arxiv.org/pdf/2112.13969.pdf">
-                    <papertitle>LINDA: Unsupervised Learning to Interpolate in Natural Language Processing</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Seohyeong Jeong,
-                  Kyunghyun Cho
-                  <br>
-                  <em>arXiv</em>
-                </td>
-              </tr>
+    <li>
+      <span class="highlight">
+        Improving LLMs using synthetic datasets for efficient training and stronger reasoning
+      </span>
+      [
+      <a href="https://arxiv.org/pdf/2505.11080">BLEUBERI (NeurIPS’25)</a>, ongoing work
+      ]
+    </li>
 
-              <!-- InfoVerse -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/InfoVerse_profile.png" width="200" height="120" alt="InfoVerse image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://aclanthology.org/2023.acl-long.547/">
-                    <papertitle>A Universal Framework for Dataset Characterization with Multidimensional Meta-information</papertitle>
-                  </a>
-                  <br>
-                  <a href="https://sites.google.com/view/jaehyungkim">Jaehyung Kim</a>,
-                  <strong>Yekyung Kim</strong>,
-                  Karin Johanna Denton de Langis,
-                  Jinwoo Shin,
-                  Dongyeop Kang
-                  <br>
-                  <em>ACL 2023</em>
-                  <br>
-                  <a href="https://github.com/minnesotanlp/infoVerse">Code</a>
-                </td>
-              </tr>
+    <li>
+      <span class="highlight">
+        Retrieving and organizing information with function-calling agents
+      </span>
+    </li>
+  </ul>
 
-              <!-- Meta-Crafting -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/metacraft_profile.png" width="200" height="120" alt="Meta-Crafting image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30467">
-                    <papertitle>Meta-Crafting: Improved Detection of Out-of-distributed Texts via Crafting Metadata Space</papertitle>
-                  </a>
-                  <br>
-                  Ryan Koo,
-                  <strong>Yekyung Kim</strong>,
-                  Dongyeop Kang,
-                  Jaehyung Kim
-                  <br>
-                  <em>AAAI 2024 Student Abstract and Poster Program</em>
-                </td>
-              </tr>
+  <p style="font-size:1.05em;">
+    Overall, I am interested in building models that are
+    <span class="highlight">more logical, more faithful, and more dependable</span>
+    in complex long-context settings.
+  </p>
 
-              <!-- Deep Active Learning -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Active_profile.png" width="200" height="120" alt="Active learning image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://aclanthology.org/2020.lifelongnlp-1.1.pdf">
-                    <papertitle>Deep Active Learning for Sequence Labeling Based on Diversity and Uncertainty in Gradient</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>
-                  <br>
-                  <em>Workshop on Life-long Learning for Spoken Language Systems at AACL</em>, 2021
-                </td>
-              </tr>
+</td>
+</tr>
+</table>
 
-              <!-- Korean NER -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Korean_profile.png" width="200" height="120" alt="Korean NER image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://journals.flvc.org/FLAIRS/article/view/128509">
-                    <papertitle>Learning Sub-Character level representation for Korean Named Entity Recognition</papertitle>
-                  </a>
-                  <br>
-                  Yejin Kim,
-                  <strong>Yekyung Kim</strong> (equal contributions)
-                  <br>
-                  <em>The International FLAIRS Conference Proceedings</em>, 2020
-                </td>
-              </tr>
-
-              <!-- Nowplaying Billboard -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Music_Twitter_profile.png" width="200" height="120" alt="Music Twitter image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="https://dl.acm.org/doi/abs/10.1145/2632188.2632206">
-                    <papertitle>#Nowplaying the Future Billboard: Mining Music Listening Behaviors of Twitter Users for Hit Song Prediction</papertitle>
-                  </a>
-                  <br>
-                  <strong>Yekyung Kim</strong>,
-                  Bongwon Suh,
-                  Kyogu Lee
-                  <br>
-                  <em>Workshop on Social Media Retrieval and Analysis (SoMeRA) at SIGIR</em>, 2014
-                </td>
-              </tr>
-
-              <!-- Visual Analytics Tweets -->
-              <tr>
-                <td style="padding:10px;padding-right:2px;width:20%;vertical-align:middle;text-align:center;">
-                  <img src="images/Adobe_Twitter_profile.png" width="200" height="120" alt="Adobe Twitter image">
-                </td>
-                <td style="padding:10px;padding-left:0;width:50%;max-width:50%;vertical-align:middle;">
-                  <a href="http://david-hawking.net/SIRIP2014_Proceedings/SIRIP'14-A%2_
+</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
