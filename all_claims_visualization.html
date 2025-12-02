@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claims Visualization - All Books</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .filters {
+            padding: 25px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        
+        .filter-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .filters label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .stats {
+            padding: 15px 30px;
+            background: #e7f3ff;
+            border-bottom: 1px solid #cfe2ff;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .table-container {
+            padding: 30px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            table-layout: fixed;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        th:nth-child(1) {
+            width: 12%;
+        }
+        
+        th:nth-child(2) {
+            width: 10%;
+        }
+        
+        th:nth-child(3) {
+            width: 22%;
+        }
+        
+        th:nth-child(4) {
+            width: 22%;
+        }
+        
+        th:nth-child(5) {
+            width: 18%;
+        }
+        
+        th:nth-child(6) {
+            width: 16%;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .claim-cell {
+            font-weight: 500;
+            color: #212529;
+            line-height: 1.6;
+            font-size: 1em;
+            font-style: normal;
+        }
+        
+        .refined-claim-cell {
+            font-weight: 500;
+            color: #212529;
+            line-height: 1.6;
+            font-size: 1em;
+            font-style: normal;
+        }
+        
+        .snippets-cell {
+            max-width: 400px;
+        }
+        
+        .snippet-item {
+            background: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #495057;
+        }
+        
+        .snippet-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .category-cell {
+            font-weight: 600;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            text-transform: capitalize;
+        }
+        
+        .category-narrative {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .category-causal {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .category-processual {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .category-interpretive {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .category-evidence {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+        
+        .category-unknown {
+            background: #eceff1;
+            color: #546e7a;
+        }
+        
+        .justification-cell {
+            color: #6c757d;
+            line-height: 1.6;
+            font-size: 0.9em;
+            max-width: 500px;
+        }
+        
+        .book-cell {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.85em;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .book-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            background: #e9ecef;
+            color: #495057;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            line-height: 1.4;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        
+        .no-results h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Extracted Claims</h1>
+        </div>
+        
+        <div class="filters">
+            <div class="filter-section">
+                <label>Filter by Category:</label>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterByCategory('all')">All (50)</button>
+                    <button class="filter-btn" onclick="filterByCategory('causal')">Causal (10)</button>
+                    <button class="filter-btn" onclick="filterByCategory('comparative')">Comparative (10)</button>
+                    <button class="filter-btn" onclick="filterByCategory('evidence')">Evidence (5)</button>
+                    <button class="filter-btn" onclick="filterByCategory('interpretive')">Interpretive (7)</button>
+                    <button class="filter-btn" onclick="filterByCategory('narrative')">Narrative (10)</button>
+                    <button class="filter-btn" onclick="filterByCategory('processual')">Processual (8)</button>
+                </div>
+            </div>
+            <div class="filter-section">
+                <label>Filter by Book:</label>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterByBook('all')">All Books</button>
+                    <button class="filter-btn" onclick="filterByBook('India_and_Pakistan-Stanley_Wolpert.epub')">India_and_Pakistan-Stanley_Wolpert.epub (10)</button>
+                    <button class="filter-btn" onclick="filterByBook('Inside_Lenins_Government-Lara_Douds.epub')">Inside_Lenins_Government-Lara_Douds.epub (12)</button>
+                    <button class="filter-btn" onclick="filterByBook('Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub')">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub (13)</button>
+                    <button class="filter-btn" onclick="filterByBook('Korean_War_Bruce-Cumings.epub')">Korean_War_Bruce-Cumings.epub (5)</button>
+                    <button class="filter-btn" onclick="filterByBook('identity-politics-in-us-national-elections')">identity-politics-in-us-national-elections (10)</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-value">50</span>
+                <span class="stat-label">Total Claims</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">5</span>
+                <span class="stat-label">Books</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">6</span>
+                <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">10</span>
+                <span class="stat-label">Comparative</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">10</span>
+                <span class="stat-label">Causal</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">10</span>
+                <span class="stat-label">Narrative</span>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Category</th>
+                        <th>Claim</th>
+                        <th>Refined Claim</th>
+                        <th>Snippets</th>
+                        <th>Justification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="claim-row" data-category="evidence" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-evidence">evidence</span>
+                        </td>
+                        <td class="claim-cell">In fact, this parade had been cancelled on a number of occasions over the years (such as during the Second World War), but historical myths about uninterrupted traditions were allowed to colour contemporary concerns about parading.</td>
+                        <td class="refined-claim-cell">The Drumcree Orange parade at Portadown was not held continuously since 1807 because it had been cancelled on a number of occasions over the years, such as during the Second World War.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Of great concern to many unionists in these years was the banning of an annual Orange parade at Drumcree, Portadown, which they believed had been held every year since 1807.</div>
+                        <div class="snippet-item">In fact, this parade had been cancelled on a number of occasions over the years (such as during the Second World War), but historical myths about uninterrupted traditions were allowed to colour contemporary concerns about parading.</div>
+                        </td>
+                        <td class="justification-cell">The author contrasts a widely held belief (“had been held every year since 1807”) with documented evidence that the Drumcree parade had actually been cancelled on several occasions. This directly corrects an inaccurate historical narrative using specific factual counter-evidence (cancellations including during the Second World War), so it fits the Evidence Discovery and Correction category.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="evidence" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-evidence">evidence</span>
+                        </td>
+                        <td class="claim-cell">During the period from the late 1980s until the early 2000s, more than 200 books on local history were produced by local publishers in Northern Ireland, such as Blackstaff Press, Friar&#39;s Bush Press and the Institute of Irish Studies.</td>
+                        <td class="refined-claim-cell">During the period from the late 1980s until the early 2000s, more than 200 books on local history were produced by local publishers in Northern Ireland, including Blackstaff Press, Friar&#39;s Bush Press and the Institute of Irish Studies.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">During the period from the late 1980s until the early 2000s, more than 200 books on local history were produced by local publishers in Northern Ireland, such as Blackstaff Press, Friar&#39;s Bush Press and the Institute of Irish Studies.</div>
+                        </td>
+                        <td class="justification-cell">This sentence quantifies local-history book production over a specific time frame and identifies several of the publishers involved. It synthesizes dispersed publication data into a corrected, evidence-based statement about volume and producers, making it an Evidence Discovery claim rather than a simple anecdote.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">This was given impetus with the introduction in 1989 of a new common history curriculum, with textbooks looking at Irish history from a range of perspectives.</td>
+                        <td class="refined-claim-cell">In 1989, the introduction of a new common history curriculum with textbooks presenting Irish history from a range of perspectives gave additional impetus to the increase in teaching of Irish history in Northern Ireland schools that had begun in the 1960s.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">In schools in Northern Ireland, teaching of Irish history had increased since the 1960s.</div>
+                        <div class="snippet-item">This was given impetus with the introduction in 1989 of a new common history curriculum, with textbooks looking at Irish history from a range of perspectives.</div>
+                        </td>
+                        <td class="justification-cell">The snippets describe a temporal sequence: an increase in Irish-history teaching since the 1960s and a further boost linked to a 1989 curriculum reform. The refined claim reconstructs this process—how the outcome (expanded teaching) unfolded through institutional change—so it is a Processual Analysis rather than a mere static description.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">Branch club numbers on parade at the August commemorations increased to thirty-one in 1924, fifty-one in 1930, and eighty in 1936.</td>
+                        <td class="refined-claim-cell">At the Apprentice Boys&#39; August commemorations in Derry, the number of branch clubs on parade increased to thirty-one in 1924, fifty-one in 1930, and eighty in 1936.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Branch club numbers on parade at the August commemorations increased to thirty-one in 1924, fifty-one in 1930, and eighty in 1936.</div>
+                        </td>
+                        <td class="justification-cell">This statement compares the number of branch clubs on parade at three specific dates using quantitative counts, allowing direct verification from organisational or press records. It is a Comparative Factual Claim because it contrasts participation levels across years using a clear numeric metric.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">By the late 1960s, the number of Protestants/unionists in Northern Ireland who still identified themselves as Irish as well as British had fallen to about 20 per cent; by the late 1970s this had collapsed to 8 per cent.</td>
+                        <td class="refined-claim-cell">By the late 1960s, the proportion of Protestants and unionists in Northern Ireland who still identified themselves as both Irish and British had fallen to about 20 per cent, and by the late 1970s this figure had collapsed to 8 per cent.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">By the late 1960s, the number of Protestants/unionists in Northern Ireland who still identified themselves as Irish as well as British had fallen to about 20 per cent; by the late 1970s this had collapsed to 8 per cent.</div>
+                        </td>
+                        <td class="justification-cell">The sentence reports two time-specific percentages for a defined group’s dual identity, enabling straightforward comparison. Because it directly contrasts these measured values across two time periods, it fits the Comparative Factual Claims category.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">The Party Processions Act banned Orange parades in 1850–71, but not these commemorations, which were regarded as civic rather than political events, and this increased their popularity.</td>
+                        <td class="refined-claim-cell">Between 1850 and 1871, the Party Processions Act banned Orange parades but not the Derry siege commemorations, which were regarded as civic rather than political events, and this exemption increased the popularity of those commemorations.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The Party Processions Act banned Orange parades in 1850–71, but not these commemorations, which were regarded as civic rather than political events, and this increased their popularity.</div>
+                        </td>
+                        <td class="justification-cell">The claim links a legal restriction (the Party Processions Act’s ban on Orange parades) to a change in another outcome (increased popularity of the siege commemorations that remained legal). Because it explicitly identifies a mechanism—differential legal treatment based on civic vs. political classification—this is an Empirical Causal Explanation.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">In 1975 the parade was allowed into the walled city during the August commemoration, but it was confined to the upper part of the city and marches around the walls continued to be banned; only from 1995 have parent clubs been allowed to march around the city walls again.</td>
+                        <td class="refined-claim-cell">In 1975 the main Apprentice Boys&#39; parade in Derry was allowed into the walled city during the August commemoration, but it was confined to the upper part of the city and marches around the walls continued to be banned, and only from 1995 have parent clubs been allowed to march around the city walls again.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">In 1970 and 1971 a ban was imposed on Apprentice Boys&#39; parades in the city, although services continued in the cathedral.</div>
+                        <div class="snippet-item">From 1972 to 1974 the August procession was restricted to the Waterside.</div>
+                        <div class="snippet-item">In 1975 the parade was allowed into the walled city during the August commemoration, but it was confined to the upper part of the city and marches around the walls continued to be banned; only from 1995 have parent clubs been allowed to march around the city walls again.</div>
+                        </td>
+                        <td class="justification-cell">The snippets trace a sequence of changing restrictions on the Apprentice Boys&#39; parade, culminating in the 1975 partial relaxation and the 1995 full restoration of wall marches. This reconstructs the stepwise evolution of parade regulation, making it a Processual Analysis of how the current arrangement came about.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">In 1922 it was made a general holiday and from 1925, thanks to the Irish Free State Licensing Act, all public houses were closed on that day.</td>
+                        <td class="refined-claim-cell">In the Irish Free State, St Patrick&#39;s Day was made a general holiday in 1922 and, from 1925, the Irish Free State Licensing Act required that all public houses be closed on that day.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">In the new Irish Free State, St Patrick&#39;s Day quickly took on special significance.</div>
+                        <div class="snippet-item">In 1922 it was made a general holiday and from 1925, thanks to the Irish Free State Licensing Act, all public houses were closed on that day.</div>
+                        </td>
+                        <td class="justification-cell">These sentences provide specific institutional decisions—designation of a public holiday and closure of pubs by statute—anchored in dates and legislation. They collectively reconstruct what happened to St Patrick’s Day in the early Free State period, so this is a Descriptive Narrative Reconstruction.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">From the early 1970s, reflecting the new divisions in republicanism, the two wings of Sinn Féin marked the event separately.</td>
+                        <td class="refined-claim-cell">From the early 1970s, reflecting the new divisions in republicanism, the two wings of Sinn Féin marked the Bodenstown commemoration of Theobald Wolfe Tone separately.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">From the early 1970s, reflecting the new divisions in republicanism, the two wings of Sinn Féin marked the event separately.</div>
+                        <div class="snippet-item">Sinn Féin (Gardner Place) paraded on the same occasion as the army and Fianna Fáil while Sinn Féin (Kevin Street) paraded on the Sunday before the main commemoration.</div>
+                        </td>
+                        <td class="justification-cell">The author shows how organisational splits within republicanism translated into separate commemorative practices at Bodenstown, with distinct wings parading on different dates. This sequence of organisational and ritual differentiation answers “how did this outcome come about?”, so it is a Processual Analysis.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">In 1999 the speaker of the Northern Ireland Assembly, John Alderdice, organised the first official reception on St Patrick&#39;s Day at the assembly buildings at Stormont, and this has continued annually (although cancelled in 2010, so that the speaker could attend the St Patrick&#39;s Day celebrations in the White House).</td>
+                        <td class="refined-claim-cell">In 1999 the speaker of the Northern Ireland Assembly, John Alderdice, organised the first official reception on St Patrick&#39;s Day at the assembly buildings at Stormont, and this reception has continued annually except in 2010, when it was cancelled so that the speaker could attend the St Patrick&#39;s Day celebrations in the White House.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">In 1999 the speaker of the Northern Ireland Assembly, John Alderdice, organised the first official reception on St Patrick&#39;s Day at the assembly buildings at Stormont, and this has continued annually (although cancelled in 2010, so that the speaker could attend the St Patrick&#39;s Day celebrations in the White House).</div>
+                        </td>
+                        <td class="justification-cell">The sentence narrates the institutionalisation of an official St Patrick’s Day reception at Stormont and its continuity, including the single-year exception in 2010. It is a factual, time-bound reconstruction of events and thus fits the Descriptive Narrative Reconstruction category.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">The emergence of unionist/nationalist confrontation in the 1870s and 1880s gave a new relevance to the story of the siege, especially for Derry Protestants.</td>
+                        <td class="refined-claim-cell">The emergence of unionist and nationalist confrontation in the 1870s and 1880s gave new relevance to the story of the siege of Derry, especially for Protestant inhabitants of the city.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The emergence of unionist/nationalist confrontation in the 1870s and 1880s gave a new relevance to the story of the siege, especially for Derry Protestants.</div>
+                        </td>
+                        <td class="justification-cell">This claim explicitly links a changing political context (unionist/nationalist confrontation) to a shift in the perceived importance of the siege narrative for a particular community. Because it specifies a historically grounded cause-and-effect relationship, it constitutes an Empirical Causal Explanation.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="interpretive" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-interpretive">interpretive</span>
+                        </td>
+                        <td class="claim-cell">On these occasions speakers selected from Tone&#39;s life and writings according to their own political agendas.</td>
+                        <td class="refined-claim-cell">At the Bodenstown commemorations, speakers selected material from Theobald Wolfe Tone&#39;s life and writings according to their own political agendas.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">On these occasions speakers selected from Tone&#39;s life and writings according to their own political agendas.</div>
+                        </td>
+                        <td class="justification-cell">The author characterises how orators framed Tone at Bodenstown, describing their selective use of his life and writings to serve specific political agendas. This is an Evidence-Grounded Interpretive Claim because it infers meaning-framing strategies from documented speeches and commemorative practices, without speculating beyond recorded rhetoric.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="interpretive" data-book="Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Irish_History_Matters_PoliticsI_identities_and_Commemoration-Brian_M_Walker.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-interpretive">interpretive</span>
+                        </td>
+                        <td class="claim-cell">Republicans frequently quoted Tone&#39;s objective of breaking the connection with England and often attacked the British and Irish governments.</td>
+                        <td class="refined-claim-cell">At Bodenstown commemorations, republican speakers frequently quoted Theobald Wolfe Tone&#39;s objective of breaking the connection with England and often attacked both the British and Irish governments.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Republicans frequently quoted Tone&#39;s objective of breaking the connection with England and often attacked the British and Irish governments.</div>
+                        </td>
+                        <td class="justification-cell">This sentence summarises recurring themes in republican speeches at Bodenstown, namely the invocation of Tone’s stated objective and criticism of both governments. It draws directly on documented speech content to characterise actors’ framing, so it fits the Evidence-Grounded Interpretive category.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">More than ten million terrified Hindus, Muslims, and Sikhs fled their ancestral homes that August, one million of whom died before reaching safe havens.</td>
+                        <td class="refined-claim-cell">In August 1947, during the partition of British India, more than ten million Hindus, Muslims, and Sikhs fled their ancestral homes, and one million of these refugees died before reaching safe havens.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">More than ten million terrified Hindus, Muslims, and Sikhs fled their ancestral homes that August, one million of whom died before reaching safe havens.</div>
+                        </td>
+                        <td class="justification-cell">This is a descriptive narrative reconstruction: it specifies what happened (mass flight and deaths), when (that August 1947, clearly tied to partition in the surrounding text), and provides concrete, quantitative figures. It is directly and fully supported by the quoted sentence, with no inference beyond adding the explicit reference to partition and month in the refined version.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">At that time, three-quarters of British India&#39;s some 400 million people were Hindus, most of the remaining quarter being Muslims, plus six million Sikhs and a million or so Parsis, Christians, and Jews.</td>
+                        <td class="refined-claim-cell">At the time of the 1947 partition of British India, three-quarters of British India&#39;s roughly 400 million people were Hindus, most of the remaining quarter were Muslims, and there were also about six million Sikhs and roughly a million Parsis, Christians, and Jews.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">At that time, three-quarters of British India&#39;s some 400 million people were Hindus, most of the remaining quarter being Muslims, plus six million Sikhs and a million or so Parsis, Christians, and Jews.</div>
+                        </td>
+                        <td class="justification-cell">This is a comparative factual claim because it compares the relative sizes of several religious groups using numerical proportions and counts. The text itself provides the full quantitative breakdown; the refined claim only clarifies that “that time” refers to the partition period already established in the surrounding narrative.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">By the end of January 1948, the Security Council decided to appoint a UN Commission on India and Pakistan (UNCIP), which was to visit South Asia as early as possible to investigate the facts and difficulties on the ground.</td>
+                        <td class="refined-claim-cell">By the end of January 1948, the United Nations Security Council decided to appoint a UN Commission on India and Pakistan (UNCIP), which was to visit South Asia as early as possible to investigate the facts and difficulties on the ground in the Kashmir dispute.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">On 3 January 1948, then, India brought charges of Pakistan&#39;s aggression to the UN Security Council, calling upon it to &quot;take immediate and effective action&quot; to stop Pakistan.</div>
+                        <div class="snippet-item">By the end of January 1948, the Security Council decided to appoint a UN Commission on India and Pakistan (UNCIP), which was to visit South Asia as early as possible to investigate the facts and difficulties on the ground.</div>
+                        </td>
+                        <td class="justification-cell">This is a processual analysis: it describes how an institutional process unfolded—India bringing the issue to the Security Council, followed by the creation of UNCIP with a defined investigative mandate. The snippets give the sequence and the formal decision, making the claim verifiable from UN archival records.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">By 1954, the Cold War played a role in exacerbating the Indo-Pakistani conflict over Kashmir.</td>
+                        <td class="refined-claim-cell">By 1954, dynamics of the Cold War played a role in exacerbating the Indo-Pakistani conflict over Kashmir.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">By 1954, the Cold War played a role in exacerbating the Indo-Pakistani conflict over Kashmir.</div>
+                        <div class="snippet-item">Pakistan—which joined the United States and Great Britain in the Central Treaty Organization (CENTO) and the Southeast Asia Treaty Organization (SEATO), military alliances designed to contain Soviet expansion—received substantial military support.</div>
+                        <div class="snippet-item">India, which was much closer to the Soviet Union thanks to Nehru&#39;s socialism and early visit to Moscow, refused to join any of Washington&#39;s Cold War alliances.</div>
+                        </td>
+                        <td class="justification-cell">This is an empirical causal explanation: it attributes the worsening of the Kashmir conflict in part to Cold War alignments and ensuing military support, identifying a mechanism (Pakistan’s alliance with U.S.-led blocs and India’s alignment with the USSR). The subsequent sentences document those alignments and support, grounding the causal claim in concrete, verifiable actions and relationships.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">That was Pakistan&#39;s first military coup.</td>
+                        <td class="refined-claim-cell">Mirza&#39;s 1958 abrogation of Pakistan&#39;s constitution and appointment of Ayub Khan as chief martial law administrator constituted Pakistan&#39;s first military coup.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">A year later, Mirza abrogated Pakistan&#39;s constitution and appointed Ayub Khan chief martial law administrator.</div>
+                        <div class="snippet-item">That was Pakistan&#39;s first military coup.</div>
+                        </td>
+                        <td class="justification-cell">This is a descriptive narrative reconstruction: it classifies a specific institutional event—Mirza’s abrogation of the constitution and appointment of Ayub Khan—as Pakistan’s first military coup, based on the immediately preceding description. The sequence and characterization are explicitly given in the text, and can be checked against historical records.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">Most West Pakistanis voted for Zulfi Bhutto&#39;s Pakistan People&#39;s Party, but there were ten million fewer voters in the West than in the East, so the Awami League won 160 seats, all but two of the contests in the East, while the PPP could claim only 81 seats in the West.</td>
+                        <td class="refined-claim-cell">In Pakistan&#39;s 7 December 1970 national elections, most West Pakistanis voted for Zulfi Bhutto&#39;s Pakistan People&#39;s Party, but because there were ten million fewer voters in West Pakistan than in East Pakistan, the Awami League won 160 seats, all but two of the contests in the East, while the Pakistan People&#39;s Party could claim only 81 seats in the West.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Pakistan&#39;s first national elections were held on 7 December 1970, in the wake of a hurricane tidal wave that drowned a quarter of a million of East Pakistan&#39;s poorest people in the low-lying Delta of Bengal and left millions without food or shelter.</div>
+                        <div class="snippet-item">Most West Pakistanis voted for Zulfi Bhutto&#39;s Pakistan People&#39;s Party, but there were ten million fewer voters in the West than in the East, so the Awami League won 160 seats, all but two of the contests in the East, while the PPP could claim only 81 seats in the West.</div>
+                        </td>
+                        <td class="justification-cell">This is a comparative factual claim: it compares regional electorates (West vs East Pakistan), vote distributions, and resulting seat allocations using explicit numbers. The date and electoral context are provided, and the figures are directly stated, allowing verification from electoral records.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">During his eleven years in power, Zia armed and funded those four million Afghan refugees, who lived under tents in Pakistan&#39;s North-West Frontier Province and were regularly sent back to Afghanistan to shoot down Soviet helicopters and blow up tanks and trucks.</td>
+                        <td class="refined-claim-cell">During his eleven years in power after 1977, General Zia ul-Haq armed and funded four million Afghan refugees living under tents in Pakistan&#39;s North-West Frontier Province and regularly sent them back into Afghanistan to shoot down Soviet helicopters and destroy tanks and trucks.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">During his eleven years in power, Zia armed and funded those four million Afghan refugees, who lived under tents in Pakistan&#39;s North-West Frontier Province and were regularly sent back to Afghanistan to shoot down Soviet helicopters and blow up tanks and trucks.</div>
+                        </td>
+                        <td class="justification-cell">This is a descriptive narrative reconstruction with clear operational content: it specifies what Zia did (armed, funded, and deployed refugees), who was involved (four million Afghan refugees), where (North-West Frontier Province and Afghanistan), and how (attacks on Soviet helicopters and armor). The sentence is self-contained and empirically checkable against contemporary accounts of the Afghan war.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">General Musharraf&#39;s decision to join the U.S. war against terror, in response to Secretary of State Colin Powell&#39;s warning not to hesitate, saved his regime from bankruptcy, bringing a fresh influx of $10 billion in new weapons to America&#39;s revived front-line ally.</td>
+                        <td class="refined-claim-cell">After the 11 September 2001 terrorist attacks, General Pervez Musharraf&#39;s decision to join the U.S. war against terror, in response to Secretary of State Colin Powell&#39;s warning not to hesitate, saved his regime from bankruptcy by bringing a fresh influx of $10 billion in new weapons to Pakistan as America&#39;s revived front-line ally.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Just as the Soviet invasion of Afghanistan little more than a decade earlier had, with massive infusions of U.S. aid, saved Zia&#39;s regime from collapsing of its own ineptitude, Pervez Musharraf&#39;s decision to join the U.S. &quot;war&quot; against terror, in response to Secretary of State Colin Powell&#39;s warning not to hesitate, saved his regime from bankruptcy, bringing a fresh influx of $10 billion in new weapons to America&#39;s revived front-line ally.</div>
+                        </td>
+                        <td class="justification-cell">This is an empirical causal explanation: it directly links Musharraf’s decision to align with the U.S. in the war on terror to the avoidance of regime bankruptcy and a quantified outcome—$10 billion in new weapons. The mechanism (U.S. aid in exchange for alliance) and the result are explicitly stated and empirically testable against U.S.–Pakistan aid data.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="interpretive" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-interpretive">interpretive</span>
+                        </td>
+                        <td class="claim-cell">He insisted that he had no ambition to retain power, but in addition to his new title of chief martial law administrator, he took Ayub&#39;s title of president and remained Pakistan&#39;s top general.</td>
+                        <td class="refined-claim-cell">After assuming power in 1969, General Yahya Khan insisted that he had no ambition to retain power, but in addition to his new title of chief martial law administrator, he also took Ayub Khan&#39;s title of president and remained Pakistan&#39;s top general.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">On Pakistan Day, 25 March 1969, Ayub surrendered his marshal&#39;s baton, handing it down to General Aga Mohammad Yahya Khan, a much smaller Pathan, and a heavier drinker.</div>
+                        <div class="snippet-item">Yahya was a boon companion of Bhutto&#39;s, often visiting the latter&#39;s huge ancestral estate in Sind&#39;s Larkana, where they hunted wild boar together and drank all night.</div>
+                        <div class="snippet-item">Yahya, therefore, agreed to preside over the transfer of power to elected representatives of the people as swiftly as possible.</div>
+                        <div class="snippet-item">He insisted that he had no ambition to retain power, but in addition to his new title of chief martial law administrator, he took Ayub&#39;s title of president and remained Pakistan&#39;s top general.</div>
+                        </td>
+                        <td class="justification-cell">This is an evidence-grounded interpretive claim: it reports how Yahya framed his own motives (no ambition to retain power) and juxtaposes that with his accumulation of formal titles and roles. The text explicitly attributes the insistence to him and documents the offices he held, allowing verification from contemporaneous statements and official titles.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="interpretive" data-book="India_and_Pakistan-Stanley_Wolpert.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">India_and_Pakistan-Stanley_Wolpert.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-interpretive">interpretive</span>
+                        </td>
+                        <td class="claim-cell">Nawaz believed Benazir to be India&#39;s tool on the question of Kashmir and was more reluctant himself to consider the idea of agreeing to treat the Line of Control as the Indo-Pakistani border.</td>
+                        <td class="refined-claim-cell">In the mid-1990s, Prime Minister Nawaz Sharif believed Benazir Bhutto to be India&#39;s tool on the question of Kashmir and was more reluctant than she was to consider agreeing to treat the Line of Control as the Indo-Pakistani border.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Had Nawaz and Benazir only been able to work together, trying to reconcile their personal differences and deep suspicions of each other, Pakistan might have been saved its prolonged return to military rule.</div>
+                        <div class="snippet-item">But neither leader trusted the other, leaving both vulnerable to easy removal by the army.</div>
+                        <div class="snippet-item">Nawaz believed Benazir to be India&#39;s tool on the question of Kashmir and was more reluctant himself to consider the idea of agreeing to treat the Line of Control as the Indo-Pakistani border.</div>
+                        </td>
+                        <td class="justification-cell">This is an interpretive claim grounded in explicitly reported beliefs: it describes Nawaz Sharif’s stated or documented perception of Benazir Bhutto’s position and his own greater reluctance about a specific border settlement. The sentence directly attributes these beliefs to Nawaz, and the surrounding text confirms the mutual distrust, making the assertion empirically checkable through speeches and political records.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">In the earliest years after the October Revolution, the government was conducted not through the party machinery, but through the Soviet state institutions, with the Council of People&#39;s Commissars, or Sovet Narodnykh Kommissarov (abbreviated to Sovnarkom) at the apex.</td>
+                        <td class="refined-claim-cell">In the earliest years after the October Revolution in Russia, the government was conducted not through the party machinery, but through the Soviet state institutions, with the Council of People&#39;s Commissars (Sovnarkom) at the apex.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">In the earliest years after the October Revolution, the government was conducted not through the party machinery, but through the Soviet state institutions, with the Council of People&#39;s Commissars, or Sovet Narodnykh Kommissarov (abbreviated to Sovnarkom) at the apex.</div>
+                        <div class="snippet-item">In fact, the earliest years of Lenin&#39;s government were a fluid period of improvisation, experimentation and negotiation of the nature of power and legitimacy during which the Soviet leaders believed that they were constructing a novel and superior democratic system, but were unsure of the particular organizational and structural forms that this new government should take.</div>
+                        </td>
+                        <td class="justification-cell">This is a Descriptive Narrative Reconstruction because it specifies which institutions actually exercised governmental authority in the immediate post‑revolutionary period and how they were hierarchically arranged; the sentence directly states that Sovnarkom, not party bodies, stood at the apex of the governing structure, and the surrounding text situates this claim in the early years after October 1917.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">In the elections the various factions of the SRs received approximately half of the 42 million votes cast, the Bolsheviks polled about ten million (24 per cent) including roughly half of the soldiers&#39; vote, the Kadets received two million (5 per cent), and the remaining 8 million votes went to other non-Socialist Parties, the Mensheviks, and parties representing national minorities.</td>
+                        <td class="refined-claim-cell">In the elections to the Constituent Assembly held in November 1917, the various factions of the SRs received approximately half of the 42 million votes cast, the Bolsheviks polled about ten million (24 per cent) including roughly half of the soldiers&#39; vote, the Kadets received two million (5 per cent), and the remaining 8 million votes went to other non-Socialist Parties, the Mensheviks, and parties representing national minorities.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The convocation of a Constituent Assembly, a representative body, elected on the basis of universal male suffrage was one of the earliest and most popular demands to emerge from the February Revolution.</div>
+                        <div class="snippet-item">The Provisional Government postponed elections until 12 November by which time it had been overthrown.</div>
+                        <div class="snippet-item">In the elections the various factions of the SRs received approximately half of the 42 million votes cast, the Bolsheviks polled about ten million (24 per cent) including roughly half of the soldiers&#39; vote, the Kadets received two million (5 per cent), and the remaining 8 million votes went to other non-Socialist Parties, the Mensheviks, and parties representing national minorities.</div>
+                        </td>
+                        <td class="justification-cell">This is a Descriptive Narrative Reconstruction because it reports precise, quantitative results of the November 1917 Constituent Assembly elections, allocating vote totals and percentages to specific parties; the figures and context are explicitly provided in the text, enabling direct verification from electoral records.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">Programmatic differences with the Bolsheviks quickly widened after the Left SR departure from Sovnarkom and any moderating influence in regards to use of terror or relations with the countryside quickly dissipated.</td>
+                        <td class="refined-claim-cell">Programmatic differences with the Bolsheviks quickly widened after the Left Socialist Revolutionary (Left SR) departure from Sovnarkom, and any moderating influence in regards to use of terror or relations with the countryside quickly dissipated.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">After the final ratification of the treaty by the VTsIK, the Left SR People&#39;s Commissars withdrew from Sovnarkom on 18 March.</div>
+                        <div class="snippet-item">They maintained a limited cooperation with the Bolsheviks, retaining their positions on the collegia of commissariats as well as their membership in the VTsIK and the local Soviets.</div>
+                        <div class="snippet-item">Programmatic differences with the Bolsheviks quickly widened after the Left SR departure from Sovnarkom and any moderating influence in regards to use of terror or relations with the countryside quickly dissipated.</div>
+                        </td>
+                        <td class="justification-cell">This is an Empirical Causal Explanation because it links a specific outcome (widening programmatic differences and loss of moderating influence) to a clearly identified cause (the Left SR withdrawal from Sovnarkom), anchored in dated events and institutional positions documented in the surrounding text.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">Lenin&#39;s government had to make concessions to the engineers and technicians with material incentives to bring their skills to bear to restore the Soviet economy.</td>
+                        <td class="refined-claim-cell">In May 1919, Lenin&#39;s government had to make concessions to the engineers and technicians with material incentives to bring their skills to bear to restore the Soviet economy.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">In May 1919, when the Soviet Republic was on the verge of collapse, further urgent measures were taken.</div>
+                        <div class="snippet-item">Lenin&#39;s government had to make concessions to the engineers and technicians with material incentives to bring their skills to bear to restore the Soviet economy.</div>
+                        <div class="snippet-item">This concession constituted a specialist wage of six to one, given that the average skilled wage at this time was 500 roubles.</div>
+                        </td>
+                        <td class="justification-cell">This is an Empirical Causal Explanation because it attributes a policy choice—granting material incentives to engineers and technicians—to the need to restore a collapsing Soviet economy, and it is empirically grounded by contemporaneous timing (May 1919) and the quantified wage concessions described in the adjacent sentences.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">From November 1917 to March 1919 the main duties of the Sovnarkom were directing the activities of the commissariats and discussing reports on their work, resolving differences among commissariats, appointing commissars and other staff of state bodies, discussing and implementing general administrative measures, reviewing departmental budgets and allocation of finance, drafting and issuing decrees, preparing other decrees for confirmation by the VTsIK, and examining and confirming treaties and agreements with foreign states.</td>
+                        <td class="refined-claim-cell">From November 1917 to March 1919, the main duties of the Council of People&#39;s Commissars (Sovnarkom) were directing the activities of the commissariats and discussing reports on their work, resolving differences among commissariats, appointing commissars and other staff of state bodies, discussing and implementing general administrative measures, reviewing departmental budgets and allocation of finance, drafting and issuing decrees, preparing other decrees for confirmation by the VTsIK, and examining and confirming treaties and agreements with foreign states.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">From November 1917 to March 1919 the main duties of the Sovnarkom were directing the activities of the commissariats and discussing reports on their work, resolving differences among commissariats, appointing commissars and other staff of state bodies, discussing and implementing general administrative measures, reviewing departmental budgets and allocation of finance, drafting and issuing decrees, preparing other decrees for confirmation by the VTsIK, and examining and confirming treaties and agreements with foreign states.</div>
+                        <div class="snippet-item">Until the onset of his illness in 1921, Lenin chaired almost every sitting of Sovnarkom, a heavy task which required all of his energy, at the expense of party work, where he never held a formal administrative role.</div>
+                        </td>
+                        <td class="justification-cell">This is a Processual Analysis because it delineates, in a time-bounded way, the routine functions and decision‑making responsibilities that constituted Sovnarkom’s work, thereby reconstructing how central state governance operated in practice between November 1917 and March 1919.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">In solving these questions, the MSNK either made a decision there and then and instructed the corresponding commissariat to implement it, or, if a unanimous decision was not achieved or if they judged it to be an issue of importance, transferred it to the full Sovnarkom.</td>
+                        <td class="refined-claim-cell">In solving minor routine questions, the Little Sovnarkom (MSNK) either made a decision there and then and instructed the corresponding commissariat to implement it, or, if a unanimous decision was not achieved or if its members judged it to be an issue of importance, transferred it to the full Council of People&#39;s Commissars (Sovnarkom).</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The need arose to devolve minor matters from Sovnarkom and the Little Sovnarkom (Malyi Sovet Narodnykh Kommissarov or MSNK) emerged in late 1917 to deal with routine business.</div>
+                        <div class="snippet-item">The range of minor matters, &#39;not raising issues of principle&#39;, considered by MSNK in its first months were wide ranging.</div>
+                        <div class="snippet-item">In solving these questions, the MSNK either made a decision there and then and instructed the corresponding commissariat to implement it, or, if a unanimous decision was not achieved or if they judged it to be an issue of importance, transferred it to the full Sovnarkom.</div>
+                        </td>
+                        <td class="justification-cell">This is a Processual Analysis because it describes the decision rules MSNK followed—either resolving routine matters directly or escalating them to Sovnarkom—thus specifying how a particular institutional mechanism functioned within the broader governmental process.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="interpretive" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-interpretive">interpretive</span>
+                        </td>
+                        <td class="claim-cell">This shared platform for the legitimacy of Soviet power as an expression of popular will was the basis for collaboration of the two parties from December 1917 and for their joint dissolution of the Constituent Assembly in January 1918.</td>
+                        <td class="refined-claim-cell">This shared platform for the legitimacy of Soviet power as an expression of popular will was the basis for collaboration of the Bolshevik and Left Socialist Revolutionary parties from December 1917 and for their joint dissolution of the Constituent Assembly in January 1918.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The Left SRs, like the Bolsheviks, accepted the sovereignty of the Congress of Soviets of Workers&#39; and Soldiers&#39; deputies as the basis for a legitimate revolutionary government, although they had preferred to include representatives of the bourgeoisie in order to quell the social struggle this exclusion would incur.</div>
+                        <div class="snippet-item">This shared platform for the legitimacy of Soviet power as an expression of popular will was the basis for collaboration of the two parties from December 1917 and for their joint dissolution of the Constituent Assembly in January 1918.</div>
+                        </td>
+                        <td class="justification-cell">This is an Evidence‑Grounded Interpretive Claim because it interprets the actors’ own articulated acceptance of Soviet sovereignty as a shared legitimacy frame and links that frame to their collaborative actions (coalition formation and dissolution of the Constituent Assembly), relying on explicitly documented positions about sovereignty and legitimacy.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="interpretive" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-interpretive">interpretive</span>
+                        </td>
+                        <td class="claim-cell">It is clear that that there was only one reason for the Left SR party&#39;s withdrawal from the central Sovnarkom: the Fourth Congress of Soviets had adopted a resolution, the ratification of the Brest-Litovsk treaty, that the Left SRs were convinced had undermined the October Revolution.</td>
+                        <td class="refined-claim-cell">According to this account, there was only one reason for the Left Socialist Revolutionary (Left SR) party&#39;s withdrawal from the central Council of People&#39;s Commissars (Sovnarkom): the Fourth Congress of Soviets had adopted a resolution, the ratification of the Brest-Litovsk treaty, that the Left SRs were convinced had undermined the October Revolution.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">After the final ratification of the treaty by the VTsIK, the Left SR People&#39;s Commissars withdrew from Sovnarkom on 18 March.</div>
+                        <div class="snippet-item">It is clear that that there was only one reason for the Left SR party&#39;s withdrawal from the central Sovnarkom: the Fourth Congress of Soviets had adopted a resolution, the ratification of the Brest-Litovsk treaty, that the Left SRs were convinced had undermined the October Revolution.</div>
+                        <div class="snippet-item">The Left SRs, if they allowed their representatives to participate in Sovnarkom, would be collaborating in policies they were sure would lead to the smothering of the revolution.</div>
+                        </td>
+                        <td class="justification-cell">This is an Evidence‑Grounded Interpretive Claim because it specifies the Left SRs’ stated motive for leaving Sovnarkom—opposition to the Brest‑Litovsk ratification—and bases that attribution on explicit descriptions of their convictions and the timing of their withdrawal relative to the Congress’s decision.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="evidence" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-evidence">evidence</span>
+                        </td>
+                        <td class="claim-cell">Thus, while one tenet of the totalitarian school was that the Party Central Committee operated as the supreme decision-making body of the early Soviet government from the birth of the regime, archival records confirm that in no way could the Party Central Committee be viewed as the effective government of the nascent Soviet regime.</td>
+                        <td class="refined-claim-cell">Thus, while one tenet of the totalitarian school was that the Party Central Committee operated as the supreme decision-making body of the early Soviet government from the birth of the regime, archival records confirm that in no way could the Party Central Committee be viewed as the effective government of the nascent Soviet regime.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Thus, while one tenet of the totalitarian school was that the Party Central Committee operated as the supreme decision-making body of the early Soviet government from the birth of the regime, archival records confirm that in no way could the Party Central Committee be viewed as the effective government of the nascent Soviet regime.</div>
+                        <div class="snippet-item">Instead, it is clear that Sovnarkom occupied this position.</div>
+                        <div class="snippet-item">In fact, during the first months after the revolution, the Party Central Committee continued instead to manage internal party affairs.</div>
+                        </td>
+                        <td class="justification-cell">This is an Evidence Discovery and Correction claim because it explicitly contrasts a prior scholarly tenet (Central Committee supremacy) with new archival evidence showing that the Central Committee did not function as the effective government, thereby correcting the earlier account of where real executive authority lay.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="evidence" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-evidence">evidence</span>
+                        </td>
+                        <td class="claim-cell">During its four-month existence the Bolshevik-Left SR coalition government functioned more successfully than has previously been acknowledged.</td>
+                        <td class="refined-claim-cell">During its four-month existence from December 1917 to March 1918, the Bolshevik–Left Socialist Revolutionary coalition government functioned more successfully than has previously been acknowledged.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">From December 1917 to March 1918 Soviet power meant a dual-party coalition composed of Bolsheviks, the self-declared party of the proletariat, and Left SRs, the radical wing of the neo-populist party of the peasantry and increasingly of poor urban workers.</div>
+                        <div class="snippet-item">During its four-month existence the Bolshevik-Left SR coalition government functioned more successfully than has previously been acknowledged.</div>
+                        <div class="snippet-item">In areas where the programmes and ideals of the two parties overlapped, fruitful collaboration strengthened the Soviet government&#39;s functioning.</div>
+                        </td>
+                        <td class="justification-cell">This is an Evidence Discovery and Correction claim because it revises an established historiographical view that downplayed the effectiveness of the Bolshevik–Left SR coalition, asserting—based on the detailed operational evidence presented in the chapter—that the coalition functioned more successfully than earlier accounts recognized.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">The length of agenda decreased over the following couple of months, with December 1917 averaging 11 items per sitting, January 1918, 9 and February 1918, 8.</td>
+                        <td class="refined-claim-cell">The length of the Council of People&#39;s Commissars (Sovnarkom) agenda decreased over the months after November 1917, with December 1917 averaging 11 items per sitting, January 1918 averaging 9, and February 1918 averaging 8.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Despite the almost daily sittings during the early months, the workload of Sovnarkom tended to be heavy.</div>
+                        <div class="snippet-item">In the hectic weeks of late November 1917 agenda items averaged 14, sometimes exceeding 20.</div>
+                        <div class="snippet-item">The length of agenda decreased over the following couple of months, with December 1917 averaging 11 items per sitting, January 1918, 9 and February 1918, 8.</div>
+                        </td>
+                        <td class="justification-cell">This is a Comparative Factual Claim because it compares the average number of items on Sovnarkom’s agenda across three distinct months, providing concrete numerical values that allow direct empirical comparison of workload over time.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="Inside_Lenins_Government-Lara_Douds.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Inside_Lenins_Government-Lara_Douds.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">This concession constituted a specialist wage of six to one, given that the average skilled wage at this time was 500 roubles.</td>
+                        <td class="refined-claim-cell">This concession on specialist salaries in May 1919 constituted a wage ratio of six to one, given that the average skilled wage at this time was 500 roubles.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The draft decision on &#39;Salaries for Specialists&#39; was proposed by the Sovnarkom on 23 May 1919 and the decision was grudgingly taken to allow, under a very tight reign, specialist salaries of 3000 roubles.</div>
+                        <div class="snippet-item">This concession constituted a specialist wage of six to one, given that the average skilled wage at this time was 500 roubles.</div>
+                        </td>
+                        <td class="justification-cell">This is a Comparative Factual Claim because it quantifies the ratio between the new specialist salary (3,000 roubles) and the average skilled wage (500 roubles), explicitly stating the six‑to‑one differential, which can be directly checked against the numerical values provided.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="Korean_War_Bruce-Cumings.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Korean_War_Bruce-Cumings.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">MacArthur had succeeded in committing most of the battle-ready divisions in the entire American armed forces to the Korean fighting; by September 8 all available combat-trained army units had been dispatched to Korea except for the 82nd Airborne Division.</td>
+                        <td class="refined-claim-cell">By September 8, 1950, General Douglas MacArthur had succeeded in committing most of the battle-ready divisions in the entire American armed forces to the Korean fighting, and all available combat-trained U.S. Army units except the 82nd Airborne Division had been dispatched to Korea.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Still, by this time the North Koreans were badly outnumbered. MacArthur had succeeded in committing most of the battle-ready divisions in the entire American armed forces to the Korean fighting; by September 8 all available combat-trained army units had been dispatched to Korea except for the 82nd Airborne Division. Although many of these units were with the impending Inchon amphibious operation, some 83,000 American soldiers and another 57,000 South Korean and British faced the North Koreans along the front.</div>
+                        </td>
+                        <td class="justification-cell">This is a descriptive narrative reconstruction of U.S. force deployments to Korea, specifying how many divisions were committed and which unit remained undeployed by a particular date. The surrounding sentences provide quantitative context and reinforce that this is a factual account of troop movements rather than interpretation or causal argument.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="Korean_War_Bruce-Cumings.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Korean_War_Bruce-Cumings.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">In other words, NSC 81, the rollback strategy itself, caused the Chinese intervention, and not the subsequent arrival of American troops at the Yalu River.</td>
+                        <td class="refined-claim-cell">In Bruce Cumings&#39;s account, U.S. National Security Council document NSC 81, embodying the rollback strategy in Korea, caused the Chinese intervention in the Korean War rather than the subsequent arrival of American troops at the Yalu River.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The decision was embodied in NSC document number 81, written mostly by Dean Rusk, which authorized MacArthur to move into North Korea if there were no Soviet or Chinese threats to intervene. It explicitly called for &quot;a roll-back&quot; of the North Korean regime; war dispatches routinely referred to the &quot;liberated areas&quot; in the North. At first he was told to use only Korean units in operations near the Chinese border, but soon the JCS told MacArthur to feel unhindered. MacArthur was correct in telling senators in 1951 that the crossing of the parallel &quot;had the most complete and absolute approval of every section of the American government,&quot; if we grant him the license of mild exaggeration owed to a person who had been badly blindsided by Truman-aligned reconstructions of history. [...] In other words, NSC 81, the rollback strategy itself, caused the Chinese intervention, and not the subsequent arrival of American troops at the Yalu River.</div>
+                        </td>
+                        <td class="justification-cell">This claim explicitly states a causal relationship between the adoption of NSC 81 (rollback into North Korea) and the subsequent Chinese intervention, contrasting it with an alternative putative cause. The snippet links the content of NSC 81 and its approval to the timing of Chinese decisions, grounding the causal explanation in documented policy and sequence.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="Korean_War_Bruce-Cumings.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Korean_War_Bruce-Cumings.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">Thus the decision to intervene in force was Acheson&#39;s decision, supported by the president but taken before United Nations, Pentagon, or congressional approval.</td>
+                        <td class="refined-claim-cell">Thus, in June 1950, the decision for the United States to intervene in the Korean War in force was Secretary of State Dean Acheson&#39;s decision, supported by President Harry Truman but taken before United Nations, Pentagon, or congressional approval.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">On the night of June 24 (Washington time), Acheson decided to take the Korean question to the UN, before he had notified President Truman of the fighting; he then told Truman there was no need to have him back in Washington until the next day. At emergency White House meetings on the evening of June 25, Acheson argued for increased military aid to the ROK, U.S. Air Force cover for the evacuation of Americans, and the interposition of the Seventh Fleet between Taiwan and the China mainland—thus obviating a Communist invasion of the island, dividing China and leaving Taiwan governed by the Republic of China even today. On the afternoon of June 26 Acheson labored alone on the fundamental decisions committing American air and naval power to the Korean War, which were approved by the White House that evening. Thus the decision to intervene in force was Acheson&#39;s decision, supported by the president but taken before United Nations, Pentagon, or congressional approval.</div>
+                        </td>
+                        <td class="justification-cell">This claim reconstructs the process by which U.S. intervention decisions were made, emphasizing who made them, when, and in what institutional sequence. The quoted passage details Acheson&#39;s solo drafting, subsequent presidential approval, and the absence of prior UN, Pentagon, or congressional authorization, fitting the processual analysis category.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="evidence" data-book="Korean_War_Bruce-Cumings.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Korean_War_Bruce-Cumings.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-evidence">evidence</span>
+                        </td>
+                        <td class="claim-cell">In 1992 the historian Yoshiaki Yoshimi walked into a military library and found many such documents just sitting on the shelf.</td>
+                        <td class="refined-claim-cell">In 1992 the historian Yoshiaki Yoshimi walked into a Japanese military library and found many archival documents on the Japanese military sexual slavery system just sitting on the shelf.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Japanese historians had written about the sexual slavery system for decades, but were told time and again by the authorities that no archival documents existed on it. In 1992 the historian Yoshiaki Yoshimi walked into a military library and found many such documents just sitting on the shelf.</div>
+                        </td>
+                        <td class="justification-cell">This claim describes the discovery of archival documents contradicting prior official assertions that no such records existed, thereby correcting the evidentiary record about the &quot;comfort women&quot; system. The snippet makes clear both the earlier denials and Yoshimi&#39;s subsequent finding of documents, satisfying the evidence-discovery and correction criteria.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="Korean_War_Bruce-Cumings.epub">
+                        <td class="book-cell">
+                            <span class="book-badge">Korean_War_Bruce-Cumings.epub</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">Various encyclopedias state that the countries involved in the three-year conflict suffered a total of more than 4 million casualties, of which at least 2 million were civilians—a higher percentage than in World War II or Vietnam.</td>
+                        <td class="refined-claim-cell">According to various encyclopedias cited by Bruce Cumings, the countries involved in the three-year Korean War suffered a total of more than 4 million casualties, of which at least 2 million were civilians, a higher civilian percentage than in World War II or the Vietnam War.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Various encyclopedias state that the countries involved in the three-year conflict suffered a total of more than 4 million casualties, of which at least 2 million were civilians—a higher percentage than in World War II or Vietnam.</div>
+                        </td>
+                        <td class="justification-cell">This claim compares casualty figures and the civilian share of casualties in the Korean War to those in World War II and Vietnam using explicit numerical thresholds and percentages. It is a comparative factual statement grounded in referenced encyclopedia data, fitting the comparative category.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">Among House members, 51 Democrats (20% of all Democrats) sent supportive mentions of BLM, while only 4 Republican members (4% of all Republicans) sent supportive mentions.</td>
+                        <td class="refined-claim-cell">Among U.S. House members, 51 Democrats (20% of all Democrats) sent supportive mentions of Black Lives Matter (BLM) in their official e-newsletters, while only 4 Republican members (4% of all Republicans) sent supportive mentions.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Among House members, 51 Democrats (20% of all Democrats) sent supportive mentions of BLM, while only 4 Republican members (4% of all Republicans) sent supportive mentions.</div>
+                        <div class="snippet-item">Seven Republicans sent anti-BLM messages.</div>
+                        </td>
+                        <td class="justification-cell">This is a comparative factual claim because it directly compares the number and share of Democratic versus Republican House members who sent supportive mentions of BLM, using explicit numeric counts and percentages. The text explicitly states these figures, so the claim is fully supported by the cited sentence and fits the comparative category.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">These results show that the incumbent House members who publicly communicated support of BLM to their constituents won a higher share of the vote than members who stayed quiet or communicated something negative even after taking other variables into account.</td>
+                        <td class="refined-claim-cell">In the 2020 U.S. House elections, incumbent House members who publicly communicated support of Black Lives Matter (BLM) to their constituents won a higher share of the vote than members who stayed quiet or communicated something negative, even after taking other variables into account.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">These results show that the incumbent House members who publicly communicated support of BLM to their constituents won a higher share of the vote than members who stayed quiet or communicated something negative even after taking other variables into account.</div>
+                        <div class="snippet-item">As can be seen in the first row of data in the table, incumbents who communicated at least one statement of Black Lives Matter won 1.7% more votes than incumbents who communicated a negative statement or no statement at all.</div>
+                        </td>
+                        <td class="justification-cell">This is an empirical causal explanation because it links a specific action (publicly communicating support for BLM) to an electoral outcome (higher vote share), based on statistical regression results. The text explicitly reports both the qualitative conclusion and the quantified effect (1.7 percentage points), demonstrating that the causal relationship is grounded in the authors’ OLS models.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">They find the greatest predictors of voters’ plan to abandon Trump were positive attitudes about BLM.</td>
+                        <td class="refined-claim-cell">In Chapter 5, Kevin Doran and Tauna S. Sisco find that the greatest predictors of voters’ plan to abandon Donald Trump in 2020 were positive attitudes about Black Lives Matter (BLM).</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">They find the greatest predictors of voters’ plan to abandon Trump were positive attitudes about BLM.</div>
+                        <div class="snippet-item">They find the greatest predictors of voters’ plan to abandon Trump were positive attitudes about BLM.</div>
+                        </td>
+                        <td class="justification-cell">This is a causal claim because it identifies positive attitudes toward BLM as the strongest predictors of a behavioral intention (plans to abandon Trump), based on empirical analysis described in Chapter 5. The sentence explicitly states this predictive relationship, indicating that attitudes toward BLM are causally associated with voters’ plans regarding Trump.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="causal" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-causal">causal</span>
+                        </td>
+                        <td class="claim-cell">While living near BLM events decreased voters’ likelihood to choose Trump, their proximity to police intervention in BLM events increase their likelihood to vote for Trump in the 2020 election.</td>
+                        <td class="refined-claim-cell">According to Kevin Doran and Tauna S. Sisco, living near Black Lives Matter (BLM) events decreased voters’ likelihood to choose Donald Trump, whereas proximity to police intervention in BLM events increased their likelihood to vote for Trump in the 2020 election.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">While living near BLM events decreased voters’ likelihood to choose Trump, their proximity to police intervention in BLM events increase their likelihood to vote for Trump in the 2020 election.</div>
+                        <div class="snippet-item">Using geo-coded protest data and district lines from 2016 to 2020, they analyze demographic differences in districts and if BLM events and their proximity impacted change in Republican vote share.</div>
+                        </td>
+                        <td class="justification-cell">This is an empirical causal explanation because it attributes changes in voters’ likelihood of choosing Trump to two distinct spatial exposures: proximity to BLM events and proximity to police intervention at those events. The text directly states that one kind of proximity decreased and the other increased the likelihood of voting for Trump, and notes that this conclusion is based on analysis of geo-coded protest data and vote-share changes.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">In 2020, African American women scored major election victories and political appointments to local, state, and federal positions.</td>
+                        <td class="refined-claim-cell">In 2020, African American women scored major election victories and political appointments to local, state, and federal positions in the United States.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">In 2020, African American women scored major election victories and political appointments to local, state, and federal positions.</div>
+                        <div class="snippet-item">The certification and swearing-in of Vice-President Kamala Harris was a victory for most women of color and of African descent after a long bitter history of exclusion from electoral participation for decades after the ratification of the 19th amendment.</div>
+                        </td>
+                        <td class="justification-cell">This is a descriptive narrative reconstruction because it summarizes what happened in the 2020 U.S. election cycle regarding African American women’s electoral and appointment successes across multiple levels of government. The sentence states a concrete historical fact about 2020 outcomes, which is supported by the subsequent example of Kamala Harris’s certification and swearing-in.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="narrative" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-narrative">narrative</span>
+                        </td>
+                        <td class="claim-cell">By 2020 identity politics was at the forefront of the divisive national election that resulted in the first African American woman voted in as Vice-President of the United States, a spotlight on social movements from Black Lives Matter to #Metoo, and a Rainbow Wave in congressional candidates.</td>
+                        <td class="refined-claim-cell">By 2020, identity politics was at the forefront of the divisive United States national election that resulted in the first African American woman being voted in as Vice-President of the United States, a spotlight on social movements from Black Lives Matter to #Metoo, and a Rainbow Wave in congressional candidates.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">By 2020 identity politics was at the forefront of the divisive national election that resulted in the first African American woman voted in as Vice-President of the United States, a spotlight on social movements from Black Lives Matter to #Metoo, and a Rainbow Wave in congressional candidates.</div>
+                        </td>
+                        <td class="justification-cell">This is a descriptive narrative reconstruction because it recounts specific outcomes of the 2020 U.S. national election—the election of the first African American woman vice president, heightened attention to certain social movements, and a “Rainbow Wave” in congressional candidates—and situates them within a broader description of identity politics being central to that election. The sentence is factual and time-bounded, and all components are explicitly stated in the text.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="processual" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-processual">processual</span>
+                        </td>
+                        <td class="claim-cell">The Club movement spearheaded the recruitment and mobilization of African American women in the suffrage movement, as well as convincing African American males who were able to vote in some areas, to support the movement.</td>
+                        <td class="refined-claim-cell">In the late nineteenth and early twentieth centuries, the African American women’s club movement spearheaded the recruitment and mobilization of African American women in the suffrage movement, as well as convincing African American males who were able to vote in some areas to support the movement.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">The Club movement spearheaded the recruitment and mobilization of African American women in the suffrage movement, as well as convincing African American males who were able to vote in some areas, to support the movement.</div>
+                        <div class="snippet-item">From the late nineteenth to the twentieth century, African American women’s clubs were the primary vehicles for socializing and creating a tier of activist African American women.</div>
+                        </td>
+                        <td class="justification-cell">This is a processual analysis because it explains how African American women and some African American men were brought into the suffrage movement through the organizational mechanism of the club movement. The text identifies the club movement as the actor that “spearheaded” recruitment and mobilization and persuaded male voters, describing a concrete pathway by which suffrage support was built over time.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="interpretive" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-interpretive">interpretive</span>
+                        </td>
+                        <td class="claim-cell">Pearl K. Ford Dowe’s (2020) groundbreaking theory asserts that African American women’s political ambitions are driven by three factors—marginalization, ambition, and radical imagination.</td>
+                        <td class="refined-claim-cell">According to Pearl K. Ford Dowe’s (2020) theory, African American women’s political ambitions are driven by three factors—marginalization, ambition, and radical imagination.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Pearl K. Ford Dowe’s (2020) groundbreaking theory asserts that African American women’s political ambitions are driven by three factors—marginalization, ambition, and radical imagination.</div>
+                        <div class="snippet-item">For proponents, the theory of “political ambition” is predicated on the assumption that all office seekers and political actors have political ambitions.</div>
+                        </td>
+                        <td class="justification-cell">This is an evidence-grounded interpretive claim because it reports Dowe’s own theoretical account of the motives underlying African American women’s political ambitions, based on her published work. The text explicitly attributes the interpretation of these motives (marginalization, ambition, radical imagination) to Dowe’s theory, grounding the claim in documented scholarly explanation rather than inferences about mental states.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">Since the late 1930s, when Gallup began asking if Americans would vote for a female president (if she were qualified), the proportion who said they would vote for a woman increased from just over 30% to more than 90%.</td>
+                        <td class="refined-claim-cell">Since the late 1930s, when Gallup began asking if Americans would vote for a qualified female president, the proportion who said they would vote for a woman has increased from just over 30% to more than 90%.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Since the late 1930s, when Gallup began asking if Americans would vote for a female president (if she were qualified), the proportion who said they would vote for a woman increased from just over 30% to more than 90%.</div>
+                        </td>
+                        <td class="justification-cell">This is a comparative factual claim because it compares public willingness to vote for a woman president at two time points—late 1930s versus more recent Gallup surveys—using specific percentages. The sentence directly reports the measured change from “just over 30%” to “more than 90%,” making the claim verifiable via Gallup polling data.</td>
+                    </tr>
+                    <tr class="claim-row" data-category="comparative" data-book="identity-politics-in-us-national-elections">
+                        <td class="book-cell">
+                            <span class="book-badge">identity-politics-in-us-national-elections</span>
+                        </td>
+                        <td class="category-cell">
+                            <span class="category-badge category-comparative">comparative</span>
+                        </td>
+                        <td class="claim-cell">Schaffner and Green’s (2019) survey experiment early in the 2020 contest found that when asked about an ideal candidate, more Democratic voters had a baseline preference for a female candidate.</td>
+                        <td class="refined-claim-cell">Schaffner and Green’s (2019) survey experiment early in the 2020 Democratic presidential nomination contest found that, when asked about an ideal candidate, more Democratic voters had a baseline preference for a female candidate.</td>
+                        <td class="snippets-cell">
+                        <div class="snippet-item">Schaffner and Green’s (2019) survey experiment early in the 2020 contest found that when asked about an ideal candidate, more Democratic voters had a baseline preference for a female candidate.</div>
+                        <div class="snippet-item">However, when asked which one might be able to beat Trump, that trend was reversed.</div>
+                        </td>
+                        <td class="justification-cell">This is a comparative factual claim because it reports experimental survey evidence showing that, under a specified question framing (“ideal candidate”), a larger share of Democratic respondents preferred a female candidate as their baseline choice. The sentence explicitly attributes this result to Schaffner and Green’s survey experiment, and the follow-up sentence about the trend reversing under an electability frame further supports that the original finding concerns relative levels of preference.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="no-results" class="no-results hidden">
+                <h2>No claims found</h2>
+                <p>Try selecting a different category filter.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentCategory = 'all';
+        let currentBook = 'all';
+        
+        function filterByCategory(category) {
+            currentCategory = category;
+            applyFilters();
+            
+            // Update category button states
+            document.querySelectorAll('.filter-section:first-child .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        function filterByBook(book) {
+            currentBook = book;
+            applyFilters();
+            
+            // Update book button states
+            document.querySelectorAll('.filter-section:last-child .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        function applyFilters() {
+            const rows = document.querySelectorAll('.claim-row');
+            let visibleCount = 0;
+            
+            rows.forEach(row => {
+                const rowCategory = row.getAttribute('data-category');
+                const rowBook = row.getAttribute('data-book');
+                
+                const categoryMatch = currentCategory === 'all' || rowCategory === currentCategory;
+                const bookMatch = currentBook === 'all' || rowBook === currentBook;
+                
+                if (categoryMatch && bookMatch) {
+                    row.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+            
+            // Show/hide no results message
+            const noResults = document.getElementById('no-results');
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
