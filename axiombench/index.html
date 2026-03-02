@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AxiomBench</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+.container { max-width: 600px; width: 100%; }
+h1 { font-size: 28px; color: #fff; margin-bottom: 8px; }
+.subtitle { color: #8892a4; font-size: 14px; margin-bottom: 32px; }
+.card { background: #1a1d27; border-radius: 12px; padding: 20px; margin-bottom: 12px; text-decoration: none; display: block; border-left: 4px solid #5dade2; transition: all 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+.card:hover { transform: translateX(4px); border-left-color: #fff; }
+.card h2 { font-size: 16px; color: #fff; margin-bottom: 4px; }
+.card p { font-size: 13px; color: #8892a4; }
+.card .tag { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: bold; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>AxiomBench</h1>
+    <div class="subtitle">Evaluating Deep Research Agents Beyond Fact Retrieval</div>
+
+    <a class="card" href="claims.html" style="border-left-color:#2ecc71">
+        <h2>Extracted Claims</h2>
+        <p>202 claims from 3 non-fiction books (Korean War, Identity Politics, Sri Lanka)</p>
+        <span class="tag" style="background:rgba(46,204,113,0.15);color:#2ecc71">Human + LLM</span>
+    </a>
+
+    <a class="card" href="korean-war.html" style="border-left-color:#e74c3c">
+        <h2>Korean War — Toulmin Pipeline (v3 EN)</h2>
+        <p>10 claims with grounds, warrants, backing/rebuttal, and claim-level rebuttals</p>
+        <span class="tag" style="background:rgba(231,76,60,0.15);color:#e74c3c">Human vs LLM Comparison</span>
+    </a>
+
+    <a class="card" href="missciplus.html" style="border-left-color:#9b59b6">
+        <h2>MissciPlus — Fallacy Detection</h2>
+        <p>84 scientific arguments: Baseline vs Axiom-Enhanced fallacy detection</p>
+        <span class="tag" style="background:rgba(155,89,182,0.15);color:#9b59b6">Per-Example Analysis</span>
+    </a>
+</div>
+</body>
+</html>
