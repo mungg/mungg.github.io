@@ -3164,7 +3164,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <script>
 const STORAGE_KEY='axiombench_all_en_starred';
-const DEFAULT_STARRED={"Geopolitics-2024-C18": true, "Geopolitics-2024-C35": true, "History-2010-C01": true, "History-2010-C04": true, "History-2010-C10": true, "History-2010-C27": true, "History-2014-C07": true, "History-2019-C15": true, "Politics-2018-C02": true, "Politics-2018-C06": true, "Politics-2021-C03": true, "Politics-2021-C07": true, "Politics-2021-C08": true, "Politics-2021-C13": true, "Politics-2021-C21": true, "Politics-2021-C23": true, "Psychology-2013-C08": true, "Sociology-2017-C08": true, "Sociology-2018-C06": true, "Sociology-2018-C07": true};
+const DEFAULT_STARRED={};
 let starred=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
 if(starred===null){starred=Object.assign({},DEFAULT_STARRED);localStorage.setItem(STORAGE_KEY,JSON.stringify(starred))}
 let genreFilter='all',catFilter='all',starredOnly=false;
