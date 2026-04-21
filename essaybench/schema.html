@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>EssayBench — Unified non-fiction essay extraction</title>
+<style>
+  :root {--bg:#fafaf9;--ink:#1c1917;--muted:#78716c;--accent:#0f766e;--border:#e7e5e4;}
+  *{box-sizing:border-box}
+  body{font:14px/1.55 -apple-system,sans-serif;color:var(--ink);background:var(--bg);margin:0;padding:24px}
+  .container{max-width:1200px;margin:0 auto}
+  h1{margin:0 0 6px;font-size:24px}
+  h2{margin:30px 0 12px;font-size:20px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+  h3{margin:18px 0 10px;font-size:17px;color:var(--accent)}
+  h4{margin:16px 0 6px;font-size:14px;color:#44403c;text-transform:uppercase;letter-spacing:0.04em}
+  h5{margin:10px 0 4px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em}
+  .meta{color:var(--muted);font-size:13px;margin-bottom:20px}
+  section{background:#fff;border:1px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:20px}
+  pre{background:#1c1917;color:#fafaf9;padding:16px;border-radius:6px;overflow-x:auto;font-size:11.5px;line-height:1.45;margin:0;white-space:pre-wrap}
+  pre,code{font-family:"SF Mono",Menlo,monospace}
+  code.small{font-size:11.5px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0 14px}
+  table.compact td, table.compact th{padding:4px 8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+  table.compact th{background:#f5f5f4;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;color:#57534e}
+  table.lit td, table.lit th{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+  table.lit th{background:#f5f5f4;font-size:12px;text-transform:uppercase;letter-spacing:0.04em}
+  table.cross-tab{border:1px solid var(--border);width:auto}
+  table.cross-tab th, table.cross-tab td{padding:6px 12px;border:1px solid var(--border);text-align:center;font-size:12px}
+  table.cross-tab th{background:#f5f5f4}
+  .totals{background:#fef3c7}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .strong{font-weight:600}
+  .thesis{margin:0 0 10px;padding:12px 14px;background:#f5f5f4;border-left:3px solid var(--accent);border-radius:4px;font-family:Georgia,serif;font-size:14px}
+  .kv{margin:4px 0;font-size:13px}
+  .kv b{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.04em;margin-right:6px;display:inline-block;min-width:160px;vertical-align:top}
+  .kv.cog{background:#fef3c7;padding:8px 12px;border-radius:4px;margin:8px 0}
+  .kv.cog b{color:#78350f}
+  .cog-text{font-family:Georgia,serif;font-size:13px;color:#1c1917}
+  .kvblock{margin:10px 0;font-size:13px}
+  .kvblock b{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:3px}
+  .kvblock>div{padding-left:2px}
+  .kvblock.cog{background:#fef3c7;padding:10px 12px;border-radius:4px}
+  .kvblock.cog b{color:#78350f}
+  .chip{display:inline-block;background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:10px;margin:1px 3px 1px 0;font-size:11px}
+  .chip.eval{background:#fef3c7;color:#78350f}
+  .chip.framing{background:#dbeafe;color:#1e40af}
+  .chip.device{background:#ede9fe;color:#6d28d9}
+  .chip.hedge{background:#ffedd5;color:#9a3412}
+  .chip.booster{background:#dcfce7;color:#166534}
+  .tag{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:500;margin-right:4px;background:#e0e7ff;color:#3730a3}
+  .tag.big{font-size:12px;padding:3px 10px}
+  .tag.support{background:#fef3c7;color:#78350f}
+  .tag.imp.minor{background:#f5f5f4;color:#78716c}
+  .tag.imp.central{background:#dcfce7;color:#166534}
+  .tag.imp.climactic{background:#fee2e2;color:#991b1b}
+  .tag.fidelity.strengthened{background:#86efac;color:#14532d}
+  .tag.fidelity.fair{background:#93c5fd;color:#1e3a8a}
+  .tag.fidelity.weakened{background:#fb7185;color:#881337}
+  .tag.stance.agrees{background:#dcfce7;color:#166534}
+  .tag.stance.partial{background:#fef3c7;color:#78350f}
+  .tag.stance.rejects{background:#fee2e2;color:#991b1b}
+  .tag.att.positive{background:#dcfce7;color:#166534}
+  .tag.att.neutral{background:#f5f5f4;color:#57534e}
+  .tag.att.negative{background:#fee2e2;color:#991b1b}
+  .tag.depth.developed{background:#e0e7ff;color:#3730a3}
+  .tag.depth.brief_mention{background:#f5f5f4;color:#78716c}
+  .tag.relation.support{background:#dcfce7;color:#166534}
+  .tag.relation.attack{background:#fee2e2;color:#991b1b}
+  .tag.relation.elaborate{background:#e0f2fe;color:#075985}
+  .tag.relation.complicate{background:#fef3c7;color:#78350f}
+  .tag.relation.undermine_rival{background:#fce7f3;color:#9f1239}
+  .tag.cat{background:#e0e7ff;color:#3730a3}
+  .tag.type{background:#d1fae5;color:#065f46}
+  .tag.concentrated{background:#dcfce7;color:#166534}
+  .tag.balanced{background:#fef3c7;color:#78350f}
+  .tag.diffuse{background:#fee2e2;color:#991b1b}
+  .muted{color:var(--muted)}
+  ul{margin:4px 0;padding-left:18px;font-size:13px}
+  li{margin-bottom:3px}
+  .p-ref{display:inline-block;background:#1c1917;color:#fff;padding:1px 6px;border-radius:3px;font-size:10px;margin-right:6px;font-family:monospace}
+  .pivots{list-style:none;padding-left:0;margin:6px 0 12px}
+  .pivots li{padding:4px 0;font-size:13px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .four-col{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}
+  .four-col h5{margin-top:0}
+  .engagement{border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin:10px 0;background:#fafaf9}
+  .rival-head{margin-bottom:10px;font-size:13px}
+  .rival-text{font-family:Georgia,serif;font-style:italic}
+  nav{position:sticky;top:0;background:#fafaf9;padding:10px 0;border-bottom:1px solid var(--border);margin-bottom:20px;font-size:13px;z-index:10}
+  nav a{color:var(--accent);text-decoration:none;margin-right:14px}
+  nav a:hover{text-decoration:underline}
+</style></head><body>
+<div class="container">
+  <h1>EssayBench — Unified non-fiction essay extraction</h1>
+  <div class="meta">Single-pass Stage-1 prompt · dry-run on "How Not to Defeat Authoritarianism" lead · literature grounding</div>
+
+  <nav>
+    <a href="#prompt">Prompt</a>
+    <a href="#thesis">① Thesis</a>
+    <a href="#engagements">② Stance structure</a>
+    <a href="#claims">③ Claims</a>
+    <a href="#evidence">④ Evidence</a>
+    <a href="#emphasis">⑤ Pivots</a>
+    <a href="#epistemics">⑥ Epistemics</a>
+    <a href="#voice-style">⑦ Voice/Style</a>
+    <a href="#lit-tradition">Lit.</a>
+    <a href="#lit-family">Families</a>
+  </nav>
+
+  <h2 id="prompt">Stage-1 Prompt</h2>
+  
+<section>
+  <h3>extract.py · EXTRACT_PROMPT (unified, Stage 1 one-pass)</h3>
+  <pre>You are an argumentative-essay analyst. Extract a structured outline
+from the provided essay in a single pass.
+
+## Instructions
+- Be objective; avoid interpretation beyond what the text conveys.
+- Use null for absent scalar fields, empty arrays for no items.
+- GLOBAL = essay-level. LOCAL = paragraph- or sentence-specific
+  (include ¶ ref when relevant, 1-indexed).
+- For canonical_name in evidence, use the MOST COMPACT form (e.g.
+  &quot;MLK Birmingham letter&quot; not &quot;the 1963 letter&quot;).
+- evidence[].claim_idx refers to claims[].idx. Use -1 if the evidence
+  backs a point not explicitly in claims.
+
+## Essay
+---
+{essay_text}
+---
+
+## Output
+Respond with ONLY valid JSON, no markdown, matching:
+
+{{
+  &quot;thesis&quot;: {{                                 // [GLOBAL]
+    &quot;statement&quot;: &quot;&lt;one sentence&gt;&quot;,
+    &quot;summary&quot;: &quot;&lt;2-3 sentences&gt;&quot;,
+    &quot;central_opposition&quot;: &quot;&lt;the competing view this argument pushes against&gt;&quot;,
+    &quot;argument_arc&quot;: &quot;&lt;beats joined by arrows, e.g. credit-lead -&gt; pivot -&gt; prescription&gt;&quot;,
+    &quot;center_of_gravity&quot;: &quot;&lt;the single most emphasized point, with ¶ ref&gt;&quot;,
+    &quot;takeaway&quot;: &quot;&lt;actionable point or null&gt;&quot;
+  }},
+
+  &quot;stance_structure&quot;: {{                       // [GLOBAL]
+    &quot;agreements&quot;: [&quot;&lt;specific points the essay explicitly endorses&gt;&quot;],
+    &quot;disagreements&quot;: [&quot;&lt;specific points the essay explicitly rejects&gt;&quot;],
+    &quot;extensions&quot;: [&quot;&lt;points accepted but pushed further&gt;&quot;],
+    &quot;concessions&quot;: [&quot;&lt;partial truths granted before pivoting&gt;&quot;]
+  }},
+
+  &quot;claims&quot;: [                                  // [LOCAL]
+    {{
+      &quot;idx&quot;: 0,
+      &quot;paragraph&quot;: 1,
+      &quot;claim&quot;: &quot;&lt;one-line, load-bearing only (10-20 per essay)&gt;&quot;,
+      &quot;importance&quot;: &quot;minor|central|climactic&quot;,
+      &quot;development_depth&quot;: 1
+    }}
+  ],
+  &quot;claim_hierarchy&quot;: &quot;&lt;how claims build toward the thesis, e.g. descriptive -&gt; causal -&gt; normative&gt;&quot;,  // [GLOBAL]
+
+  &quot;evidence&quot;: [                                // [LOCAL]
+    {{
+      &quot;canonical_name&quot;: &quot;&lt;compact reference, &lt;8 words&gt;&quot;,
+      &quot;category&quot;: &quot;historical_event|person|country_case|election|study|statistic|policy|book_or_essay|organization|quote|legal_case|other&quot;,
+      &quot;evidence_type&quot;: &quot;academic_study|empirical_data|case_study|expert_opinion|policy_precedent|personal_account|hypothetical|journalistic_report&quot;,
+      &quot;author_attitude&quot;: &quot;positive|neutral|negative&quot;,
+      &quot;claim_idx&quot;: 0,
+      &quot;specific_detail&quot;: &quot;&lt;what the essay says, &lt;30 words&gt;&quot;
+    }}
+  ],
+
+  &quot;pivots&quot;: [                                  // [LOCAL]
+    {{&quot;paragraph&quot;: 3, &quot;description&quot;: &quot;&lt;how the argument reframes here&gt;&quot;}}
+  ],
+
+  &quot;assumed_premises&quot;: &quot;&lt;what is taken for granted without argument&gt;&quot;,  // [GLOBAL]
+
+  &quot;epistemics&quot;: {{                             // [GLOBAL + LOCAL]
+    &quot;hedges&quot;: [&quot;&lt;verbatim hedge instances&gt;&quot;],
+    &quot;boosters&quot;: [&quot;&lt;verbatim booster instances&gt;&quot;],
+    &quot;certainty_level&quot;: &quot;low|medium|high&quot;,
+    &quot;source_attribution&quot;: &quot;absent|implicit|explicit&quot;,
+    &quot;certainty_trajectory&quot;: &quot;&lt;how commitment evolves, e.g. &#x27;hedged opening -&gt; assertive middle -&gt; qualified conclusion&#x27;&gt;&quot;
+  }},
+
+  &quot;style&quot;: {{                                  // [LOCAL]
+    &quot;hypothetical_cases&quot;: [&quot;&lt;abstract &#x27;when X...&#x27; framings used in place of concrete evidence&gt;&quot;],
+    &quot;figurative_language&quot;: [&quot;&lt;metaphors or analogies used&gt;&quot;],
+    &quot;evaluative_language&quot;: [&quot;&lt;judgmental or polemical phrasing&gt;&quot;]
+  }},
+
+  &quot;scope&quot;: {{                                  // [GLOBAL]
+    &quot;domains&quot;: [&quot;&lt;topical domains engaged&gt;&quot;],
+    &quot;time_span&quot;: &quot;&lt;historical reach&gt;&quot;,
+    &quot;atmosphere&quot;: &quot;urgent|analytical|polemical|scholarly&quot;
+  }},
+
+  &quot;density_note&quot;: &quot;&lt;one sentence: is the essay evidence-dense or abstract?&gt;&quot;  // [GLOBAL]
+}}
+</pre>
+</section>
+
+  <h2 id="result">Dry-run result — 00_lead (Bonica &amp; Grumbach, Boston Review Winter 2026)</h2>
+  <div id="thesis">
+<section>
+  <h3>① Thesis</h3>
+  <p class="thesis">In an era of nationalized elections and intense polarization, moderation is at best a small and inconsistent electoral advantage for Democrats and a dangerously inadequate response to the authoritarian threat to democracy.</p>
+  <div class="kvblock"><b>summary</b><div>The authors reject the post-2024 consensus that Democrats lost because they were not moderate enough, arguing that popularism rests on outdated median-voter logic and flawed empirical analyses. They marshal political-science research, replication failures, and case studies to show moderation no longer produces consistent vote gains, and they prescribe a strategy built on anti-corruption reframing, anti-establishment credibility, and turnout mobilization.</div></div>
+  <div class="kvblock"><b>central opposition</b><div>Popularism/moderation orthodoxy as advanced by the NYT editorial board, Matthew Yglesias, Ruy Teixeira, Ezra Klein, and Split Ticket&#x27;s WAR analysis.</div></div>
+  <div class="kvblock"><b>arc</b><div><code>2024 loss &amp; moderation consensus -&gt; critique of popularism&#x27;s theory -&gt; empirical debunking of the moderation advantage -&gt; structural explanation of why the old rules broke -&gt; prescriptive pivot to reframe/credibility/turnout -&gt; climactic stakes (democracy itself)</code></div></div>
+  <div class="kvblock"><b>takeaway</b><div>Democrats should abandon poll-driven moderation and instead build an anti-corruption, anti-establishment coalition focused on mobilizing disengaged voters rather than persuading a shrinking pool of swing voters.</div></div>
+  <div class="kvblock cog"><b>center_of_gravity</b>
+    <div class="cog-text">The empirical claim that &#x27;in the Trump era, a candidate&#x27;s ideological moderation has no consistent, measurable effect on their vote share,&#x27; anchored by the 22-of-22 moderate-loss statistic (¶22-23).</div></div>
+</section></div>
+  <div id="engagements">
+<section>
+  <h3>② Stance structure — point-level agree/disagree/extend/concede</h3>
+  <div class="four-col">
+    <div><h5>✅ agreements (4)</h5><ul><li>Democrats face real structural disadvantages in the Senate/Electoral College due to geographic concentration</li><li>Moderation did produce measurable electoral benefits in the 1980s-1990s</li><li>Candidate quality still matters, though less than before</li><li>Nonvoters in 2024 likely leaned slightly toward Trump over Harris</li></ul></div>
+    <div><h5>❌ disagreements (7)</h5><ul><li>The NYT editorial board&#x27;s claim that &#x27;moving to the center is the way to win&#x27;</li><li>Yglesias&#x27;s call for &#x27;a more moderate ideology&#x27;</li><li>Teixeira&#x27;s equation &#x27;Moderation = Democratic votes&#x27;</li><li>Split Ticket&#x27;s WAR metric showing moderates dramatically outperform progressives</li><li>Ezra Klein&#x27;s popularist framing of campaigns as polling-driven packaging</li><li>The median voter theorem as a reliable guide in polarized, nationalized elections</li><li>The implicit view that Trump is an aberration to be waited out</li></ul></div>
+    <div><h5>🔀 extensions (3)</h5><ul><li>Achen and Bartels&#x27;s rebuttal of folk theory is extended to argue popularism specifically misreads voter agency</li><li>Daniel Hopkins&#x27;s nationalization thesis is pushed into the claim that candidate ideology is largely drowned out by partisan tides</li><li>The &#x27;follow the leader&#x27; dynamic is extended to show strategic repositioning backfires for candidates lacking Trump/Manchin-style bonds</li></ul></div>
+    <div><h5>🤝 concessions (5)</h5><ul><li>Popularism correctly diagnoses Democrats&#x27; geographic/structural bind</li><li>A small moderation bonus may exist in some contexts</li><li>Candidate quality still matters some</li><li>There is reasonable room for debate about particular kinds of moderation in particular contexts</li><li>Nobody knows for certain what Democrats should do instead</li></ul></div>
+  </div>
+</section></div>
+  <div id="claims">
+<section>
+  <h3>③ Claims (25 · 3-level importance + development_depth)</h3>
+  <div class="kv"><b>importance distribution</b>
+    <span class=chip>central: 15</span> <span class=chip>climactic: 8</span> <span class=chip>minor: 2</span></div>
+  <div class="kv"><b>development_depth</b>
+    min=2 ·
+    max=3 ·
+    avg=2.6</div>
+  <div class="kv"><b>claim_hierarchy</b>
+    <code class="small">&quot;descriptive (2024 loss &amp; moderation consensus) -&gt; critical-theoretical (popularism&#x27;s folk theory of voters) -&gt; empirical-debunking (replication failures, null causal effects, 22-of-22) -&gt; structural-causal (nationalization, turnout, leader-follower, moderate-is-not-popular) -&gt; normative-prescriptive (reframe around corruption, build credibility, boost turnout) -&gt; existential-climactic (authoritarian stakes)&quot;</code></div>
+  <table class='compact'><thead>
+    <tr><th>idx</th><th>¶</th><th>importance</th><th>dev</th><th>claim</th></tr>
+  </thead><tbody><tr><td class='num'>#0</td><td class='num'>¶1</td><td><span class='tag imp central'>central</span></td><td class='num'>2</td><td>In 2024 democracy was framed as &#x27;on the ballot&#x27; and the consensus response was that Democrats must moderate to win.</td></tr><tr><td class='num'>#1</td><td class='num'>¶2</td><td><span class='tag imp central'>central</span></td><td class='num'>2</td><td>Kamala Harris pursued a moderation strategy—distancing from progressive positions and courting Liz Cheney—and lost anyway.</td></tr><tr><td class='num'>#2</td><td class='num'>¶4</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>Despite Harris&#x27;s loss, major pundits and editorial boards continue to insist moderation is the path to victory.</td></tr><tr><td class='num'>#3</td><td class='num'>¶6</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>3</td><td>The electoral benefits of moderation are at best small and inconsistent, at worst counterproductive.</td></tr><tr><td class='num'>#4</td><td class='num'>¶8</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>Popularism argues candidates should amplify what polls well and suppress what doesn&#x27;t, treating voters as consumers with fixed preferences.</td></tr><tr><td class='num'>#5</td><td class='num'>¶10</td><td><span class='tag imp central'>central</span></td><td class='num'>2</td><td>Popularism is a technocratic reskinning of Cleon-style pandering that dampens enthusiasm and demobilizes the base.</td></tr><tr><td class='num'>#6</td><td class='num'>¶12</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>Contemporary political science shows elections are nationalized and voters don&#x27;t primarily pick candidates based on policy, undermining popularism&#x27;s premise.</td></tr><tr><td class='num'>#7</td><td class='num'>¶15</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>3</td><td>The once-real moderation advantage has largely disappeared in the Trump era; popularist case studies rely on analyses that ignore newer research.</td></tr><tr><td class='num'>#8</td><td class='num'>¶17</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>Split Ticket&#x27;s WAR metric is proprietary, statistically underpowered, and fails replication against transparent baselines.</td></tr><tr><td class='num'>#9</td><td class='num'>¶19</td><td><span class='tag imp central'>central</span></td><td class='num'>2</td><td>The NYT&#x27;s PAC-endorsement analysis confuses correlation with causation and vanishes once fundraising and incumbency are controlled for.</td></tr><tr><td class='num'>#10</td><td class='num'>¶20</td><td><span class='tag imp central'>central</span></td><td class='num'>2</td><td>Joe Manchin&#x27;s success reflects personal brand, not transferable moderation—evidenced by Glenn Elliott&#x27;s 40-point loss.</td></tr><tr><td class='num'>#11</td><td class='num'>¶22</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>3</td><td>Coin-flip-primary causal designs show moderates who win close primaries do not outperform progressives in general elections.</td></tr><tr><td class='num'>#12</td><td class='num'>¶23</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>2</td><td>Of 22 Democratic incumbents who lost competitive seats between 2016 and 2024, 21 were moderates and only one was a progressive.</td></tr><tr><td class='num'>#13</td><td class='num'>¶26</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>The median voter theorem worked in an earlier era but has eroded for structural reasons tied to turnout, nationalization, and leadership dynamics.</td></tr><tr><td class='num'>#14</td><td class='num'>¶28</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>Who counts as the median voter depends on who turns out, so turnout-building matters more than persuading swing voters.</td></tr><tr><td class='num'>#15</td><td class='num'>¶30</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>Progressive candidates are slightly more effective at mobilizing the Democratic base and closing the turnout gap.</td></tr><tr><td class='num'>#16</td><td class='num'>¶31</td><td><span class='tag imp central'>central</span></td><td class='num'>2</td><td>Local politics has been swamped by national tides; every Democrat now rises or falls with the party brand.</td></tr><tr><td class='num'>#17</td><td class='num'>¶33</td><td><span class='tag imp minor'>minor</span></td><td class='num'>2</td><td>Voters who appear moderate often hold a mix of extreme positions, so there is no coherent &#x27;center&#x27; to triangulate toward.</td></tr><tr><td class='num'>#18</td><td class='num'>¶35</td><td><span class='tag imp central'>central</span></td><td class='num'>3</td><td>Voters follow leaders, but only leaders they already identify with; strategic repositioning signals inauthenticity for candidates still building that bond.</td></tr><tr><td class='num'>#19</td><td class='num'>¶37</td><td><span class='tag imp central'>central</span></td><td class='num'>2</td><td>High-profile Democratic moderates like Jared Golden and Kyrsten Sinema have seen their favorability collapse, contradicting the moderation thesis.</td></tr><tr><td class='num'>#20</td><td class='num'>¶38</td><td><span class='tag imp minor'>minor</span></td><td class='num'>2</td><td>European center-left parties that accommodate right-wing positions lose voters to the radical right, a cautionary pattern for Democrats.</td></tr><tr><td class='num'>#21</td><td class='num'>¶41</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>3</td><td>Democrats should reframe the battlefield around anti-corruption, which has broad resonance and mobilizing potential.</td></tr><tr><td class='num'>#22</td><td class='num'>¶45</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>2</td><td>Democrats must build anti-establishment credibility through genuine, costly reform rather than poll-tested messaging.</td></tr><tr><td class='num'>#23</td><td class='num'>¶47</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>3</td><td>Most critically, Democrats must close the turnout gap that was the decisive factor in 2024.</td></tr><tr><td class='num'>#24</td><td class='num'>¶51</td><td><span class='tag imp climactic'>climactic</span></td><td class='num'>3</td><td>The real divide is not left vs. center but whether Democrats treat Trump&#x27;s authoritarianism as an existential crisis or a temporary distraction.</td></tr></tbody></table>
+</section></div>
+  <div id="evidence">
+<section>
+  <h3>④ Evidence (33 · linked by claim_idx)</h3>
+
+  <div class="kv"><b>author_attitude</b>
+    <span class="tag att positive">positive: 16</span> <span class="tag att negative">negative: 11</span> <span class="tag att neutral">neutral: 6</span></div>
+  <div class="kv"><b>evidence_type</b>
+    <span class=chip>academic_study: 10</span> <span class=chip>case_study: 7</span> <span class=chip>empirical_data: 6</span> <span class=chip>journalistic_report: 5</span> <span class=chip>expert_opinion: 5</span></div>
+  <div class="kv"><b>category</b>
+    <span class=chip>quote: 7</span> <span class=chip>study: 6</span> <span class=chip>book_or_essay: 5</span> <span class=chip>historical_event: 4</span> <span class=chip>person: 4</span> <span class=chip>statistic: 4</span> <span class=chip>election: 2</span> <span class=chip>organization: 1</span></div>
+  <div class="kv"><b>claim_idx dist.</b>
+    <span class="small muted">#1: 1, #2: 4, #4: 1, #5: 1, #6: 3, #8: 3, #10: 2, #11: 1, #12: 1, #13: 1, #15: 1, #16: 1, #17: 1, #18: 3, #19: 2, #20: 1, #21: 4, #23: 1, #24: 1</span></div>
+
+  <h4>All items</h4>
+  <table class='compact'><thead>
+    <tr><th>name</th><th>category</th><th>evidence_type</th>
+        <th>attitude</th><th>→claim</th><th>detail</th></tr>
+  </thead><tbody><tr><td><b>Harris 2024 loss</b></td><td><span class='tag cat'>election</span></td><td><span class='tag type'>case_study</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#1</td><td class='muted'>Harris distanced from progressive positions, emphasized kitchen-table issues, courted Liz Cheney, and still lost.</td></tr><tr><td><b>NYT editorial board</b></td><td><span class='tag cat'>quote</span></td><td><span class='tag type'>journalistic_report</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#2</td><td class='muted'>Declared &#x27;moving to the center is the way to win,&#x27; dismissing contrary research as lost in &#x27;statistical complexities.&#x27;</td></tr><tr><td><b>Matthew Yglesias</b></td><td><span class='tag cat'>quote</span></td><td><span class='tag type'>expert_opinion</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#2</td><td class='muted'>In early 2025 wrote Democrats need &#x27;not just more moderate candidates&#x27; but &#x27;a more moderate ideology.&#x27;</td></tr><tr><td><b>Ruy Teixeira 2022</b></td><td><span class='tag cat'>quote</span></td><td><span class='tag type'>expert_opinion</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#2</td><td class='muted'>Wrote &#x27;Moderation = Democratic votes.&#x27;</td></tr><tr><td><b>Zohran Mamdani victory speech</b></td><td><span class='tag cat'>quote</span></td><td><span class='tag type'>journalistic_report</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#2</td><td class='muted'>Warned against bowing &#x27;at the altar of caution&#x27; in his November victory speech.</td></tr><tr><td><b>Ezra Klein on popularism</b></td><td><span class='tag cat'>quote</span></td><td><span class='tag type'>expert_opinion</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#4</td><td class='muted'>Said Democrats should poll, then talk about popular stuff and &#x27;shut up about the unpopular stuff.&#x27;</td></tr><tr><td><b>Cleon/Thucydides</b></td><td><span class='tag cat'>historical_event</span></td><td><span class='tag type'>case_study</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#5</td><td class='muted'>Thucydides derided Cleon as guided not by wisdom but by whatever drew the assembly&#x27;s loudest applause.</td></tr><tr><td><b>Achen &amp; Bartels, Democracy for Realists</b></td><td><span class='tag cat'>book_or_essay</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#6</td><td class='muted'>2016 book systematically rebutting the folk theory that voters choose based on freestanding policy preferences.</td></tr><tr><td><b>Hopkins, The Increasingly United States</b></td><td><span class='tag cat'>book_or_essay</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#6</td><td class='muted'>2018 book showing contemporary U.S. politics are more nationalized and polarized than ever.</td></tr><tr><td><b>Tip O&#x27;Neill &#x27;all politics is local&#x27;</b></td><td><span class='tag cat'>quote</span></td><td><span class='tag type'>expert_opinion</span></td><td><span class='tag att neutral'>neutral</span></td><td class='num'>#6</td><td class='muted'>Former Speaker&#x27;s maxim invoked as no longer true—elections have become national referendums.</td></tr><tr><td><b>Downs, Economic Theory of Democracy</b></td><td><span class='tag cat'>book_or_essay</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att neutral'>neutral</span></td><td class='num'>#13</td><td class='muted'>1957 book giving expression to the median voter theorem with the beach/ice-cream-vendor logic.</td></tr><tr><td><b>Split Ticket WAR</b></td><td><span class='tag cat'>organization</span></td><td><span class='tag type'>empirical_data</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#8</td><td class='muted'>Proprietary metric claims moderates dramatically outperform; authors found &lt;1/3 of WAR reflects actual overperformance.</td></tr><tr><td><b>Andrew Gelman critique</b></td><td><span class='tag cat'>person</span></td><td><span class='tag type'>expert_opinion</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#8</td><td class='muted'>Noted political WAR estimates are far more uncertain than baseball WAR because candidates face voters only every two years.</td></tr><tr><td><b>G. Elliott Morris WAR model</b></td><td><span class='tag cat'>study</span></td><td><span class='tag type'>empirical_data</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#8</td><td class='muted'>Transparent replicable model finding moderation is &#x27;overrated&#x27; and &#x27;not a silver bullet.&#x27;</td></tr><tr><td><b>Joe Manchin case</b></td><td><span class='tag cat'>person</span></td><td><span class='tag type'>case_study</span></td><td><span class='tag att neutral'>neutral</span></td><td class='num'>#10</td><td class='muted'>Success reflects decades of personal brand-building in a realigning state, not transferable moderation effect.</td></tr><tr><td><b>Glenn Elliott loss</b></td><td><span class='tag cat'>election</span></td><td><span class='tag type'>case_study</span></td><td><span class='tag att neutral'>neutral</span></td><td class='num'>#10</td><td class='muted'>After Manchin retired, the moderate Democrat Elliott lost West Virginia Senate race by 40 points.</td></tr><tr><td><b>Coin-flip primary design</b></td><td><span class='tag cat'>study</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#11</td><td class='muted'>Authors&#x27; causal design comparing moderates and progressives who won very close Democratic primaries; moderates did not outperform.</td></tr><tr><td><b>22 incumbents statistic</b></td><td><span class='tag cat'>statistic</span></td><td><span class='tag type'>empirical_data</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#12</td><td class='muted'>Of 22 Democratic incumbents who lost competitive seats 2016-2024, 21 were moderates; only one was a progressive.</td></tr><tr><td><b>120-million-voter turnout study</b></td><td><span class='tag cat'>study</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#15</td><td class='muted'>Authors&#x27; panel tracking 120M individuals across five cycles found progressives slightly better at mobilizing registered Democrats.</td></tr><tr><td><b>Grumbach&#x27;s nationalization book</b></td><td><span class='tag cat'>book_or_essay</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#16</td><td class='muted'>Co-author Grumbach&#x27;s book documenting voter attention to national news and state parties as agents of national counterparts.</td></tr><tr><td><b>Broockman on moderate voters</b></td><td><span class='tag cat'>study</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#17</td><td class='muted'>Shows voters appearing moderate often hold a mix of extreme positions (e.g., confiscate billionaire wealth AND ban abortion).</td></tr><tr><td><b>Barber &amp; Pope on Trump</b></td><td><span class='tag cat'>study</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#18</td><td class='muted'>Analysis of Trump&#x27;s contradictory policy statements showing followers adopt whichever position they are shown.</td></tr><tr><td><b>Lenz, Follow the Leader</b></td><td><span class='tag cat'>book_or_essay</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#18</td><td class='muted'>2012 book providing evidence that politicians shape voters&#x27; policy attitudes rather than vice versa.</td></tr><tr><td><b>Trump/Operation Warp Speed</b></td><td><span class='tag cat'>historical_event</span></td><td><span class='tag type'>case_study</span></td><td><span class='tag att neutral'>neutral</span></td><td class='num'>#18</td><td class='muted'>Trump has the most anti-vax voters despite overseeing 2020 rapid COVID-19 vaccine development.</td></tr><tr><td><b>Jared Golden case</b></td><td><span class='tag cat'>person</span></td><td><span class='tag type'>case_study</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#19</td><td class='muted'>Archetypal moderate in Maine&#x27;s 2nd district; by Oct 2025 favorability collapsed to 16%, 57% said he didn&#x27;t deserve reelection.</td></tr><tr><td><b>Kyrsten Sinema case</b></td><td><span class='tag cat'>person</span></td><td><span class='tag type'>case_study</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#19</td><td class='muted'>By late 2022, triangulation made her unpopular with Democrats, Republicans, and independents alike.</td></tr><tr><td><b>European center-left study</b></td><td><span class='tag cat'>study</span></td><td><span class='tag type'>academic_study</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#20</td><td class='muted'>Research found strategies that &#x27;accommodate&#x27; right-wing positions &#x27;lead to more voters defecting to the radical right.&#x27;</td></tr><tr><td><b>Yale/George Mason 2025 poll</b></td><td><span class='tag cat'>statistic</span></td><td><span class='tag type'>empirical_data</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#21</td><td class='muted'>May 2025 poll: more Americans &#x27;very worried&#x27; about government corruption than about cost of living or the economy.</td></tr><tr><td><b>YouGov bribery survey</b></td><td><span class='tag cat'>statistic</span></td><td><span class='tag type'>empirical_data</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#21</td><td class='muted'>73% of Americans believe a member of Congress would likely accept a bribe if offered one.</td></tr><tr><td><b>Clarence Thomas gifts</b></td><td><span class='tag cat'>historical_event</span></td><td><span class='tag type'>journalistic_report</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#21</td><td class='muted'>Revelations of undisclosed gifts from billionaire donors invoked as confirming belief that rules don&#x27;t apply to the powerful.</td></tr><tr><td><b>Epstein files</b></td><td><span class='tag cat'>historical_event</span></td><td><span class='tag type'>journalistic_report</span></td><td><span class='tag att neutral'>neutral</span></td><td class='num'>#21</td><td class='muted'>Disclosure energized the sense of &#x27;a club of powerful insiders acting with impunity.&#x27;</td></tr><tr><td><b>Black-white turnout gap 2024</b></td><td><span class='tag cat'>statistic</span></td><td><span class='tag type'>empirical_data</span></td><td><span class='tag att negative'>negative</span></td><td class='num'>#23</td><td class='muted'>Gap reached 10.9 percentage points—widest in over three decades—as Black participation dropped more sharply.</td></tr><tr><td><b>Ronald Brownstein fault line</b></td><td><span class='tag cat'>quote</span></td><td><span class='tag type'>journalistic_report</span></td><td><span class='tag att positive'>positive</span></td><td class='num'>#24</td><td class='muted'>Identified split between those viewing authoritarianism as a &#x27;distraction&#x27; vs. an existential crisis defining all other questions.</td></tr></tbody></table>
+</section></div>
+  <div id="emphasis">
+<section>
+  <h3>⑤ Pivots &amp; premises</h3>
+  <div class="kv"><b>pivots (6)</b></div>
+  <ul class="pivots"><li><span class='p-ref'>¶6</span> From summarizing the moderation consensus to asserting the essay&#x27;s counter-thesis that the view is wrong.</li><li><span class='p-ref'>¶14</span> From rebutting popularism&#x27;s theoretical basis to examining the empirical/quantitative case for moderation.</li><li><span class='p-ref'>¶20</span> From critiquing others&#x27; analyses to presenting the authors&#x27; own transparent causal methodology.</li><li><span class='p-ref'>¶25</span> From empirical debunking to structural explanation (&#x27;What has changed?&#x27;).</li><li><span class='p-ref'>¶40</span> From diagnosis to prescription—shifting the essay from critique to proposed strategy.</li><li><span class='p-ref'>¶51</span> Final reframing: the real divide is not left-vs-center but authoritarian-threat-vs-distraction.</li></ul>
+  <div class="kv"><b>assumed_premises</b>
+    <span class="muted">&quot;That Trump represents a genuine authoritarian/existential threat to democracy; that the Democratic Party is the relevant vehicle for defending democratic self-governance; that winning elections is necessary (though not sufficient) to stop authoritarianism; that peer-reviewed political-science methods (causal identification, replication) are the appropriate standard for adjudicating strategic claims; and that mobilizing disengaged voters is a legitimate and feasible alternative to persuading swing voters.&quot;</span></div>
+</section></div>
+  <div id="epistemics">
+<section>
+  <h3>⑥ Epistemics (NEW — Hyland-style)</h3>
+  <div class="kv"><b>certainty_level</b>
+    <span class="tag big">high</span></div>
+  <div class="kv"><b>source_attribution</b>
+    <span class="tag big">explicit</span></div>
+  <div class="kv"><b>certainty_trajectory</b>
+    <span class="muted">measured/concessive opening (acknowledging the moderation consensus and its &#x27;grain of truth&#x27;) -&gt; assertive empirical middle (confident debunking backed by authors&#x27; own studies) -&gt; climactic normative conclusion (near-prophetic urgency about the stakes for democracy)</span></div>
+  <div class="two-col">
+    <div><h5>hedges (15)</h5><span class="chip hedge">at best small and inconsistent</span> <span class="chip hedge">at worst counterproductive</span> <span class="chip hedge">at most negligible benefits</span> <span class="chip hedge">may end up pleasing no one</span> <span class="chip hedge">may completely miss the mark</span> <span class="chip hedge">perhaps the most prominent</span> <span class="chip hedge">to be fair</span> <span class="chip hedge">to be sure</span> <span class="chip hedge">nobody knows for certain</span> <span class="chip hedge">generally provides</span> <span class="chip hedge">often</span> <span class="chip hedge">some contexts</span> <span class="chip hedge">highly context-dependent</span> <span class="chip hedge">at most</span> <span class="chip hedge">a grain of truth</span></div>
+    <div><h5>boosters (13)</h5><span class="chip booster">badly misunderstand</span> <span class="chip booster">fatally limited</span> <span class="chip booster">firm conviction</span> <span class="chip booster">most critically</span> <span class="chip booster">devastating</span> <span class="chip booster">staggering 73 percent</span> <span class="chip booster">starkest warning</span> <span class="chip booster">the results are clear</span> <span class="chip booster">fundamentally</span> <span class="chip booster">relentlessly</span> <span class="chip booster">simply</span> <span class="chip booster">clearly</span> <span class="chip booster">hardheaded</span></div>
+  </div>
+  <div class="kv"><b>booster ratio</b>
+    boosters / (hedges + boosters) = <b>0.46</b></div>
+</section></div>
+  <div id="voice-style">
+<section>
+  <h3>⑦ Style · Scope</h3>
+  <div class="kv"><b>atmosphere</b>
+    <span class="tag">polemical</span></div>
+  <div class="kv"><b>domains</b><span class="chip">U.S. electoral politics</span> <span class="chip">political strategy and campaigns</span> <span class="chip">political science methodology</span> <span class="chip">democratic theory</span> <span class="chip">authoritarianism and democratic backsliding</span> <span class="chip">comparative politics (European center-left)</span> <span class="chip">public opinion and polling</span></div>
+  <div class="kv"><b>time_span</b>Antiquity (Thucydides/Cleon) through 2025, with concentrated focus on 1957 (Downs) to the Trump era and especially 2016-2024 elections</div>
+
+  <div class="two-col">
+    <div><h5>hypothetical_cases (4)</h5>
+      <ul><li>&#x27;Imagine voters arranged along a line from left to right&#x27; (median voter thought experiment)</li><li>&#x27;Like ice cream vendors setting up in the center of a beach&#x27; (Downsian analogy)</li><li>&#x27;When candidates without the leadership clout of people like Trump or Manchin shift positions...&#x27;</li><li>&#x27;If you apply the same method to candidates backed by progressive PACs...&#x27;</li></ul></div>
+    <div><h5>figurative_language (13)</h5>
+      <ul><li>&#x27;bowing at the altar of caution&#x27;</li><li>&#x27;preaching at this altar&#x27;</li><li>&#x27;ice cream vendors setting up in the center of a beach&#x27;</li><li>&#x27;swamped by national tides&#x27;</li><li>&#x27;partisan tides&#x27; drowning out messaging</li><li>&#x27;the roar of the crowd has been replaced by polling data&#x27;</li><li>&#x27;Team Blue or Team Red&#x27;</li><li>&#x27;let a thousand flowers bloom&#x27;</li><li>&#x27;rigged system&#x27;</li><li>&#x27;rots it from within&#x27;</li><li>&#x27;battlefield&#x27; and &#x27;redraws the map&#x27;</li><li>&#x27;existential conflict&#x27;</li><li>Wins Above Replacement (baseball metaphor)</li></ul></div>
+  </div>
+  <h5>evaluative_language (13)</h5>
+  <div><span class="chip eval">&#x27;more conventional than wise&#x27;</span> <span class="chip eval">&#x27;badly misunderstand how politics works&#x27;</span> <span class="chip eval">&#x27;fatally limited&#x27;</span> <span class="chip eval">&#x27;the emptiness remains&#x27;</span> <span class="chip eval">&#x27;pandering&#x27;</span> <span class="chip eval">&#x27;outdated conventional wisdom&#x27;</span> <span class="chip eval">&#x27;failed institutions&#x27;</span> <span class="chip eval">&#x27;unprincipled, not pragmatic&#x27;</span> <span class="chip eval">&#x27;irrelevant debate&#x27;</span> <span class="chip eval">&#x27;the old rules are dead&#x27;</span> <span class="chip eval">&#x27;not a silver bullet&#x27;</span> <span class="chip eval">&#x27;dwindling number of swing voters&#x27;</span> <span class="chip eval">&#x27;deep-seated cynicism&#x27;</span></div>
+
+  <div class="kv" style="margin-top:16px"><b>density_note</b>
+    <span class="muted">&quot;Evidence-dense: the essay cites at least a dozen named scholars, books, organizations, and studies and repeatedly grounds normative claims in specific statistics (22-of-22 losses, 10.9-point turnout gap, 73% bribery belief, Golden&#x27;s 16% favorability) rather than relying on abstract argument.&quot;</span></div>
+</section></div>
+
+  <h2 id="lit-tradition">Literature review</h2>
+  
+<section>
+  <h3>Prior-work evaluation traditions</h3>
+  <table class='lit'><thead>
+    <tr><th>Tradition</th><th>Focus</th><th>Features</th>
+        <th>Our Stage-1 coverage</th></tr>
+  </thead><tbody><tr><td><b>Toulmin (1958)</b></td><td>Argument anatomy</td><td><code>Claim</code> · <code>Grounds</code> · <code>Warrant</code> · <code>Backing</code> · <code>Qualifier</code> · <code>Rebuttal</code></td><td>✅ claims + evidence · ⚠️ Warrant via assumed_premises · ⚠️ Qualifier via epistemics.hedges · ⚠️ Rebuttal via stance_structure.disagreements</td></tr><tr><td><b>Stab &amp; Gurevych (2014/17)</b></td><td>AAEC argument graph</td><td><code>Major claim</code> · <code>Claim</code> · <code>Premise</code> · <code>support relation</code> · <code>attack relation</code></td><td>✅ thesis.statement · ✅ claims · ✅ evidence.claim_idx link · ❌ relation enum (removed — derivable from attitude + claim_idx)</td></tr><tr><td><b>Walton schemes</b></td><td>96 argumentation schemes + CQs</td><td><code>Expert opinion</code> · <code>Analogy</code> · <code>Cause-effect</code> · <code>Consequences</code> · <code>Popular opinion</code> · <code>Case</code> · <code>Sign</code> · <code>Slippery slope</code></td><td>✅ evidence.evidence_type enum maps partially · ❌ critical questions (Stage 3)</td></tr><tr><td><b>Rhetorical Structure Theory</b></td><td>Nucleus/satellite hierarchy</td><td><code>Evidence</code> · <code>Justify</code> · <code>Motivation</code> · <code>Antithesis</code> · <code>Concession</code></td><td>✅ stance_structure.concessions = Concession · ✅ stance_structure.extensions = Justify/Motivation · ⚠️ Antithesis via stance_structure.disagreements</td></tr><tr><td><b>ICLE++ / ASAP++ (2024)</b></td><td>Trait-based scoring (~10 dims)</td><td><code>Thesis clarity</code> · <code>Prompt adherence</code> · <code>Argument strength</code> · <code>Organization</code> · <code>Coherence</code> · <code>Development</code> · <code>Persuasiveness</code> · <code>Grammar</code></td><td>✅ thesis.statement (clarity) · ✅ argument_arc (organization) · ✅ development_depth per-claim · ❌ trait scores (Stage 3)</td></tr><tr><td><b>ArguGPT (2023)</b></td><td>AI vs human essay signals</td><td><code>Syntactic complexity</code> · <code>Lexical complexity</code> · <code>Detection classifier</code></td><td>❌ dropped (Stage 3 if classifier needed)</td></tr><tr><td><b>StoryScope (2026)</b></td><td>Narrative fiction → 304 axial features</td><td><code>10 NarraBench dims</code></td><td>✅ Stage 1 mirrors · ❌ Stage 2/3 (axial features) pending</td></tr><tr><td><b>Hyland (metadiscourse)</b></td><td>Commitment markers</td><td><code>Hedges (may, might)</code> · <code>Boosters (clearly)</code> · <code>Attitude</code> · <code>Self-mention</code></td><td>✅ epistemics.hedges / boosters · ✅ certainty_level · ✅ certainty_trajectory</td></tr><tr><td><b>Steelmanning / counterargument</b></td><td>Mill tradition</td><td><code>Steelman</code> · <code>Faithful</code> · <code>Acknowledge</code> · <code>Dispatch</code> · <code>Mock</code> · <code>Strawman</code></td><td>⚠️ per-rival handling enum removed (too vague/overlapping); only point-level via stance_structure.disagreements</td></tr><tr><td><b>Ke (2019) persuasiveness</b></td><td>Component persuasion</td><td><code>Component strength</code> · <code>Argument type</code> · <code>Flaw detection</code> · <code>Evidence specificity</code></td><td>✅ evidence items (specificity + type) · ❌ component strength / flaws (Stage 3)</td></tr></tbody></table>
+</section>
+  <div id="lit-family">
+<section>
+  <h3>Integrated feature families</h3>
+  <table class='lit'><thead>
+    <tr><th>Family</th><th>Primary source</th><th>Our coverage</th></tr>
+  </thead><tbody><tr><td><b>Argument components</b></td><td>Toulmin, Stab &amp; Gurevych</td><td>✅ claims + evidence</td></tr><tr><td><b>Argument relations (support/attack graph)</b></td><td>Stab &amp; Gurevych, RST</td><td>✅ evidence.claim_idx (link) · ❌ relation enum removed (derivable)</td></tr><tr><td><b>Argumentation schemes</b></td><td>Walton</td><td>✅ evidence.evidence_type enum</td></tr><tr><td><b>Rival-theory handling</b></td><td>Mill, counterargument research</td><td>❌ enum removed (too vague); partial coverage via stance_structure</td></tr><tr><td><b>Stance structure (agree/disagree/concede/extend)</b></td><td>RST, persuasion theory</td><td>✅ stance_structure.agreements/disagreements/extensions/concessions</td></tr><tr><td><b>Thesis clarity &amp; organization</b></td><td>ASAP++, ICLE++</td><td>✅ thesis + argument_arc</td></tr><tr><td><b>Evidence specificity</b></td><td>Ke, Toulmin Backing</td><td>✅ style.hypothetical_cases vs evidence items</td></tr><tr><td><b>Hedging / commitment</b></td><td>Hyland</td><td>✅ epistemics group (hedges / boosters / certainty_level / trajectory)</td></tr><tr><td><b>Emphasis point (single most-weighted)</b></td><td>Rhetoric, RST nucleus</td><td>✅ thesis.center_of_gravity · ⚠️ weighting_pattern/emphasis_devices removed (subjective)</td></tr><tr><td><b>Flaws / fallacies</b></td><td>Ke</td><td>❌ (Stage 3)</td></tr><tr><td><b>Lexical / syntactic complexity</b></td><td>ArguGPT, Crossley</td><td>❌ (intentionally dropped)</td></tr></tbody></table>
+</section></div>
+</div>
+</body></html>
