@@ -7,101 +7,93 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Yekyung Kim</title>
   <meta name="author" content="Yekyung Kim">
-  <meta name="description" content="Yekyung Kim, PhD student at the University of Maryland, CLIP Lab. Research on NLP: evaluation and alignment for long-context language models.">
+  <meta name="description" content="Yekyung Kim, PhD student at the University of Maryland, CLIP Lab. Research on evaluating and improving language models for long-form generation, feedback, and self-improving systems.">
   <meta name="keywords" content="Yekyung Kim, NLP, natural language processing, long-context, evaluation, alignment, CLIP Lab, University of Maryland">
 
-  <!-- third-party styles (same stack as the al-folio theme) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
-
-  <!-- theme styles -->
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <script src="assets/js/home.js" defer></script>
   <link rel="icon" href="images/grogu_pixel.png">
-
-  <style>
-    /* a few small tweaks on top of the theme */
-    .post-header { padding-top: 1rem; }
-    .news .table-responsive { max-height: 7rem; overflow-y: auto; }
-    .news th { white-space: nowrap; padding-right: 1rem; }
-    .publications ol.bibliography li .preview { border-radius: 4px; }
-    .industry .periodical { color: var(--global-text-color-light); }
-    /* animated fric the frog mascot in the tagline */
-    .frog-mascot { height: 2.6em; width: auto; }
-    .frog-laptop { vertical-align: -1em; }
-    .frog-mag { vertical-align: -0.85em; }
-    /* smaller, centered profile photo on mobile */
-    @media (max-width: 575.98px) {
-      .profile.float-left { width: 55%; max-width: 210px; float: none !important; margin: 0 auto 1.2rem; }
-    }
-  </style>
 </head>
 
 <body>
+<a class="skip-link" href="#about">Skip to content</a>
+<div class="page">
+  <nav class="page-nav" aria-label="On this page">
+    <a href="#about">About</a>
+    <a href="#news">News</a>
+    <a href="#publications">Publications</a>
+  </nav>
+  <main>
+    <section class="introduction" id="about" aria-label="About and research">
+      <header class="intro-heading">
+        <h1>Yekyung Kim</h1>
+        <nav class="social-links" aria-label="Contact and profiles">
+          <a href="mailto:yekyung@umd.edu">
+            <svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span>Email</span>
+          </a>
+          <a href="https://scholar.google.co.kr/citations?user=6Rn81SsAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+            <svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m2 9 10-5 10 5-10 5-10-5Z"/><path d="M6 11v6c3 2 9 2 12 0v-6M22 9v7"/></svg>
+            <span>Google Scholar</span>
+          </a>
+          <a href="https://github.com/mungg" target="_blank" rel="noopener">
+            <svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.104.768-.244.768-.543 0-.267-.01-.975-.015-1.914-3.13.68-3.79-1.508-3.79-1.508-.512-1.3-1.25-1.646-1.25-1.646-1.022-.698.078-.684.078-.684 1.13.08 1.725 1.16 1.725 1.16 1.005 1.722 2.637 1.224 3.28.936.102-.728.394-1.225.715-1.507-2.498-.284-5.124-1.25-5.124-5.562 0-1.229.439-2.233 1.159-3.021-.116-.285-.502-1.43.11-2.98 0 0 .944-.302 3.094 1.154A10.79 10.79 0 0 1 12 6.19c.956.004 1.918.13 2.818.379 2.149-1.456 3.09-1.154 3.09-1.154.614 1.55.228 2.695.112 2.98.722.788 1.157 1.792 1.157 3.021 0 4.323-2.63 5.275-5.136 5.553.404.349.766 1.034.766 2.084 0 1.505-.014 2.72-.014 3.089 0 .302.203.652.774.542A11.25 11.25 0 0 0 12 .75Z"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://x.com/YekyungKim" target="_blank" rel="noopener">
+            <svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 3h4.5L20 21h-4.5L4 3ZM20 3 4 21"/></svg>
+            <span>Twitter</span>
+          </a>
+        </nav>
+      </header>
+      <figure class="portrait">
+        <img src="images/yekyung_bigsur.jpg" width="720" height="960" alt="Yekyung Kim by the coast">
+      </figure>
+      <div class="intro-copy">
+<p class="bio">I am a fourth-year Ph.D. student at the
+        <a href="https://wiki.umiacs.umd.edu/clip/index.php/Main_Page" target="_blank" rel="noopener">University of Maryland, CLIP Lab</a>,
+        advised by <a href="https://www.cs.umd.edu/~miyyer/" target="_blank" rel="noopener">Mohit Iyyer</a>.
+        I began my Ph.D. at <a href="https://nlp.cs.umass.edu/" target="_blank" rel="noopener">UMass Amherst</a> and moved to UMD with my advisor.</p>
+      <p class="research-intro">My goal is to build <strong>self-improving models</strong> that people can rely on as partners in learning and problem-solving.
+        My research focuses on evaluating and improving language models for tasks where <strong>output quality is not easily verifiable</strong>, like long-form writing.</p>
 
-<div class="container mt-5">
-  <div class="post">
-
-    <!-- ===================== HEADER ===================== -->
-    <header class="post-header">
-      <h1 class="post-title">
-        <span class="font-weight-bold">Yekyung</span> Kim
-        <span class="header-links">
-          <a href="mailto:yekyung@umd.edu">Email</a>
-          <a href="https://scholar.google.co.kr/citations?user=6Rn81SsAAAAJ&amp;hl=en" target="_blank" rel="external nofollow noopener">Scholar</a>
-          <a href="https://github.com/mungg" target="_blank" rel="external nofollow noopener">Github</a>
-          <a href="https://x.com/YekyungKim" target="_blank" rel="external nofollow noopener">Twitter</a>
-        </span>
-      </h1>
-      <div class="physics-tagline">
-        <img class="frog-mascot frog-mag" src="images/fric_magnifier.gif" alt="fric the frog with a magnifying glass">Toward faithful and human-centric language models
       </div>
-    </header>
+      <section class="research-map" aria-labelledby="research-goal">
+        <h2 id="research-goal" class="map-goal">Self-improving models</h2>
+        <div class="map-branches" aria-hidden="true"></div>
+        <div class="map-groups">
+          <section class="map-group" aria-labelledby="evaluation-title">
+            <h3 class="map-group-label" id="evaluation-title">Evaluation</h3>
+            <article class="research-topic">
+              <h4>What ideas get lost when models write, and why?</h4>
+              <p>Different LLMs converge on the same arguments, often favored by LLM judges and reward models (<span class="research-links"><a href="https://arxiv.org/pdf/2606.01736" target="_blank" rel="noopener">Argument Collapse</a></span>).</p>
+            </article>
+            <article class="research-topic">
+              <h4>Can we trust long-form outputs?</h4>
+              <p>Factuality and faithfulness in long-form generation, and long-context understanding (<span class="research-links"><a href="https://arxiv.org/abs/2404.01261" target="_blank" rel="noopener">FABLES</a>, <a href="https://arxiv.org/pdf/2406.19276" target="_blank" rel="noopener">VeriScore</a>, <a href="https://arxiv.org/pdf/2503.01996" target="_blank" rel="noopener">OneRuler</a></span>).</p>
+            </article>
+          </section>
+          <section class="map-group" aria-labelledby="alignment-title">
+            <h3 class="map-group-label" id="alignment-title">Alignment</h3>
+            <article class="research-topic">
+              <h4>Can models learn through simulated interaction?</h4>
+              <p>Building simulated environments where models learn from feedback and revision <span class="ongoing">(ongoing).</span></p>
+            </article>
+            <article class="research-topic">
+              <h4>Post-training with synthetic datasets</h4>
+              <p>Using synthetic data to improve instruction following (<span class="research-links"><a href="https://arxiv.org/pdf/2505.11080" target="_blank" rel="noopener">BLEUBERI</a></span>) and retrieval over complex, real-world documents <span class="ongoing">(ongoing).</span></p>
+            </article>
+          </section>
+        </div>
+      </section>
+    </section>
 
-    <article>
-      <!-- ===================== ABOUT ===================== -->
-      <div class="profile float-left">
-        <figure>
-          <picture>
-            <img src="images/yekyung_hanbok.jpg" class="img-fluid z-depth-1 rounded" width="auto" height="auto" alt="Yekyung Kim">
-          </picture>
-        </figure>
-      </div>
-
-      <div class="clearfix">
-        <p>I am a third-year Ph.D. student at the
-          <a href="https://wiki.umiacs.umd.edu/clip/index.php/Main_Page" target="_blank" rel="external nofollow noopener">University of Maryland, CLIP Lab</a>,
-          advised by <a href="https://www.cs.umd.edu/~miyyer/" target="_blank" rel="external nofollow noopener">Mohit Iyyer</a>.
-          My research in NLP asks how to <strong>evaluate</strong> and <strong>align</strong> language models
-          as everything gets <em>long</em>, from long-context understanding to long-form generation to long-horizon problem-solving.
-          I began my Ph.D. at <a href="https://nlp.cs.umass.edu/" target="_blank" rel="external nofollow noopener">UMass NLP</a>
-          and later transferred to UMD along with my advisor.</p>
-
-        <p><strong>Evaluating faithfulness &amp; factuality</strong> in long-context understanding
-          (<a href="https://arxiv.org/abs/2404.01261" target="_blank" rel="external nofollow noopener">FABLES</a>,
-          <a href="https://arxiv.org/pdf/2503.01996" target="_blank" rel="external nofollow noopener">OneRuler</a>)
-          and long-form generation
-          (<a href="https://arxiv.org/pdf/2406.19276" target="_blank" rel="external nofollow noopener">VeriScore</a>,
-          <a href="https://arxiv.org/pdf/2606.01736" target="_blank" rel="external nofollow noopener">Argument Collapse</a>).</p>
-
-        <p><strong>Aligning language models</strong> by post-training with synthetic data for instruction following
-          (<a href="https://arxiv.org/pdf/2505.11080" target="_blank" rel="external nofollow noopener">BLEUBERI</a>)
-          and compositional reasoning.</p>
-
-        <p>Before my Ph.D., I worked at Hyundai Motor Group and LG Electronics as a research engineer.
-          I was selected as a
-          <a href="https://www.koreatimes.co.kr/business/tech-science/20190422/lg-to-nurture-ai-specialists-with-carnegie-mellon-university-of-toronto" target="_blank" rel="external nofollow noopener">specialist in AI</a>
-          and conducted research at <a href="https://lti.cs.cmu.edu/" target="_blank" rel="external nofollow noopener">CMU LTI</a>
-          as a visiting scientist mentored by <a href="https://www.cs.cmu.edu/~jgc/" target="_blank" rel="external nofollow noopener">Jaime Carbonell</a>.</p>
-      </div>
-
-      <!-- ===================== NEWS ===================== -->
-      <!-- TODO: edit dates / add your latest news here -->
-      <div class="news">
-        <h2>news</h2>
-        <div class="table-responsive">
+      <section class="news" id="news" aria-labelledby="news-title">
+        <div class="news-heading">
+          <h2 id="news-title">News</h2>
+        </div>
+        <div class="news-window" tabindex="0" role="region" aria-label="News updates; scroll for older news">
           <table class="table table-sm table-borderless">
             <tr>
               <th scope="row">Aug 2026</th>
@@ -124,26 +116,30 @@
               <td><a href="https://arxiv.org/pdf/2406.19276" target="_blank" rel="external nofollow noopener">VeriScore</a> was accepted to <strong>EMNLP Findings 2024</strong>.</td>
             </tr>
             <tr>
+              <th scope="row">Jun 2024</th>
+              <td><a href="https://arxiv.org/pdf/2402.06794" target="_blank" rel="external nofollow noopener">Is It Safe to Cross?</a> was named a <strong>Best Paper Finalist</strong> at <strong>UR 2024</strong>!</td>
+            </tr>
+            <tr>
               <th scope="row">May 2024</th>
               <td><a href="https://arxiv.org/abs/2404.01261" target="_blank" rel="external nofollow noopener">FABLES</a> was accepted to <strong>COLM 2024</strong>.</td>
             </tr>
           </table>
         </div>
-      </div>
+      </section>
 
-      <!-- ===================== PUBLICATIONS ===================== -->
-      <div class="publications">
-        <h2>publications</h2>
+      <section class="publications" id="publications" aria-labelledby="publications-title">
+        <div class="section-heading"><h2 id="publications-title">Publications</h2><a href="https://scholar.google.co.kr/citations?user=6Rn81SsAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar ↗</a></div>
         <ol class="bibliography">
 
           <!-- Argument Collapse -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/argument_collapse_thumbnail.png" alt="Argument Collapse teaser figure"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/argument_collapse_pixel.png" width="1448" height="1086" alt="Argument Collapse: people offer varied arguments while LLMs converge on the same argument"></div>
               <div class="col-sm-8">
-                <div class="title">Argument Collapse: LLMs Flatten Long-Form Public Debate<a href="https://arxiv.org/pdf/2606.01736" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a><a href="https://github.com/mungg/argument_collapse" title="Code" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fab fa-github fa-sm"></i></a></div>
+                <h3 class="title">Argument Collapse: LLMs Flatten Long-Form Public Debate</h3>
                 <div class="author"><em>Yekyung Kim</em>*, Yapei Chang*, Chau Minh Pham, and Mohit Iyyer<br><span style="color:var(--global-text-color-light)">(* equal contribution)</span></div>
                 <div class="periodical"><em>EMNLP</em> 2026</div>
+                <div class="paper-links"><a href="https://arxiv.org/pdf/2606.01736" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a> <a href="https://github.com/mungg/argument_collapse" title="Code" target="_blank" rel="external nofollow noopener">Code</a></div>
               </div>
             </div>
           </li>
@@ -151,11 +147,12 @@
           <!-- BLEUBERI -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/BLEUBERI_thumnail.png" alt="BLEUBERI"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail bleuberi-thumbnail" loading="lazy" src="images/bleuberi_pixel.png" width="1254" height="1254" alt="BLEUBERI: comparing an answer with a reference to provide a BLEU reward"></div>
               <div class="col-sm-8">
-                <div class="title">BLEUBERI: BLEU is a Surprisingly Effective Reward for Instruction Following<a href="https://arxiv.org/pdf/2505.11080" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a><a href="https://github.com/lilakk/BLEUBERI" title="Code" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fab fa-github fa-sm"></i></a></div>
+                <h3 class="title">BLEUBERI: BLEU is a Surprisingly Effective Reward for Instruction Following</h3>
                 <div class="author">Yapei Chang, <em>Yekyung Kim</em>, Michael Krumdick, Amir Zadeh, Chuan Li, Chris Tanner, and Mohit Iyyer</div>
                 <div class="periodical"><em>NeurIPS</em> 2025</div>
+                <div class="paper-links"><a href="https://arxiv.org/pdf/2505.11080" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a> <a href="https://github.com/lilakk/BLEUBERI" title="Code" target="_blank" rel="external nofollow noopener">Code</a></div>
               </div>
             </div>
           </li>
@@ -163,11 +160,12 @@
           <!-- OneRuler -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/OneRuler_image.png" alt="OneRuler"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/oneruler_pixel.png" width="1254" height="1254" alt="OneRuler: measuring long-context understanding across languages"></div>
               <div class="col-sm-8">
-                <div class="title">One Ruler to Measure Them All: Benchmarking Multilingual Long-Context Language Models<a href="https://arxiv.org/pdf/2503.01996" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a><a href="https://github.com/mungg/OneRuler" title="Code" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fab fa-github fa-sm"></i></a></div>
+                <h3 class="title">One Ruler to Measure Them All: Benchmarking Multilingual Long-Context Language Models</h3>
                 <div class="author"><em>Yekyung Kim</em>, Jenna Russell, Marzena Karpinska, and Mohit Iyyer</div>
                 <div class="periodical"><em>COLM</em> 2025</div>
+                <div class="paper-links"><a href="https://arxiv.org/pdf/2503.01996" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a> <a href="https://github.com/mungg/OneRuler" title="Code" target="_blank" rel="external nofollow noopener">Code</a></div>
               </div>
             </div>
           </li>
@@ -175,11 +173,12 @@
           <!-- VeriScore -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/VeriScore_img.png" alt="VeriScore"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/veriscore_pixel.png" width="1536" height="1024" alt="VeriScore: extracting verifiable claims and checking web evidence"></div>
               <div class="col-sm-8">
-                <div class="title">VeriScore: Evaluating the Factuality of Verifiable Claims in Long-Form Text Generation<a href="https://arxiv.org/pdf/2406.19276" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a><a href="https://github.com/Yixiao-Song/VeriScore" title="Code" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fab fa-github fa-sm"></i></a></div>
+                <h3 class="title">VeriScore: Evaluating the Factuality of Verifiable Claims in Long-Form Text Generation</h3>
                 <div class="author">Yixiao Song, <em>Yekyung Kim</em>, and Mohit Iyyer</div>
                 <div class="periodical"><em>EMNLP Findings</em> 2024</div>
+                <div class="paper-links"><a href="https://arxiv.org/pdf/2406.19276" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a> <a href="https://github.com/Yixiao-Song/VeriScore" title="Code" target="_blank" rel="external nofollow noopener">Code</a></div>
               </div>
             </div>
           </li>
@@ -187,11 +186,12 @@
           <!-- FABLES -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/FABLES_icon2.png" alt="FABLES"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/fables_pixel.png" width="1448" height="1086" alt="FABLES: checking a book summary for faithful claims and missing content"></div>
               <div class="col-sm-8">
-                <div class="title">FABLES: Evaluating Faithfulness and Content Selection in Book-Length Summarization<a href="https://arxiv.org/abs/2404.01261" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a><a href="https://github.com/mungg/FABLES" title="Dataset + Code" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fab fa-github fa-sm"></i></a></div>
+                <h3 class="title">FABLES: Evaluating Faithfulness and Content Selection in Book-Length Summarization</h3>
                 <div class="author"><em>Yekyung Kim</em>, Yapei Chang, Marzena Karpinska, Aparna Garimella, Varun Manjunatha, Kyle Lo, Tanya Goyal, and Mohit Iyyer</div>
                 <div class="periodical"><em>COLM</em> 2024</div>
+                <div class="paper-links"><a href="https://arxiv.org/abs/2404.01261" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a> <a href="https://github.com/mungg/FABLES" title="Dataset + Code" target="_blank" rel="external nofollow noopener">Code</a></div>
               </div>
             </div>
           </li>
@@ -199,11 +199,13 @@
           <!-- Street Crossing -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/UR_thumbnail.png" alt="Safe street crossing"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/safe_to_cross_pixel.png" width="1448" height="1086" alt="Is It Safe to Cross? GPT-4V assesses street-crossing risk from an approaching car"></div>
               <div class="col-sm-8">
-                <div class="title">Is It Safe to Cross? Interpretable Risk Assessment with GPT-4V for Safety-Aware Street Crossing<a href="https://arxiv.org/pdf/2402.06794" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a></div>
+                <h3 class="title">Is It Safe to Cross? Interpretable Risk Assessment with GPT-4V for Safety-Aware Street Crossing</h3>
                 <div class="author">Hochul Hwang, Sunjae Kwon, <em>Yekyung Kim</em>, and Donghyun Kim</div>
-                <div class="periodical"><em>Ubiquitous Robots (UR)</em> 2024</div>
+                <!-- Finalist record: https://www.umass.edu/robotics/people/hochul-hwang -->
+                <div class="periodical"><em>Ubiquitous Robots (UR)</em> 2024 <span class="award-note">(Best Paper Finalist)</span></div>
+                <div class="paper-links"><a href="https://arxiv.org/pdf/2402.06794" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a></div>
               </div>
             </div>
           </li>
@@ -211,11 +213,12 @@
           <!-- LINDA -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/LINDA_profile2.png" alt="LINDA"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/linda_pixel.png" width="1448" height="1086" alt="LINDA: a model interpolates between two sentences with an adjustable mixing ratio"></div>
               <div class="col-sm-8">
-                <div class="title">LINDA: Unsupervised Learning to Interpolate in Natural Language Processing<a href="https://arxiv.org/pdf/2112.13969.pdf" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a></div>
+                <h3 class="title">LINDA: Unsupervised Learning to Interpolate in Natural Language Processing</h3>
                 <div class="author"><em>Yekyung Kim</em>, Seohyeong Jeong, and Kyunghyun Cho</div>
                 <div class="periodical"><em>arXiv</em> 2021</div>
+                <div class="paper-links"><a href="https://arxiv.org/pdf/2112.13969.pdf" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a></div>
               </div>
             </div>
           </li>
@@ -223,11 +226,12 @@
           <!-- InfoVerse -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/InfoVerse_profile.png" alt="InfoVerse"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/infoverse_pixel.png" width="1448" height="1086" alt="InfoVerse: combining model signals to map data and select informative, diverse examples"></div>
               <div class="col-sm-8">
-                <div class="title">InfoVerse: A Universal Framework for Dataset Characterization with Multidimensional Meta-information<a href="https://aclanthology.org/2023.acl-long.547/" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a><a href="https://github.com/minnesotanlp/infoVerse" title="Code" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fab fa-github fa-sm"></i></a></div>
+                <h3 class="title">InfoVerse: A Universal Framework for Dataset Characterization with Multidimensional Meta-information</h3>
                 <div class="author"><a href="https://sites.google.com/view/jaehyungkim" target="_blank" rel="external nofollow noopener">Jaehyung Kim</a>, <em>Yekyung Kim</em>, Karin de Langis, Jinwoo Shin, and Dongyeop Kang</div>
                 <div class="periodical"><em>ACL</em> 2023</div>
+                <div class="paper-links"><a href="https://aclanthology.org/2023.acl-long.547/" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a> <a href="https://github.com/minnesotanlp/infoVerse" title="Code" target="_blank" rel="external nofollow noopener">Code</a></div>
               </div>
             </div>
           </li>
@@ -235,11 +239,12 @@
           <!-- Meta-Crafting -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/metacraft_profile.png" alt="Meta-Crafting"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/metacrafting_pixel.png" width="1448" height="1086" alt="Style and content shifts detected using model metadata"></div>
               <div class="col-sm-8">
-                <div class="title">Meta-Crafting: Improved Detection of Out-of-Distributed Texts via Crafting Metadata Space<a href="https://ojs.aaai.org/index.php/AAAI/article/view/30467" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a></div>
+                <h3 class="title">Meta-Crafting: Improved Detection of Out-of-Distributed Texts via Crafting Metadata Space</h3>
                 <div class="author">Ryan Koo, <em>Yekyung Kim</em>, Dongyeop Kang, and Jaehyung Kim</div>
                 <div class="periodical"><em>AAAI</em> 2024 &nbsp;<span style="color:var(--global-text-color-light)">(Student Abstract &amp; Poster)</span></div>
+                <div class="paper-links"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/30467" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a></div>
               </div>
             </div>
           </li>
@@ -247,11 +252,12 @@
           <!-- Deep Active Learning -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/Active_profile.png" alt="Deep Active Learning"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/active_learning_pixel.png" width="1448" height="1086" alt="Select uncertain diverse sequences for human labeling"></div>
               <div class="col-sm-8">
-                <div class="title">Deep Active Learning for Sequence Labeling Based on Diversity and Uncertainty in Gradient<a href="https://aclanthology.org/2020.lifelongnlp-1.1.pdf" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a></div>
+                <h3 class="title">Deep Active Learning for Sequence Labeling Based on Diversity and Uncertainty in Gradient</h3>
                 <div class="author"><em>Yekyung Kim</em></div>
                 <div class="periodical"><em>Life-long Learning for Spoken Language Systems Workshop @ AACL</em> 2021</div>
+                <div class="paper-links"><a href="https://aclanthology.org/2020.lifelongnlp-1.1.pdf" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a></div>
               </div>
             </div>
           </li>
@@ -259,11 +265,12 @@
           <!-- Korean NER -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/Korean_profile.png" alt="Korean NER"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/korean_ner_pixel.png" width="1448" height="1086" alt="Jamo and character context for Korean named entity recognition"></div>
               <div class="col-sm-8">
-                <div class="title">Learning Sub-Character Level Representation for Korean Named Entity Recognition<a href="https://journals.flvc.org/FLAIRS/article/view/128509" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a></div>
+                <h3 class="title">Learning Sub-Character Level Representation for Korean Named Entity Recognition</h3>
                 <div class="author">Yejin Kim and <em>Yekyung Kim</em> <span style="color:var(--global-text-color-light)">(equal contribution)</span></div>
                 <div class="periodical"><em>FLAIRS</em> 2020</div>
+                <div class="paper-links"><a href="https://journals.flvc.org/FLAIRS/article/view/128509" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a></div>
               </div>
             </div>
           </li>
@@ -271,11 +278,12 @@
           <!-- Nowplaying Billboard -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/Music_Twitter_profile.png" alt="Nowplaying the Future Billboard"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/nowplaying_pixel.png" width="1448" height="1086" alt="Music listening tweets predict future chart rankings"></div>
               <div class="col-sm-8">
-                <div class="title">#Nowplaying the Future Billboard: Mining Music Listening Behaviors of Twitter Users for Hit Song Prediction<a href="https://dl.acm.org/doi/abs/10.1145/2632188.2632206" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a></div>
+                <h3 class="title">#Nowplaying the Future Billboard: Mining Music Listening Behaviors of Twitter Users for Hit Song Prediction</h3>
                 <div class="author"><em>Yekyung Kim</em>, Bongwon Suh, and Kyogu Lee</div>
                 <div class="periodical"><em>SoMeRA Workshop @ SIGIR</em> 2014</div>
+                <div class="paper-links"><a href="https://dl.acm.org/doi/abs/10.1145/2632188.2632206" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a></div>
               </div>
             </div>
           </li>
@@ -283,60 +291,60 @@
           <!-- Visual Analytics Tweets -->
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/Adobe_Twitter_profile.png" alt="Visual Analytics of Tweets"></div>
+              <div class="col-sm-2 preview"><img class="preview pixel-thumbnail" loading="lazy" src="images/tweet_analytics_pixel.png" width="1448" height="1086" alt="Explore topic trends and linked source tweets"></div>
               <div class="col-sm-8">
-                <div class="title">A Visual Analytics Approach to Summarizing Tweets<a href="http://david-hawking.net/SIRIP2014_Proceedings/SIRIP'14-A%20Visual%20Analytics%20Approach%20to%20Summarizing%20Tweets.pdf" title="Paper" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-file-alt fa-sm"></i></a></div>
+                <h3 class="title">A Visual Analytics Approach to Summarizing Tweets</h3>
                 <div class="author">Ramik Sadana, <em>Yekyung Kim</em>, Bongwon Suh, and Eunyee Koh</div>
                 <div class="periodical"><em>Industry Day @ SIGIR</em> 2014</div>
+                <div class="paper-links"><a href="http://david-hawking.net/SIRIP2014_Proceedings/SIRIP'14-A%20Visual%20Analytics%20Approach%20to%20Summarizing%20Tweets.pdf" title="Paper" target="_blank" rel="external nofollow noopener">Paper</a></div>
               </div>
             </div>
           </li>
 
         </ol>
-      </div>
+      </section>
 
-      <!-- ===================== INDUSTRY PROJECTS ===================== -->
-      <div class="publications industry">
-        <h2>industry projects</h2>
+      <section class="publications industry" id="industry" aria-labelledby="industry-title">
+        <h2 id="industry-title">Industry projects</h2>
+      <p class="background-note">Before my Ph.D., I worked at Hyundai Motor Group and LG Electronics as a research engineer.
+        I was selected as a
+        <a href="https://www.koreatimes.co.kr/business/tech-science/20190422/lg-to-nurture-ai-specialists-with-carnegie-mellon-university-of-toronto" target="_blank" rel="external nofollow noopener">specialist in AI</a>
+        and conducted research at <a href="https://lti.cs.cmu.edu/" target="_blank" rel="external nofollow noopener">CMU LTI</a>
+        as a visiting scientist mentored by <a href="https://www.cs.cmu.edu/~jgc/" target="_blank" rel="external nofollow noopener">Jaime Carbonell</a>.</p>
         <ol class="bibliography">
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/Incheon_robot.jpeg" alt="Airstar airport robot"></div>
+              <div class="col-sm-2 preview"><img class="preview" loading="lazy" src="images/Incheon_robot.jpeg" alt="Airstar airport robot"></div>
               <div class="col-sm-8">
-                <div class="title">Airstar, Incheon Airport Robot<a href="https://jordanfraser.medium.com/the-robot-airport-workers-of-seoul-a08349f4f44e" title="Article" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-external-link-alt fa-sm"></i></a></div>
+                <h3 class="title">Airstar, Incheon Airport Robot</h3>
                 <div class="periodical">LG Electronics</div>
+                <div class="paper-links"><a href="https://jordanfraser.medium.com/the-robot-airport-workers-of-seoul-a08349f4f44e" title="Article" target="_blank" rel="external nofollow noopener">Read</a></div>
               </div>
             </div>
           </li>
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/hyundai_chatbot.jpeg" alt="Hyundai in-car AI assistant"></div>
+              <div class="col-sm-2 preview"><img class="preview" loading="lazy" src="images/hyundai_chatbot.jpeg" alt="Hyundai in-car AI assistant"></div>
               <div class="col-sm-8">
-                <div class="title">AI Assistant for Cars</div>
+                <h3 class="title">AI Assistant for Cars</h3>
                 <div class="periodical">Hyundai Motor Group</div>
               </div>
             </div>
           </li>
           <li>
             <div class="row">
-              <div class="col-sm-2 preview"><img class="preview z-depth-1 rounded" src="images/LG_thinQ.jpeg" alt="LG ThinQ chatbot"></div>
+              <div class="col-sm-2 preview"><img class="preview" loading="lazy" src="images/LG_thinQ.jpeg" alt="LG ThinQ chatbot"></div>
               <div class="col-sm-8">
-                <div class="title">Chatbot for Home Appliances<a href="https://www.prnewswire.com/news-releases/lg-introduces-faster-advanced-customer-service-experience-with-proactive-support-300959483.html" title="Article" style="margin-left: 0.3em;" target="_blank" rel="external nofollow noopener"><i class="fas fa-external-link-alt fa-sm"></i></a></div>
+                <h3 class="title">Chatbot for Home Appliances</h3>
                 <div class="periodical">LG Electronics</div>
+                <div class="paper-links"><a href="https://www.prnewswire.com/news-releases/lg-introduces-faster-advanced-customer-service-experience-with-proactive-support-300959483.html" title="Article" target="_blank" rel="external nofollow noopener">Read</a></div>
               </div>
             </div>
           </li>
         </ol>
-      </div>
-
-    </article>
-  </div>
+      </section>
+    <footer><img src="images/grogu_pixel.png" width="30" height="30" alt=""><a href="#about">Back to top ↑</a></footer>
+  </main>
 </div>
-
-<footer></footer>
-
-<!-- scripts: jQuery + Bootstrap bundle power the mobile nav toggle -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
 </body>
 </html>
