@@ -1,4 +1,24 @@
 (() => {
+  const publications = document.querySelector('#publications');
+  const toggle = publications?.querySelector('.publications-toggle');
+  if (toggle) {
+    const papers = Array.from(publications.querySelectorAll('.bibliography > li'));
+    const heading = publications.querySelector('h2');
+    let expanded = false;
+    const updatePublications = () => {
+      papers.slice(6).forEach(paper => { paper.hidden = !expanded; });
+      heading.textContent = expanded ? 'Publications' : 'Selected publications';
+      toggle.textContent = expanded ? 'Show selected publications' : `Show all publications (${papers.length})`;
+      toggle.setAttribute('aria-expanded', String(expanded));
+    };
+    toggle.hidden = false;
+    updatePublications();
+    toggle.addEventListener('click', () => {
+      expanded = !expanded;
+      updatePublications();
+      if (!expanded) heading.scrollIntoView({ block: 'start' });
+    });
+  }
   const viewport = document.querySelector('.news-window');
   const table = viewport?.querySelector('table');
   if (!table) return;
