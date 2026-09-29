@@ -21,12 +21,15 @@ strong { font-weight: 600; }
 .introduction { display: grid; grid-template-columns: 180px minmax(0,1fr); grid-template-rows: max-content auto auto; column-gap: 32px; row-gap: 12px; align-items: start; }
 .intro-heading { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
 h1 { font-family: inherit; font-size: 36px; font-weight: 600; line-height: 1.1; letter-spacing: -.025em; color: #2b493c; }
-.social-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.social-links { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 14px; }
 .social-links a { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; color: var(--muted); white-space: nowrap; }
-.social-icon { width: 18px; height: 18px; flex: none; color: var(--accent); }
+.social-icon { width: 16px; height: 16px; flex: none; color: var(--accent); }
 .social-links a:hover { color: var(--accent); }
 .portrait { grid-column: 1; grid-row: 1 / span 2; }
 .portrait img { display: block; width: 100%; height: 220px; object-fit: cover; }
+.photo-credit { margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.35; text-align: center; }
+.photo-credit a { color: inherit; white-space: nowrap; text-decoration: underline; text-decoration-color: #c2cac4; text-underline-offset: 2px; }
+.photo-credit a:hover { color: var(--accent); text-decoration-color: currentColor; }
 .intro-copy { grid-column: 2; grid-row: 2; min-width: 0; }
 .bio { margin-bottom: 10px; }
 .research-map { position: relative; grid-column: 1 / -1; min-width: 0; }
@@ -62,9 +65,9 @@ h2 { font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: -.02em
 .bibliography li:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
 .bibliography .row { display: grid; grid-template-columns: 174px minmax(0,1fr); gap: 28px; align-items: start; }
 .bibliography img { width: 174px; height: 112px; object-fit: contain; display: block; margin-top: 3px; }
-.bibliography img.pixel-thumbnail { height: auto; max-height: 148px; }
-/* Offset the transparent top inset so BLEUBERI artwork aligns with its title. */
-.bibliography img.bleuberi-thumbnail { margin-top: -9%; }
+.publications .bibliography { --thumbnail-height: 132px; }
+.publications .row { align-items: center; }
+.bibliography img.pixel-thumbnail { width: 100%; height: var(--thumbnail-height); object-position: center; margin: 0; }
 .title { font-size: inherit; line-height: inherit; font-weight: 600; }
 .author { color: var(--muted); margin-top: 5px; }
 .author em { font-style: normal; color: var(--ink); border-bottom: 1px solid #bcc7c0; }
@@ -74,6 +77,9 @@ h2 { font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: -.02em
 .paper-links { display: flex; gap: 16px; margin-top: 6px; }
 .industry h2 { margin-bottom: 14px; }
 .background-note { color: var(--muted); margin-bottom: 25px; }
+.interests { margin-top: 34px; padding-top: 23px; border-top: 1px solid var(--line); }
+.interests h2 { margin-bottom: 10px; }
+.interests p { max-width: 64ch; }
 footer { display: flex; align-items: center; justify-content: space-between; padding: 35px 0 28px; }
 footer img { image-rendering: pixelated; object-fit: contain; }
 .skip-link { position: absolute; top: -80px; left: 20px; padding: 10px; background: white; z-index: 2; }
@@ -94,6 +100,12 @@ footer img { image-rendering: pixelated; object-fit: contain; }
   .intro-copy { grid-column: 1 / -1; grid-row: 2; }
   .bibliography .row { grid-template-columns: 104px minmax(0,1fr); gap: 20px; }
   .bibliography img { width: 104px; height: 82px; }
+  .publications .bibliography { --thumbnail-height: 79px; }
+  .publications .row { align-items: start; }
+}
+@media (max-width: 576px) {
+  .social-links { display: grid; grid-template-columns: repeat(2, max-content); gap: 4px 16px; }
+  .social-links a { min-height: 32px; }
 }
 @media (max-width: 400px) {
   .page { width: calc(100% - 32px); }
@@ -103,6 +115,10 @@ footer img { image-rendering: pixelated; object-fit: contain; }
   .table th { padding-right: 14px; }
   .bibliography .row { grid-template-columns: 72px minmax(0,1fr); gap: 14px; }
   .bibliography img { width: 72px; height: 65px; }
+  .publications .bibliography { --thumbnail-height: 55px; }
+}
+@media (max-width: 360px) {
+  .scholar-prefix { display: none; }
 }
 @media (max-width: 640px) {
   .map-branches { width: calc(50% - 12px); margin: 0 0 0 12px; }
