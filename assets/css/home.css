@@ -32,12 +32,13 @@ h1 { font-family: inherit; font-size: 36px; font-weight: 600; line-height: 1.1; 
 .photo-credit a:hover { color: var(--accent); text-decoration-color: currentColor; }
 .intro-copy { grid-column: 2; grid-row: 2; min-width: 0; }
 .bio { margin-bottom: 10px; }
+.research-question { color: var(--accent); }
 .research-map { position: relative; grid-column: 1 / -1; min-width: 0; }
 .map-goal { width: fit-content; max-width: 100%; margin: 0 auto; padding: 4px 14px; border: 1px solid #cbd8e7; background: #eef3f9; color: #42658f; font-size: inherit; font-weight: 600; line-height: inherit; letter-spacing: 0; text-align: center; }
 .map-branches { position: relative; width: calc(50% + 9px); height: 8px; margin: 0 auto; border-bottom: 1px solid #c3cfdc; }
 .map-branches::before { content: ''; position: absolute; top: 0; left: 50%; height: 100%; border-left: 1px solid #c3cfdc; }
 .map-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto auto; gap: 6px 18px; padding-top: 6px; }
-.map-group { --card-accent: #42658f; --card-border: #dce4ee; position: relative; display: grid; grid-row: span 3; grid-template-rows: subgrid; gap: 6px; min-width: 0; padding: 6px; border: 1px solid var(--card-border); border-radius: 8px; background: transparent; }
+.map-group { --card-accent: #42658f; --card-border: #dce4ee; position: relative; display: grid; grid-row: span 3; grid-template-rows: subgrid; gap: 6px; min-width: 0; padding: 6px; background: transparent; }
 .map-group::before { content: ''; position: absolute; top: -7px; left: 50%; height: 6px; border-left: 1px solid #c3cfdc; }
 .map-group:last-child { --card-accent: #76608e; --card-border: #e5dfeb; }
 .map-group-label { position: relative; font-size: inherit; font-weight: 600; color: var(--card-accent); text-align: center; }
